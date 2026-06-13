@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  /* Soft sky-to-grass playground backdrop. */
+  background:
+    radial-gradient(1200px 600px at 50% -10%, #bae6fd 0%, transparent 60%),
+    linear-gradient(180deg, #e0f2fe 0%, #f0fdf4 100%);
+  background-attachment: fixed;
+  min-height: 100dvh;
+  color: #1f2937;
+  /* Prevent the rubber-band glow from feeling broken on touch devices. */
+  overscroll-behavior-y: none;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    line-height: 1.1;
+  }
+  /* Bigger default tap targets everywhere for little fingers. */
+  button {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  /* A chunky, kid-friendly card. */
+  .kid-card {
+    @apply rounded-blob bg-white/90 shadow-soft ring-1 ring-black/5 backdrop-blur;
+  }
+  /* A bouncy primary action button. */
+  .kid-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-lg font-extrabold
+      shadow-pop transition-transform duration-150 active:translate-y-1 active:shadow-none
+      focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2;
+  }
+}
+
+/* Respect families who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Leaflet tweaks so the map feels part of the playful theme. */
+.leaflet-container {
+  font-family: var(--font-body), system-ui, sans-serif;
+  background: #cce7ff;
+  border-radius: 1.5rem;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 1rem;
+}
+.leaflet-popup-content {
+  margin: 0.75rem 1rem;
+  font-size: 1rem;
+}
