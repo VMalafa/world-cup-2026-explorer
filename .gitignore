@@ -31,3 +31,7 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# stray temp/log files from shell path mangling
+*.log
+*Temp*
