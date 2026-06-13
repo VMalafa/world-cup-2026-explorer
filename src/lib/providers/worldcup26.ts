@@ -44,6 +44,31 @@ interface RawStadium {
   region: string;
 }
 
+/**
+ * Lightweight reachability probe for diagnostics. Tells us *why* live data
+ * isn't flowing (e.g. the .ir host is blocked from the server's region).
+ */
+export async function probeWorldCup26(): Promise<{
+  ok: boolean;
+  status?: number;
+  error?: string;
+}> {
+  const controller = new AbortController();
+  const t = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(`${BASE}/get/teams`, {
+      signal: controller.signal,
+      cache: "no-store",
+      headers: { accept: "application/json" },
+    });
+    return { ok: res.ok, status: res.status };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e) };
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 async function getJson<T>(path: string, signal: AbortSignal): Promise<T | null> {
   try {
     const res = await fetch(`${BASE}${path}`, {

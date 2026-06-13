@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { MATCHES } from "@/data/matches";
 import { deriveLive } from "@/lib/schedule";
-import { fetchWorldCup26Matches } from "@/lib/providers/worldcup26";
+import {
+  fetchWorldCup26Matches,
+  probeWorldCup26,
+} from "@/lib/providers/worldcup26";
 import type { Match } from "@/types";
 
 /**
@@ -38,6 +41,7 @@ export async function GET() {
 
   let matches: Match[] = MATCHES;
   let source: "live" | "sample" = "sample";
+  let note: string | undefined;
 
   if (useLive) {
     try {
@@ -46,11 +50,19 @@ export async function GET() {
         matches = live;
         source = "live";
       } else {
-        console.warn("[api/matches] live fetch empty; using bundled data");
+        // Find out *why* it was empty (unreachable host? non-200?).
+        const probe = await probeWorldCup26();
+        note = probe.ok
+          ? "Provider reachable but returned no usable matches."
+          : `Provider unreachable (${probe.status ?? probe.error ?? "unknown"}). Using bundled data.`;
+        console.warn("[api/matches] live empty; using bundled data:", note);
       }
     } catch (err) {
+      note = `Live fetch threw: ${err instanceof Error ? err.message : String(err)}`;
       console.error("[api/matches] live fetch failed; using bundled data", err);
     }
+  } else {
+    note = "Live data is off (set USE_LIVE_DATA=true to enable).";
   }
 
   // Sample data needs clock-derived scores; live data already carries real
@@ -60,6 +72,8 @@ export async function GET() {
 
   return NextResponse.json({
     source,
+    note,
+    liveEnabled: useLive,
     generatedAt: now.toISOString(),
     count: result.length,
     matches: result,
