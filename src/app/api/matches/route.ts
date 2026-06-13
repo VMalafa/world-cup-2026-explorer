@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { MATCHES } from "@/data/matches";
 import { deriveLive } from "@/lib/schedule";
+import { fetchApiFootballMatches } from "@/lib/providers/apiFootball";
 import type { Match } from "@/types";
 
 /**
@@ -27,18 +28,9 @@ export const dynamic = "force-dynamic";
  * uses the bundled curated schedule.
  */
 async function fetchLiveMatches(): Promise<Match[] | null> {
-  // Example seam — implement against a provider you trust, e.g.:
-  //
-  //   const key = process.env.API_FOOTBALL_KEY;
-  //   if (!key) return null;
-  //   const res = await fetch("https://v3.football.api-sports.io/fixtures?...", {
-  //     headers: { "x-apisports-key": key },
-  //     next: { revalidate: 30 },
-  //   });
-  //   if (!res.ok) return null;
-  //   return normalize(await res.json());
-  //
-  return null;
+  // API-Football provider. Returns null when no API_FOOTBALL_KEY is set, or on
+  // any error, so the app safely uses the bundled curated schedule.
+  return fetchApiFootballMatches();
 }
 
 export async function GET() {
@@ -57,7 +49,8 @@ export async function GET() {
         matches = live;
         source = "live";
       } else {
-        note = "Live mode is on, but no live provider is configured yet.";
+        note =
+          "Live mode is on, but the provider returned no data (missing/invalid API_FOOTBALL_KEY, plan/season restriction, or rate limit). Using bundled data.";
       }
     } catch (err) {
       note = `Live fetch failed: ${err instanceof Error ? err.message : String(err)}`;
