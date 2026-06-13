@@ -110,32 +110,30 @@ Copy `.env.example` to `.env.local` and set what you want:
 
 | Variable | Purpose |
 | --- | --- |
-| `USE_LIVE_DATA` | `true` to use **live** fixtures & scores; anything else (default) = bundled sample data. Server-only runtime toggle. |
-| `API_FOOTBALL_KEY` | Optional — only if you wire in a different provider that needs a key. |
-| `WORLD_CUP_API_BASE` | Optional — base URL for a different provider. |
+| `USE_LIVE_DATA` | `true` to use a **live** provider you've wired in; anything else (default) = bundled curated data. Server-only runtime toggle. |
+| `API_FOOTBALL_KEY` | Optional — a key for whatever trusted provider you wire in. |
 
-On Vercel: **Project → Settings → Environment Variables**, add `USE_LIVE_DATA`
-with value `true`, then redeploy. (CLI: `vercel env add USE_LIVE_DATA production`.)
+On Vercel: **Project → Settings → Environment Variables**. (CLI:
+`vercel env add USE_LIVE_DATA production`.)
 
-### Where live data comes from
+### How live data works
 
-Live mode fetches the free, no-key **worldcup26.ir** API (the open-source
-[`rezarahiminia/worldcup2026`](https://github.com/rezarahiminia/worldcup2026)
-project): real fixtures, scores, groups, and the 16 host stadiums. The adapter
-lives in `src/lib/providers/worldcup26.ts`.
+The app ships with **no external live provider** — it runs entirely on its own
+bundled, curated schedule, so it depends on no third-party server. The "Today"
+screen shows a small **🟢 Live data / ⚪ Sample data** badge so you can always
+see which is active.
 
-**Robustness:** if that server is ever down or returns something unexpected, the
-app automatically falls back to the bundled curated schedule — it never goes
-blank. The "Today" screen shows a small **🟢 Live data / ⚪ Sample data** badge
-so you can see which is active.
+There's a clean **seam** ready for you to plug in a source you trust: implement
+`fetchLiveMatches()` in `src/app/api/matches/route.ts` so it returns the app's
+`Match[]` shape, and set `USE_LIVE_DATA=true`. If the provider is ever
+unreachable or returns nothing, the app automatically falls back to the bundled
+schedule, so it's never blank.
 
-**Two known approximations** (documented, fine for a kids' countdown):
-- The provider gives host-*local* kickoff times with no timezone, so we
-  approximate each venue's zone from its region/country (see `src/lib/timezone.ts`).
-- "Live data" means real **fixtures & scores**. The learning content (capitals,
-  continents, map, fun facts, hero stories) stays curated — no free API provides
-  that. Teams that appear in live fixtures but aren't in the curated set still
-  show their name and flag from the provider.
+A good free option for real **live scores** is
+[api-football.com](https://www.api-football.com/) (free tier, ~100 requests/day,
+needs a free account + key). "Live data" only covers fixtures & scores — the
+learning content (capitals, continents, map, fun facts, hero stories) is always
+curated, since no sports API provides that.
 
 ---
 
@@ -158,14 +156,14 @@ no database needed.
 
 ### Using live data
 
-Set `USE_LIVE_DATA=true` (locally in `.env.local`, or on Vercel as an
-environment variable) and redeploy. That's it — the app pulls real fixtures and
-scores from worldcup26.ir, cached for 30s to be kind to the server, and polls
-for updates every 30s. To go back to the bundled schedule, set it to `false`.
+1. Implement `fetchLiveMatches()` in `src/app/api/matches/route.ts` against a
+   provider you trust (there's a commented api-football example in the file).
+   Map its response into the app's `Match[]` shape.
+2. Add any key (e.g. `API_FOOTBALL_KEY`) to `.env.local` and to Vercel.
+3. Set `USE_LIVE_DATA=true` and redeploy.
 
-To swap in a *different* provider, add a module under `src/lib/providers/` that
-returns our `Match[]` shape and call it from `fetchLiveMatches()` in
-`src/app/api/matches/route.ts`.
+The UI already polls `/api/matches` every 30s, so scores stay fresh
+automatically. Set `USE_LIVE_DATA=false` to return to the bundled schedule.
 
 > **Note:** The "today's match" logic is smart — if today isn't a tournament
 > day, it shows the **next** match day; once the tournament is over it shows the

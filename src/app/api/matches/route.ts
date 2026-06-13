@@ -1,43 +1,50 @@
 import { NextResponse } from "next/server";
 import { MATCHES } from "@/data/matches";
 import { deriveLive } from "@/lib/schedule";
-import {
-  fetchWorldCup26Matches,
-  probeWorldCup26,
-} from "@/lib/providers/worldcup26";
 import type { Match } from "@/types";
 
 /**
  * Match data endpoint.
  *
- * By default this serves the bundled, curated 2026 schedule with a live-feeling
- * status/score derived from the current time — so the app works with zero setup
- * and zero API keys.
+ * Serves the bundled, curated 2026 schedule with a live-feeling status/score
+ * derived from the current time — so the app works with zero setup and zero
+ * API keys, and depends on NO external server.
  *
- * Set NEXT_PUBLIC_USE_LIVE_DATA=true to fetch real fixtures & scores from the
- * worldcup26.ir provider. If that provider is unreachable or returns nothing,
- * the route transparently falls back to the bundled schedule, so the app is
- * never blank. See the README, section "How to update match data".
+ * LIVE DATA SEAM:
+ * There is intentionally no live provider wired in. To add one, implement
+ * `fetchLiveMatches()` below so it returns our `Match[]` shape from a source
+ * YOU trust, and set USE_LIVE_DATA=true. If the provider is unreachable or
+ * returns nothing, the route transparently falls back to the bundled schedule,
+ * so the app is never blank. See the README, section "Using live data".
  */
 
-// Run on every request so the runtime env toggle is always respected. The
-// upstream provider call is still cached for 30s (see the fetch in the provider
-// and useFeatured's 30s poll), so this stays cheap and rate-limit friendly.
+// Run on every request so the runtime env toggle is always respected.
 export const dynamic = "force-dynamic";
 
+/**
+ * Return live matches from a trusted provider, or null if none is configured /
+ * the fetch fails. Currently no provider is wired in (returns null), so the app
+ * uses the bundled curated schedule.
+ */
 async function fetchLiveMatches(): Promise<Match[] | null> {
-  // The worldcup26.ir provider needs no key. A custom base/key combination can
-  // still be supported by adding another provider module here.
-  return fetchWorldCup26Matches();
+  // Example seam — implement against a provider you trust, e.g.:
+  //
+  //   const key = process.env.API_FOOTBALL_KEY;
+  //   if (!key) return null;
+  //   const res = await fetch("https://v3.football.api-sports.io/fixtures?...", {
+  //     headers: { "x-apisports-key": key },
+  //     next: { revalidate: 30 },
+  //   });
+  //   if (!res.ok) return null;
+  //   return normalize(await res.json());
+  //
+  return null;
 }
 
 export async function GET() {
   const now = new Date();
-  // Server-only runtime toggle (NOT NEXT_PUBLIC_, so it can be changed on the
-  // host without a rebuild). Back-compat: also honour the old public name.
-  const useLive =
-    process.env.USE_LIVE_DATA === "true" ||
-    process.env.NEXT_PUBLIC_USE_LIVE_DATA === "true";
+  // Server-only runtime toggle (NOT NEXT_PUBLIC_), changeable without a rebuild.
+  const useLive = process.env.USE_LIVE_DATA === "true";
 
   let matches: Match[] = MATCHES;
   let source: "live" | "sample" = "sample";
@@ -50,23 +57,18 @@ export async function GET() {
         matches = live;
         source = "live";
       } else {
-        // Find out *why* it was empty (unreachable host? non-200?).
-        const probe = await probeWorldCup26();
-        note = probe.ok
-          ? "Provider reachable but returned no usable matches."
-          : `Provider unreachable (${probe.status ?? probe.error ?? "unknown"}). Using bundled data.`;
-        console.warn("[api/matches] live empty; using bundled data:", note);
+        note = "Live mode is on, but no live provider is configured yet.";
       }
     } catch (err) {
-      note = `Live fetch threw: ${err instanceof Error ? err.message : String(err)}`;
+      note = `Live fetch failed: ${err instanceof Error ? err.message : String(err)}`;
       console.error("[api/matches] live fetch failed; using bundled data", err);
     }
   } else {
-    note = "Live data is off (set USE_LIVE_DATA=true to enable).";
+    note = "Using the built-in curated schedule.";
   }
 
-  // Sample data needs clock-derived scores; live data already carries real
-  // status & scores from the provider, so leave it untouched.
+  // Sample data needs clock-derived scores; live data (if ever wired in) already
+  // carries real status & scores, so it is left untouched.
   const result =
     source === "sample" ? matches.map((m) => deriveLive(m, now)) : matches;
 
