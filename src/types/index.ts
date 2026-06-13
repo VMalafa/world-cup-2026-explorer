@@ -59,6 +59,17 @@ export interface Match {
   status: MatchStatus;
   homeScore?: number;
   awayScore?: number;
+  /**
+   * Optional display fallbacks used by LIVE data, so matches featuring a team
+   * that isn't in the curated learning set still render a name and flag.
+   */
+  homeName?: string;
+  awayName?: string;
+  /** Flag image URLs (e.g. flagcdn.com) from the live provider. */
+  homeFlag?: string;
+  awayFlag?: string;
+  /** Matchday number from the live provider, if known. */
+  matchday?: string;
 }
 
 export interface PlayerStory {

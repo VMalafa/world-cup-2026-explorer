@@ -64,49 +64,60 @@ export interface Featured {
   dayIndex: number;
 }
 
-const ALL_DATES = Array.from(new Set(MATCHES.map((m) => m.date))).sort();
-
 /**
- * Choose the match day to feature:
+ * Choose the match day to feature, from ANY list of matches:
  *   1. Matches on the real current date, else
  *   2. the next upcoming match day, else
- *   3. the most recent match day (tournament is over in the sample data).
- * This keeps the app delightful whenever Vee opens it.
+ *   3. the most recent match day (tournament is over in the data).
+ * This keeps the app delightful whenever Vee opens it, with live or bundled data.
+ *
+ * `applyDerive` controls whether clock-based mock scores are layered on. Pass
+ * false for live data (which already carries real scores).
  */
-export function getFeatured(now: Date = new Date()): Featured {
+export function getFeaturedFrom(
+  source: Match[],
+  now: Date = new Date(),
+  applyDerive = true,
+): Featured {
+  const dates = Array.from(new Set(source.map((m) => m.date))).sort();
   const todayKey = toDateKey(now);
-  const matchesOn = (date: string) =>
-    MATCHES.filter((m) => m.date === date).map((m) => deriveLive(m, now));
 
-  if (ALL_DATES.includes(todayKey)) {
-    return {
-      date: todayKey,
-      isToday: true,
-      kind: "today",
-      matches: matchesOn(todayKey),
-      dayIndex: ALL_DATES.indexOf(todayKey),
-    };
-  }
-
-  const upcoming = ALL_DATES.find((d) => d > todayKey);
-  if (upcoming) {
-    return {
-      date: upcoming,
-      isToday: false,
-      kind: "upcoming",
-      matches: matchesOn(upcoming),
-      dayIndex: ALL_DATES.indexOf(upcoming),
-    };
-  }
-
-  const recent = ALL_DATES[ALL_DATES.length - 1];
-  return {
-    date: recent,
-    isToday: false,
-    kind: "recent",
-    matches: matchesOn(recent),
-    dayIndex: ALL_DATES.indexOf(recent),
+  const matchesOn = (date: string) => {
+    const onDay = source.filter((m) => m.date === date);
+    return applyDerive ? onDay.map((m) => deriveLive(m, now)) : onDay;
   };
+
+  // Pick the date, then its kind, with graceful fallbacks.
+  let date = dates.find((d) => d === todayKey);
+  let kind: Featured["kind"] = "today";
+  if (!date) {
+    const upcoming = dates.find((d) => d > todayKey);
+    if (upcoming) {
+      date = upcoming;
+      kind = "upcoming";
+    } else {
+      date = dates[dates.length - 1];
+      kind = "recent";
+    }
+  }
+
+  // Guard against an empty source.
+  if (!date) {
+    return { date: todayKey, isToday: true, kind: "today", matches: [], dayIndex: 0 };
+  }
+
+  return {
+    date,
+    isToday: kind === "today",
+    kind,
+    matches: matchesOn(date),
+    dayIndex: dates.indexOf(date),
+  };
+}
+
+/** Convenience wrapper over the bundled curated schedule. */
+export function getFeatured(now: Date = new Date()): Featured {
+  return getFeaturedFrom(MATCHES, now, true);
 }
 
 /** Friendly long date like "Saturday 13 June". */

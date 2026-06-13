@@ -106,16 +106,36 @@ git push -u origin main
 
 The app runs fully without any of these. They only switch on optional live data.
 
-Copy `.env.example` to `.env.local` and fill in what you have:
+Copy `.env.example` to `.env.local` and set what you want:
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_USE_LIVE_DATA` | `true` to try live data, `false` (default) for bundled data. |
-| `API_FOOTBALL_KEY` | A free key from [api-football.com](https://www.api-football.com/) (optional). |
-| `WORLD_CUP_API_BASE` | Base URL of a World Cup data provider, e.g. `https://wc2026api.com` (optional). |
+| `USE_LIVE_DATA` | `true` to use **live** fixtures & scores; anything else (default) = bundled sample data. Server-only runtime toggle. |
+| `API_FOOTBALL_KEY` | Optional — only if you wire in a different provider that needs a key. |
+| `WORLD_CUP_API_BASE` | Optional — base URL for a different provider. |
 
-On Vercel, add these under **Project → Settings → Environment Variables**, then
-redeploy. (With the CLI: `vercel env add API_FOOTBALL_KEY`.)
+On Vercel: **Project → Settings → Environment Variables**, add `USE_LIVE_DATA`
+with value `true`, then redeploy. (CLI: `vercel env add USE_LIVE_DATA production`.)
+
+### Where live data comes from
+
+Live mode fetches the free, no-key **worldcup26.ir** API (the open-source
+[`rezarahiminia/worldcup2026`](https://github.com/rezarahiminia/worldcup2026)
+project): real fixtures, scores, groups, and the 16 host stadiums. The adapter
+lives in `src/lib/providers/worldcup26.ts`.
+
+**Robustness:** if that server is ever down or returns something unexpected, the
+app automatically falls back to the bundled curated schedule — it never goes
+blank. The "Today" screen shows a small **🟢 Live data / ⚪ Sample data** badge
+so you can see which is active.
+
+**Two known approximations** (documented, fine for a kids' countdown):
+- The provider gives host-*local* kickoff times with no timezone, so we
+  approximate each venue's zone from its region/country (see `src/lib/timezone.ts`).
+- "Live data" means real **fixtures & scores**. The learning content (capitals,
+  continents, map, fun facts, hero stories) stays curated — no free API provides
+  that. Teams that appear in live fixtures but aren't in the curated set still
+  show their name and flag from the provider.
 
 ---
 
@@ -136,12 +156,16 @@ no database needed.
   version of the hook, story, and lesson).
 - **Fun facts** → `src/data/funFacts.ts`.
 
-### Plugging in a real live API
+### Using live data
 
-Open `src/app/api/matches/route.ts` and fill in the `fetchLiveMatches()`
-function for your chosen provider (there's a commented example), then set
-`NEXT_PUBLIC_USE_LIVE_DATA=true`. The endpoint already caches responses
-(`revalidate = 30`) to stay within free-tier rate limits.
+Set `USE_LIVE_DATA=true` (locally in `.env.local`, or on Vercel as an
+environment variable) and redeploy. That's it — the app pulls real fixtures and
+scores from worldcup26.ir, cached for 30s to be kind to the server, and polls
+for updates every 30s. To go back to the bundled schedule, set it to `false`.
+
+To swap in a *different* provider, add a module under `src/lib/providers/` that
+returns our `Match[]` shape and call it from `fetchLiveMatches()` in
+`src/app/api/matches/route.ts`.
 
 > **Note:** The "today's match" logic is smart — if today isn't a tournament
 > day, it shows the **next** match day; once the tournament is over it shows the

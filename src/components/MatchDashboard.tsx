@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
-import { getFeatured, liveMinute, prettyDate, type Featured } from "@/lib/schedule";
+import { liveMinute, prettyDate, type Featured } from "@/lib/schedule";
 import { getTeam } from "@/data/teams";
 import type { Match } from "@/types";
 import { CountdownTimer } from "./CountdownTimer";
@@ -15,16 +15,55 @@ const HEADING: Record<Featured["kind"], { title: string; sub: string }> = {
   recent: { title: "Latest Matches", sub: "Look back at the last match day." },
 };
 
-function Side({ code }: { code: string }) {
+function Side({
+  code,
+  name,
+  flagUrl,
+}: {
+  code: string;
+  /** Fallback display name when the team isn't in the curated set. */
+  name?: string;
+  /** Fallback flag image URL for non-curated teams. */
+  flagUrl?: string;
+}) {
   const team = getTeam(code);
-  if (!team) return null;
+
+  // Curated team → full learning data (flag with emoji fallback + greeting).
+  if (team) {
+    return (
+      <div className="flex flex-1 flex-col items-center gap-2 text-center">
+        <Flag team={team} size={88} />
+        <span className="text-xl font-extrabold leading-tight sm:text-2xl">
+          {team.name}
+        </span>
+        <span className="text-sm text-slate-500">{team.hello}</span>
+      </div>
+    );
+  }
+
+  // Live team not in the curated set → show what the provider gave us.
+  const label = name || code;
   return (
     <div className="flex flex-1 flex-col items-center gap-2 text-center">
-      <Flag team={team} size={88} />
+      {flagUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element -- provider CDN flag
+        <img
+          src={flagUrl}
+          alt={`Flag of ${label}`}
+          width={88}
+          height={66}
+          loading="lazy"
+          className="rounded-lg object-cover shadow-sm"
+          style={{ width: 88, height: 66 }}
+        />
+      ) : (
+        <span className="text-5xl" role="img" aria-label={`Flag of ${label}`}>
+          🏳️
+        </span>
+      )}
       <span className="text-xl font-extrabold leading-tight sm:text-2xl">
-        {team.name}
+        {label}
       </span>
-      <span className="text-sm text-slate-500">{team.hello}</span>
     </div>
   );
 }
@@ -89,9 +128,9 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
       </div>
 
       <div className="flex items-center justify-between gap-2">
-        <Side code={match.homeCode} />
+        <Side code={match.homeCode} name={match.homeName} flagUrl={match.homeFlag} />
         <ScoreOrVs match={match} />
-        <Side code={match.awayCode} />
+        <Side code={match.awayCode} name={match.awayName} flagUrl={match.awayFlag} />
       </div>
 
       {match.status === "scheduled" && (
@@ -106,7 +145,8 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
       <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-sm font-semibold text-slate-600">
         <MapPinIcon className="h-4 w-4 shrink-0 text-bubble" aria-hidden />
         <span>
-          {match.stadium}, {match.city}
+          {match.stadium}
+          {match.city ? `, ${match.city}` : ""}
         </span>
       </div>
     </motion.article>
@@ -114,27 +154,13 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
 }
 
 export function MatchDashboard({
-  onFeatured,
+  featured,
+  source,
 }: {
-  /** Lets the parent page know which teams/day to theme other sections with. */
-  onFeatured?: (f: Featured) => void;
+  featured: Featured | null;
+  /** Whether the data is live or the bundled sample, for the little badge. */
+  source?: "live" | "sample" | null;
 }) {
-  const [featured, setFeatured] = useState<Featured | null>(null);
-
-  useEffect(() => {
-    const update = () => {
-      const f = getFeatured(new Date());
-      setFeatured(f);
-      onFeatured?.(f);
-    };
-    update();
-    // Refresh periodically so live scores & statuses keep ticking.
-    const id = setInterval(update, 5000);
-    return () => clearInterval(id);
-    // onFeatured is stable enough for this use; intentionally run once.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   if (!featured) {
     return (
       <div className="grid gap-5 sm:grid-cols-2">
@@ -157,6 +183,22 @@ export function MatchDashboard({
         <p className="mt-1 text-base font-bold text-sky-600">
           {prettyDate(featured.date)}
         </p>
+        {source && (
+          <span
+            className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold uppercase ${
+              source === "live"
+                ? "bg-grass/20 text-emerald-700"
+                : "bg-slate-200 text-slate-500"
+            }`}
+            title={
+              source === "live"
+                ? "Showing real fixtures & scores from the live data source"
+                : "Showing the built-in sample schedule"
+            }
+          >
+            {source === "live" ? "🟢 Live data" : "⚪ Sample data"}
+          </span>
+        )}
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         {featured.matches.map((m, i) => (

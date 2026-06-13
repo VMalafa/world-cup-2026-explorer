@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { MATCHES } from "@/data/matches";
 import { deriveLive } from "@/lib/schedule";
+import { fetchWorldCup26Matches } from "@/lib/providers/worldcup26";
 import type { Match } from "@/types";
 
 /**
@@ -10,54 +11,57 @@ import type { Match } from "@/types";
  * status/score derived from the current time — so the app works with zero setup
  * and zero API keys.
  *
- * To wire in a real provider later, set NEXT_PUBLIC_USE_LIVE_DATA=true and add
- * the relevant keys, then implement `fetchLiveMatches()` below. See the README,
- * section "How to update match data".
+ * Set NEXT_PUBLIC_USE_LIVE_DATA=true to fetch real fixtures & scores from the
+ * worldcup26.ir provider. If that provider is unreachable or returns nothing,
+ * the route transparently falls back to the bundled schedule, so the app is
+ * never blank. See the README, section "How to update match data".
  */
 
-// Re-derive live status at most every 30s (cheap caching, avoids rate limits).
-export const revalidate = 30;
+// Run on every request so the runtime env toggle is always respected. The
+// upstream provider call is still cached for 30s (see the fetch in the provider
+// and useFeatured's 30s poll), so this stays cheap and rate-limit friendly.
+export const dynamic = "force-dynamic";
 
 async function fetchLiveMatches(): Promise<Match[] | null> {
-  const base = process.env.WORLD_CUP_API_BASE;
-  const key = process.env.API_FOOTBALL_KEY;
-  if (!base && !key) return null;
-
-  // EXAMPLE shape — adapt to your chosen provider's response.
-  // try {
-  //   const res = await fetch(`${base}/matches/today`, {
-  //     headers: key ? { "x-apisports-key": key } : undefined,
-  //     next: { revalidate: 30 },
-  //   });
-  //   if (!res.ok) return null;
-  //   return (await res.json()) as typeof MATCHES;
-  // } catch {
-  //   return null;
-  // }
-  return null;
+  // The worldcup26.ir provider needs no key. A custom base/key combination can
+  // still be supported by adding another provider module here.
+  return fetchWorldCup26Matches();
 }
 
 export async function GET() {
   const now = new Date();
-  const useLive = process.env.NEXT_PUBLIC_USE_LIVE_DATA === "true";
+  // Server-only runtime toggle (NOT NEXT_PUBLIC_, so it can be changed on the
+  // host without a rebuild). Back-compat: also honour the old public name.
+  const useLive =
+    process.env.USE_LIVE_DATA === "true" ||
+    process.env.NEXT_PUBLIC_USE_LIVE_DATA === "true";
 
-  let matches = MATCHES;
+  let matches: Match[] = MATCHES;
   let source: "live" | "sample" = "sample";
 
   if (useLive) {
-    const live = await fetchLiveMatches();
-    if (live && live.length) {
-      matches = live;
-      source = "live";
+    try {
+      const live = await fetchLiveMatches();
+      if (live && live.length) {
+        matches = live;
+        source = "live";
+      } else {
+        console.warn("[api/matches] live fetch empty; using bundled data");
+      }
+    } catch (err) {
+      console.error("[api/matches] live fetch failed; using bundled data", err);
     }
   }
 
-  const enriched = matches.map((m) => deriveLive(m, now));
+  // Sample data needs clock-derived scores; live data already carries real
+  // status & scores from the provider, so leave it untouched.
+  const result =
+    source === "sample" ? matches.map((m) => deriveLive(m, now)) : matches;
 
   return NextResponse.json({
     source,
     generatedAt: now.toISOString(),
-    count: enriched.length,
-    matches: enriched,
+    count: result.length,
+    matches: result,
   });
 }

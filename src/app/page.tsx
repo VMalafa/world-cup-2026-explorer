@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { getFeatured, type Featured } from "@/lib/schedule";
+import { useFeatured } from "@/lib/useFeatured";
+import { getTeam } from "@/data/teams";
 import { ReadingLevelToggle } from "@/components/ReadingLevelToggle";
 import { MatchDashboard } from "@/components/MatchDashboard";
 import { MapExplorer } from "@/components/MapExplorer";
@@ -22,16 +23,14 @@ const TABS: { id: TabId; label: string; emoji: string }[] = [
 
 export default function Home() {
   const [tab, setTab] = useState<TabId>("today");
-  const [featured, setFeatured] = useState<Featured | null>(null);
-
-  // Work out the day/teams once on mount to theme the other sections.
-  useEffect(() => {
-    setFeatured(getFeatured(new Date()));
-  }, []);
+  // Fetches /api/matches (live or bundled), polls, and falls back gracefully.
+  const { featured, source } = useFeatured();
 
   const firstMatch = featured?.matches[0];
-  const homeCode = firstMatch?.homeCode ?? "BRA";
-  const awayCode = firstMatch?.awayCode ?? "FRA";
+  // The Compare view needs codes that exist in the curated learning set; fall
+  // back to two well-known teams when today's live teams aren't curated yet.
+  const homeCode = getTeam(firstMatch?.homeCode ?? "") ? firstMatch!.homeCode : "BRA";
+  const awayCode = getTeam(firstMatch?.awayCode ?? "") ? firstMatch!.awayCode : "FRA";
   const dayIndex = featured?.dayIndex ?? 0;
 
   return (
@@ -70,7 +69,9 @@ export default function Home() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.25 }}
           >
-            {tab === "today" && <MatchDashboard />}
+            {tab === "today" && (
+              <MatchDashboard featured={featured} source={source} />
+            )}
             {tab === "map" && <MapExplorer />}
             {tab === "compare" && (
               <CompareView defaultLeft={homeCode} defaultRight={awayCode} />
