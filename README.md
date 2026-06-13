@@ -56,7 +56,16 @@ npm start
 
 ## ☁️ Deploy it online (so the family can use it anywhere)
 
-The easiest path is **Vercel** (free for personal projects).
+The easiest path is **Vercel** (free for personal projects). The code already
+lives on GitHub at
+<https://github.com/VMalafa/world-cup-2026-explorer>.
+
+**One-click deploy:**
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/VMalafa/world-cup-2026-explorer)
+
+Click the button, log in to Vercel (you can use your GitHub account), and press
+**Deploy**. In about a minute you'll get a live URL. No settings or keys needed.
 
 ### Option A — the website (no command line)
 
