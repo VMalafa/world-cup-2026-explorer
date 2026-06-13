@@ -1,5 +1,7 @@
 # ⚽ World Cup 2026 Learning Explorer
 
+> 🌍 **Live app:** <https://world-cup-2026-explorer.vercel.app>
+
 A playful, interactive learning app built for **Ava (6)** and **Kai (4)** — a fun
 "five-minute briefing" for each World Cup match day. Tap a country on the map,
 compare two nations side by side, read inspiring true stories about football
