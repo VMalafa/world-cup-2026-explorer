@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { MATCHES } from "@/data/matches";
 import { deriveLive } from "@/lib/schedule";
+import { fetchFootballDataMatches } from "@/lib/providers/footballData";
 import { fetchApiFootballMatches } from "@/lib/providers/apiFootball";
 import type { Match } from "@/types";
 
@@ -28,9 +29,12 @@ export const dynamic = "force-dynamic";
  * uses the bundled curated schedule.
  */
 async function fetchLiveMatches(): Promise<Match[] | null> {
-  // API-Football provider. Returns null when no API_FOOTBALL_KEY is set, or on
-  // any error, so the app safely uses the bundled curated schedule.
-  return fetchApiFootballMatches();
+  // Try whichever trusted provider is configured (by env var), in order.
+  // Each returns null when its key/token is absent or on any error, so the app
+  // safely falls back to the bundled curated schedule.
+  return (
+    (await fetchFootballDataMatches()) ?? (await fetchApiFootballMatches())
+  );
 }
 
 export async function GET() {

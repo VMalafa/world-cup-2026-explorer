@@ -142,13 +142,15 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
         </div>
       )}
 
-      <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-sm font-semibold text-slate-600">
-        <MapPinIcon className="h-4 w-4 shrink-0 text-bubble" aria-hidden />
-        <span>
-          {match.stadium}
-          {match.city ? `, ${match.city}` : ""}
-        </span>
-      </div>
+      {match.stadium && (
+        <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-sm font-semibold text-slate-600">
+          <MapPinIcon className="h-4 w-4 shrink-0 text-bubble" aria-hidden />
+          <span>
+            {match.stadium}
+            {match.city ? `, ${match.city}` : ""}
+          </span>
+        </div>
+      )}
     </motion.article>
   );
 }
