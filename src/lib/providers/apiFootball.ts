@@ -94,7 +94,10 @@ export async function fetchApiFootballMatches(): Promise<Match[] | null> {
     if (!fixtures.length) return null;
 
     const matches: Match[] = fixtures.map((f) => {
-      const status = statusFor(f.fixture.status.short);
+      const short = f.fixture.status.short;
+      const status = statusFor(short);
+      // HT = halftime, BT = break before extra time — both are the interval.
+      const halftime = short === "HT" || short === "BT";
       const homeCode = resolveCode(f.teams.home.name) ?? f.teams.home.name;
       const awayCode = resolveCode(f.teams.away.name) ?? f.teams.away.name;
       return {
@@ -109,6 +112,10 @@ export async function fetchApiFootballMatches(): Promise<Match[] | null> {
         status,
         homeScore: status === "scheduled" ? undefined : f.goals.home ?? 0,
         awayScore: status === "scheduled" ? undefined : f.goals.away ?? 0,
+        // The real live clock — the whole point of issue #24.
+        minute:
+          status === "live" && !halftime ? f.fixture.status.elapsed ?? undefined : undefined,
+        halftime: status === "live" ? halftime : undefined,
         homeName: f.teams.home.name,
         awayName: f.teams.away.name,
         homeFlag: f.teams.home.logo,

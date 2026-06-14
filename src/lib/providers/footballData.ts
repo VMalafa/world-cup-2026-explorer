@@ -81,6 +81,9 @@ export async function fetchFootballDataMatches(): Promise<Match[] | null> {
 
     const matches: Match[] = json.matches.map((m) => {
       const status = statusFor(m.status);
+      // The free tier carries no live minute, but PAUSED tells us it's the
+      // interval, so we can at least show "Halftime" instead of a wrong number.
+      const halftime = m.status === "PAUSED";
       const homeCode =
         resolveCode(m.homeTeam.name ?? "", m.homeTeam.tla ?? undefined) ??
         m.homeTeam.tla ??
@@ -103,6 +106,7 @@ export async function fetchFootballDataMatches(): Promise<Match[] | null> {
         status,
         homeScore: status === "scheduled" ? undefined : m.score.fullTime.home ?? 0,
         awayScore: status === "scheduled" ? undefined : m.score.fullTime.away ?? 0,
+        halftime: status === "live" ? halftime : undefined,
         homeName: m.homeTeam.name ?? undefined,
         awayName: m.awayTeam.name ?? undefined,
         homeFlag: m.homeTeam.crest ?? undefined,

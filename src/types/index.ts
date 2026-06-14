@@ -119,6 +119,17 @@ export interface Match {
   homeScore?: number;
   awayScore?: number;
   /**
+   * Real elapsed minute from a live provider (API-Football `elapsed`), when the
+   * feed supplies it. Absent for sample data and providers without a live timer
+   * (football-data free tier). Drives the displayed clock — see `matchClock`.
+   */
+  minute?: number;
+  /**
+   * The live provider reports the match is paused for the interval — halftime
+   * (API-Football `HT`/`BT`, football-data `PAUSED`). Shown as "Halftime".
+   */
+  halftime?: boolean;
+  /**
    * Optional display fallbacks used by LIVE data, so matches featuring a team
    * that isn't in the curated learning set still render a name and flag.
    */
