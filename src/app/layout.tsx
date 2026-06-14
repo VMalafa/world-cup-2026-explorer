@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Baloo_2, Nunito } from "next/font/google";
 import "./globals.css";
-import { ReadingLevelProvider } from "@/components/ReadingLevel";
+import { ProfileProvider } from "@/components/Profiles";
+import { ProfileGate } from "@/components/ProfileGate";
 
 const display = Baloo_2({
   subsets: ["latin"],
@@ -41,7 +42,9 @@ export default function RootLayout({
       <body>
         {/* The Malafa signature: four homelands pinned to the top of every page. */}
         <div className="unity-ribbon-top" aria-hidden />
-        <ReadingLevelProvider>{children}</ReadingLevelProvider>
+        <ProfileProvider>
+          <ProfileGate>{children}</ProfileGate>
+        </ProfileProvider>
       </body>
     </html>
   );
