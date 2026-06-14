@@ -14,6 +14,7 @@ import { createPassportStore } from "@/lib/passport";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
 import { FindItStation, SayHelloStation, WondersStation } from "./Stations";
+import { MatchMoment } from "./MatchMoment";
 
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
@@ -38,7 +39,19 @@ const STATION_TITLE: Record<Station["kind"], (name: string) => string> = {
  * Stamp per Country (issue #2). Stations are pleasant stubs here; #7 makes them
  * interactive.
  */
-export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: string }) {
+export function Journey({
+  homeCode,
+  awayCode,
+  matchId = `${homeCode}-${awayCode}`,
+  kickoff,
+}: {
+  homeCode: string;
+  awayCode: string;
+  /** Stable id used to store the Prediction (per Profile + Match). */
+  matchId?: string;
+  /** ISO kickoff for the Match moment countdown, if known. */
+  kickoff?: string;
+}) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
   const passport = useMemo(() => createPassportStore(browserKeyValue()), []);
@@ -64,9 +77,11 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
     );
   }
 
-  const total = journey.stations.length;
-  const station = journey.stations[step];
-  const country = getCountry(station.countryCode)!;
+  // The learning Stations, then one final Match moment step.
+  const total = journey.stations.length + 1;
+  const isMatchMoment = step === journey.stations.length;
+  const station = isMatchMoment ? null : journey.stations[step];
+  const country = station ? getCountry(station.countryCode)! : null;
   // Plain const (not a hook) — we're past the early return above.
   const journeyCodes = new Set(journey.countries.map((c) => c.code));
 
@@ -82,7 +97,7 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
       {/* Globe spine — always present, focused on the current Country */}
       <div className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5">
         <WorldMap
-          selectedCode={finished ? null : station.countryCode}
+          selectedCode={finished || !station ? null : station.countryCode}
           onSelect={setTappedCode}
           earnedCodes={journeyCodes}
         />
@@ -98,9 +113,9 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
               Step <span className="text-royal">{step + 1}</span> of {total}
             </p>
             <div className="flex gap-1.5" aria-hidden>
-              {journey.stations.map((s, i) => (
+              {Array.from({ length: total }).map((_, i) => (
                 <span
-                  key={s.id}
+                  key={i}
                   className={`h-2.5 rounded-full transition-all ${
                     i === step ? "w-6 bg-royal" : i < step ? "w-2.5 bg-cedar" : "w-2.5 bg-line"
                   }`}
@@ -109,30 +124,46 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
             </div>
           </div>
 
-          {/* Station */}
+          {/* Station (or the final Match moment) */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={station.id}
+              key={station ? station.id : "match-moment"}
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
               className="kid-card mt-3 p-5 sm:p-7"
             >
-              <div className="mb-3 flex items-center gap-2.5">
-                <Flag
-                  team={getTeam(country.code)!}
-                  size={44}
-                  className="!h-[33px] !w-[44px] shrink-0"
-                />
-                <h2 className="text-2xl font-extrabold sm:text-3xl">
-                  {STATION_TITLE[station.kind](country.name)}
-                </h2>
-              </div>
-              {station.kind === "locate" && (
-                <FindItStation country={country} found={tappedCode === country.code} />
+              {station && country ? (
+                <>
+                  <div className="mb-3 flex items-center gap-2.5">
+                    <Flag
+                      team={getTeam(country.code)!}
+                      size={44}
+                      className="!h-[33px] !w-[44px] shrink-0"
+                    />
+                    <h2 className="text-2xl font-extrabold sm:text-3xl">
+                      {STATION_TITLE[station.kind](country.name)}
+                    </h2>
+                  </div>
+                  {station.kind === "locate" && (
+                    <FindItStation country={country} found={tappedCode === country.code} />
+                  )}
+                  {station.kind === "hello" && <SayHelloStation country={country} />}
+                  {station.kind === "wonders" && <WondersStation country={country} pick={pick} />}
+                </>
+              ) : (
+                <>
+                  <h2 className="mb-3 text-center text-2xl font-extrabold sm:text-3xl">
+                    Match moment <span aria-hidden>⚽</span>
+                  </h2>
+                  <MatchMoment
+                    home={journey.countries[0]}
+                    away={journey.countries[1]}
+                    matchId={matchId}
+                    kickoff={kickoff}
+                  />
+                </>
               )}
-              {station.kind === "hello" && <SayHelloStation country={country} />}
-              {station.kind === "wonders" && <WondersStation country={country} pick={pick} />}
             </motion.div>
           </AnimatePresence>
 
