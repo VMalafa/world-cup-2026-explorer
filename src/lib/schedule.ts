@@ -45,11 +45,54 @@ export function deriveLive(match: Match, now: Date): Match {
   return { ...match, status: "finished", homeScore: finalHome, awayScore: finalAway };
 }
 
-/** Minutes played (capped) for a live match, for a "45'" style badge. */
-export function liveMinute(match: Match, now: Date): number {
+// A normal match: two 45' halves with a ~15' interval between them. Used only
+// for the fallback clock, when no live provider minute is available.
+const FIRST_HALF_MIN = 45;
+const HALFTIME_BREAK_MIN = 15;
+const REGULATION_MIN = 90;
+
+/** What the live clock should show for a match. */
+export type MatchClock =
+  | { kind: "scheduled" }
+  | { kind: "playing"; minute: number }
+  | { kind: "halftime" }
+  | { kind: "finished" };
+
+/**
+ * The single source of truth for "what minute is it?", replacing a naive
+ * wall-clock count that ignored the halftime break (issue #24: a match 74 real
+ * minutes past kickoff was shown as "74'" when the game was actually at ~59' or
+ * sitting in the interval).
+ *
+ * Priority:
+ *   1. Trust the live provider — a real `minute` (API-Football `elapsed`) or a
+ *      `halftime` flag (HT / PAUSED) is shown verbatim.
+ *   2. Otherwise synthesize a plausible minute from kickoff that SUBTRACTS the
+ *      ~15' interval, so sample data and providers without a live timer
+ *      (football-data free tier) are never wildly wrong.
+ */
+export function matchClock(match: Match, now: Date): MatchClock {
+  if (match.status === "scheduled") return { kind: "scheduled" };
+  if (match.status === "finished") return { kind: "finished" };
+
+  // status === "live" from here.
+  if (match.halftime) return { kind: "halftime" };
+  // A real provider minute is authoritative — show it as-is (incl. stoppage 90+').
+  if (typeof match.minute === "number") {
+    return { kind: "playing", minute: Math.max(1, Math.round(match.minute)) };
+  }
+
+  // No real minute: synthesize one that accounts for the interval.
   const kickoff = new Date(match.kickoff).getTime();
-  const mins = Math.floor((now.getTime() - kickoff) / 60000);
-  return Math.max(1, Math.min(90, mins));
+  const elapsed = Math.floor((now.getTime() - kickoff) / 60000);
+  if (elapsed <= FIRST_HALF_MIN) {
+    return { kind: "playing", minute: Math.max(1, elapsed) };
+  }
+  if (elapsed <= FIRST_HALF_MIN + HALFTIME_BREAK_MIN) {
+    return { kind: "halftime" };
+  }
+  const played = elapsed - HALFTIME_BREAK_MIN; // drop the interval from the count
+  return { kind: "playing", minute: Math.min(REGULATION_MIN, played) };
 }
 
 export interface Featured {

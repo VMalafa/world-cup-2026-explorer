@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
-import { liveMinute, prettyDate, type Featured } from "@/lib/schedule";
+import { matchClock, prettyDate, type Featured } from "@/lib/schedule";
 import { getTeam } from "@/data/teams";
 import type { Match } from "@/types";
 import { CountdownTimer } from "./CountdownTimer";
@@ -75,7 +75,9 @@ function ScoreOrVs({ match }: { match: Match }) {
     return () => clearInterval(id);
   }, []);
 
-  if (match.status === "scheduled") {
+  const clock = matchClock(match, now);
+
+  if (clock.kind === "scheduled") {
     return (
       <div className="flex shrink-0 flex-col items-center gap-1 px-2">
         <span className="font-display text-3xl font-extrabold text-royal-200">
@@ -85,7 +87,6 @@ function ScoreOrVs({ match }: { match: Match }) {
     );
   }
 
-  const isLive = match.status === "live";
   return (
     <div className="flex shrink-0 flex-col items-center gap-1 px-2">
       <div className="flex items-center gap-1.5 font-display text-3xl font-extrabold tabular-nums sm:gap-2 sm:text-4xl">
@@ -93,10 +94,14 @@ function ScoreOrVs({ match }: { match: Match }) {
         <span className="text-royal-200">:</span>
         <span>{match.awayScore ?? 0}</span>
       </div>
-      {isLive ? (
+      {clock.kind === "playing" ? (
         <span className="inline-flex items-center gap-1.5 rounded-full bg-unity px-3 py-1 text-xs font-extrabold uppercase text-white">
           <span className="h-2 w-2 animate-ping rounded-full bg-white" />
-          Live {liveMinute(match, now)}&apos;
+          Live {clock.minute}&apos;
+        </span>
+      ) : clock.kind === "halftime" ? (
+        <span className="rounded-full bg-unity px-3 py-1 text-xs font-extrabold uppercase text-white">
+          Halftime
         </span>
       ) : (
         <span className="rounded-full bg-line px-3 py-1 text-xs font-extrabold uppercase text-muted">
