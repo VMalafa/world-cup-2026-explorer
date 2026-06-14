@@ -18,8 +18,19 @@ export function JourneyClient() {
 
   const { featured } = useFeatured();
 
+  // An override links to a specific fixture — find it for its kickoff/id.
   if (qHome && qAway) {
-    return <Journey homeCode={qHome} awayCode={qAway} />;
+    const match = featured?.matches.find(
+      (m) => m.homeCode === qHome && m.awayCode === qAway,
+    );
+    return (
+      <Journey
+        homeCode={qHome}
+        awayCode={qAway}
+        matchId={match?.id ?? `${qHome}-${qAway}`}
+        kickoff={match?.kickoff}
+      />
+    );
   }
 
   // Wait for the schedule before picking the Match of the Day.
@@ -34,5 +45,12 @@ export function JourneyClient() {
   const mod = featured.matches[0];
   const home = mod && getTeam(mod.homeCode) ? mod.homeCode : "BRA";
   const away = mod && getTeam(mod.awayCode) ? mod.awayCode : "FRA";
-  return <Journey homeCode={home} awayCode={away} />;
+  return (
+    <Journey
+      homeCode={home}
+      awayCode={away}
+      matchId={mod?.id ?? `${home}-${away}`}
+      kickoff={mod?.kickoff}
+    />
+  );
 }
