@@ -1,23 +1,19 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import type { Country } from "@/types";
 import { getCountry } from "@/data/countries";
-import { CONTINENT_LABEL, getTeam } from "@/data/teams";
-import { langFor } from "@/data/languages";
+import { getTeam } from "@/data/teams";
 import { buildJourney, type Station } from "@/lib/journey";
-import { geographyFor, type Compass } from "@/lib/geography";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
 import { useProfile } from "./Profiles";
-import { SpeakableText } from "./SpeakableText";
 import { Flag } from "./Flag";
-
-const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
+import { FindItStation, SayHelloStation, WondersStation } from "./Stations";
 
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
@@ -29,17 +25,6 @@ const WorldMap = dynamic(() => import("./WorldMap"), {
     </div>
   ),
 });
-
-const COMPASS_WORD: Record<Compass, string> = {
-  N: "north",
-  NE: "north-east",
-  E: "east",
-  SE: "south-east",
-  S: "south",
-  SW: "south-west",
-  W: "west",
-  NW: "north-west",
-};
 
 const STATION_TITLE: Record<Station["kind"], (name: string) => string> = {
   locate: (n) => `Find ${n} on the globe`,
@@ -61,6 +46,11 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
   const journey = useMemo(() => buildJourney(homeCode, awayCode), [homeCode, awayCode]);
   const [step, setStep] = useState(0);
   const [finished, setFinished] = useState(false);
+  // The Country the child last tapped on the globe — drives "Find it".
+  const [tappedCode, setTappedCode] = useState<string | null>(null);
+
+  // A fresh Station starts un-tapped.
+  useEffect(() => setTappedCode(null), [step]);
 
   if (!journey) {
     return (
@@ -93,7 +83,7 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
       <div className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5">
         <WorldMap
           selectedCode={finished ? null : station.countryCode}
-          onSelect={() => {}}
+          onSelect={setTappedCode}
           earnedCodes={journeyCodes}
         />
       </div>
@@ -138,7 +128,11 @@ export function Journey({ homeCode, awayCode }: { homeCode: string; awayCode: st
                   {STATION_TITLE[station.kind](country.name)}
                 </h2>
               </div>
-              <StationBody station={station} country={country} pick={pick} />
+              {station.kind === "locate" && (
+                <FindItStation country={country} found={tappedCode === country.code} />
+              )}
+              {station.kind === "hello" && <SayHelloStation country={country} />}
+              {station.kind === "wonders" && <WondersStation country={country} pick={pick} />}
             </motion.div>
           </AnimatePresence>
 
@@ -195,74 +189,6 @@ function BackToToday() {
     >
       <span aria-hidden>←</span> Today
     </Link>
-  );
-}
-
-function StationBody({
-  station,
-  country,
-  pick,
-}: {
-  station: Station;
-  country: Country;
-  pick: (t: { kinder: string; enriched: string }) => string;
-}) {
-  if (station.kind === "locate") {
-    const geo = geographyFor(country);
-    const nearest = [...geo.fromHomelands].sort((a, b) => a.km - b.km)[0];
-    const line =
-      nearest.km === 0
-        ? `${country.name} is one of our four home countries!`
-        : `${country.name} is about ${nearest.km.toLocaleString()} kilometres ${COMPASS_WORD[nearest.compass]} of ${nearest.homeland.name}.`;
-    return (
-      <div className="space-y-2">
-        <SpeakableText text={line} textClassName="text-lg font-semibold text-ink" />
-        <SpeakableText
-          text={`It sits in ${CONTINENT_LABEL[country.continent]}, near the ${capitalize(geo.ocean)} Ocean.`}
-          textClassName="text-base font-semibold text-muted"
-        />
-      </div>
-    );
-  }
-
-  if (station.kind === "hello") {
-    const hello = country.hello ?? "Hello!";
-    return (
-      <div className="space-y-2">
-        <SpeakableText
-          text={hello}
-          lang={langFor(country.code)}
-          textClassName="text-2xl font-extrabold text-ink"
-        />
-        <p className="font-semibold text-muted">
-          That&rsquo;s how you say hello in {country.name}. Tap 🔊 to hear it!
-        </p>
-      </div>
-    );
-  }
-
-  // wonders
-  if (!country.wonders) {
-    return (
-      <SpeakableText
-        text={`We're still gathering the wonders of ${country.name} — come back soon!`}
-        textClassName="text-lg font-semibold text-ink"
-      />
-    );
-  }
-  const ws = [country.wonders.landmark, country.wonders.animal, country.wonders.food];
-  return (
-    <ul className="space-y-3">
-      {ws.map((w) => (
-        <li key={w.name} className="flex items-start gap-3">
-          <span className="text-3xl" aria-hidden>{w.emoji}</span>
-          <div>
-            <p className="font-extrabold text-ink">{w.name}</p>
-            <SpeakableText text={pick(w.blurb)} textClassName="font-semibold text-muted" />
-          </div>
-        </li>
-      ))}
-    </ul>
   );
 }
 
