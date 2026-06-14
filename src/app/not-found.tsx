@@ -7,10 +7,10 @@ export default function NotFound() {
         🧭
       </span>
       <h1 className="text-3xl font-extrabold">This page ran off the pitch!</h1>
-      <p className="max-w-md text-lg font-semibold text-slate-600">
+      <p className="max-w-md text-lg font-semibold text-muted">
         We couldn&apos;t find that page. Let&apos;s head back to the game.
       </p>
-      <Link href="/" className="kid-btn bg-grass text-white outline-grass">
+      <Link href="/" className="kid-btn bg-cedar text-white outline-cedar">
         🏠 Back home
       </Link>
     </div>

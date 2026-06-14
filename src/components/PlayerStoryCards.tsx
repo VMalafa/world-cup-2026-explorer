@@ -48,11 +48,11 @@ function StoryCard({
         {story.emoji}
       </span>
       <span className="text-lg font-extrabold leading-tight">{story.name}</span>
-      <span className="flex items-center gap-1 text-sm font-semibold text-slate-500">
+      <span className="flex items-center gap-1 text-sm font-semibold text-muted">
         <span aria-hidden>{team?.flag}</span> {story.position}
       </span>
-      <p className="text-sm font-semibold text-slate-600">{pick(story.hook)}</p>
-      <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-sunshine/40 px-3 py-1 text-xs font-extrabold text-amber-700">
+      <p className="text-sm font-semibold text-muted">{pick(story.hook)}</p>
+      <span className="mt-1 inline-flex items-center gap-1 rounded-full bg-gold-100 px-3 py-1 text-xs font-extrabold text-gold-700">
         <SparklesIcon className="h-3.5 w-3.5" aria-hidden /> Tap to read
       </span>
     </motion.button>
@@ -91,7 +91,7 @@ function StoryModal({
         <button
           onClick={onClose}
           aria-label="Close story"
-          className="absolute right-3 top-3 rounded-full bg-slate-100 p-2 text-slate-600 hover:bg-slate-200"
+          className="absolute right-3 top-3 rounded-full bg-canvas p-2 text-muted hover:bg-line"
         >
           <XMarkIcon className="h-6 w-6" aria-hidden />
         </button>
@@ -107,7 +107,7 @@ function StoryModal({
             {story.emoji}
           </motion.span>
           <h3 className="text-2xl font-extrabold">{story.name}</h3>
-          <p className="flex items-center gap-1.5 font-semibold text-slate-500">
+          <p className="flex items-center gap-1.5 font-semibold text-muted">
             <span aria-hidden className="text-xl">
               {team?.flag}
             </span>
@@ -116,7 +116,7 @@ function StoryModal({
         </div>
 
         <motion.p
-          className="mt-5 text-pretty text-lg font-semibold leading-relaxed text-slate-800"
+          className="mt-5 text-pretty text-lg font-semibold leading-relaxed text-ink"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.18 }}
@@ -125,15 +125,15 @@ function StoryModal({
         </motion.p>
 
         <motion.div
-          className="mt-5 rounded-blob bg-sunshine/25 p-4 text-center"
+          className="mt-5 rounded-blob bg-gold-50 p-4 text-center"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, type: "spring", stiffness: 240, damping: 20 }}
         >
-          <p className="text-sm font-extrabold uppercase tracking-wide text-amber-700">
+          <p className="text-sm font-extrabold uppercase tracking-wide text-gold-700">
             ⭐ The big idea
           </p>
-          <p className="mt-1 text-lg font-bold text-amber-900">
+          <p className="mt-1 text-lg font-bold text-ink">
             {pick(story.lesson)}
           </p>
         </motion.div>
@@ -159,14 +159,14 @@ export function PlayerStoryCards({
         <h2 id="stories-heading" className="text-3xl font-extrabold sm:text-4xl">
           Hero Stories 🌟
         </h2>
-        <p className="mt-1 text-lg font-semibold text-slate-600">
+        <p className="mt-1 text-lg font-semibold text-muted">
           Drag the cards around. Tap one to hear a true story!
         </p>
       </div>
 
       <div
         ref={area}
-        className="relative grid grid-cols-2 gap-4 rounded-blob bg-white/30 p-4 sm:grid-cols-3 lg:grid-cols-4"
+        className="relative grid grid-cols-2 gap-4 rounded-blob bg-white/50 ring-1 ring-line p-4 sm:grid-cols-3 lg:grid-cols-4"
       >
         {stories.map((s, i) => (
           <StoryCard

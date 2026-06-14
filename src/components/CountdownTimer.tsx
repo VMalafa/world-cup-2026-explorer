@@ -30,7 +30,7 @@ function diff(target: number, now: number): Parts {
 function Cell({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="relative h-16 w-14 overflow-hidden rounded-2xl bg-slate-900 text-white shadow-pop sm:h-20 sm:w-16">
+      <div className="relative h-16 w-14 overflow-hidden rounded-2xl bg-ink text-white shadow-pop sm:h-20 sm:w-16">
         <motion.span
           key={value}
           initial={{ y: "-100%", opacity: 0 }}
@@ -41,7 +41,7 @@ function Cell({ value, label }: { value: number; label: string }) {
           {String(value).padStart(2, "0")}
         </motion.span>
       </div>
-      <span className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+      <span className="mt-1 text-xs font-bold uppercase tracking-wide text-muted">
         {label}
       </span>
     </div>

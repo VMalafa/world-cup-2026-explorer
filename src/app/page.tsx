@@ -34,18 +34,33 @@ export default function Home() {
   const dayIndex = featured?.dayIndex ?? 0;
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 pb-28 pt-4 sm:pb-10">
+    <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 pb-28 pt-5 sm:pb-10">
       {/* Header */}
-      <header className="mb-4 flex flex-col items-center gap-3 sm:mb-6 sm:flex-row sm:justify-between">
-        <h1 className="flex items-center gap-2 text-center text-3xl font-extrabold tracking-tight sm:text-4xl">
-          <span className="animate-float" aria-hidden>
-            ⚽
-          </span>
-          <span>
-            <span className="text-sky-600">World Cup</span>{" "}
-            <span className="text-grass">Explorer</span>
-          </span>
-        </h1>
+      <header className="mb-5 flex flex-col items-center gap-4 sm:mb-7 sm:flex-row sm:justify-between sm:gap-3">
+        <div className="flex flex-col items-center gap-1.5 sm:items-start">
+          <h1 className="flex items-center gap-2 text-center text-[clamp(1.5rem,7vw,2rem)] font-extrabold tracking-tight sm:text-left sm:text-4xl">
+            <span className="animate-float" aria-hidden>
+              ⚽
+            </span>
+            <span>
+              <span className="text-royal">World Cup</span>{" "}
+              <span className="text-unity">Explorer</span>
+            </span>
+          </h1>
+          {/* The Malafa signature: four homes, one game. */}
+          <div className="flex items-center gap-2">
+            <span className="unity-ribbon h-1 w-16 rounded-full" aria-hidden />
+            <span
+              className="text-sm font-bold text-muted"
+              title="Cameroon · Netherlands · Lebanon · USA"
+            >
+              <span aria-hidden>🇨🇲 🇳🇱 🇱🇧 🇺🇸</span>
+              <span className="sr-only">
+                Made by the Malafa family — Cameroon, Netherlands, Lebanon and USA
+              </span>
+            </span>
+          </div>
+        </div>
         <ReadingLevelToggle compact />
       </header>
 
@@ -87,7 +102,7 @@ export default function Home() {
       {/* Mobile bottom tab bar */}
       <nav
         aria-label="Sections"
-        className="fixed inset-x-0 bottom-0 z-40 flex justify-around border-t border-black/5 bg-white/90 px-2 py-2 backdrop-blur sm:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 flex justify-around border-t border-line bg-white/95 px-2 py-2 backdrop-blur sm:hidden"
       >
         {TABS.map((t) => (
           <button
@@ -95,7 +110,7 @@ export default function Home() {
             onClick={() => setTab(t.id)}
             aria-current={tab === t.id ? "page" : undefined}
             className={`flex min-w-[3.5rem] flex-col items-center gap-0.5 rounded-2xl px-2 py-1 text-xs font-extrabold transition-colors ${
-              tab === t.id ? "bg-sky-100 text-sky-700" : "text-slate-500"
+              tab === t.id ? "bg-royal-50 text-royal-700" : "text-muted"
             }`}
           >
             <span className="text-2xl" aria-hidden>
@@ -123,13 +138,15 @@ function TabButton({
       onClick={onClick}
       aria-current={active ? "page" : undefined}
       className={`relative rounded-full px-5 py-2.5 text-lg font-extrabold transition-colors ${
-        active ? "text-white" : "bg-white/70 text-slate-600 hover:text-slate-900"
+        active
+          ? "text-white"
+          : "bg-white text-muted ring-1 ring-line hover:text-ink"
       }`}
     >
       {active && (
         <motion.span
           layoutId="tab-pill"
-          className="absolute inset-0 -z-10 rounded-full bg-grass"
+          className="absolute inset-0 -z-10 rounded-full bg-royal shadow-pop"
           transition={{ type: "spring", stiffness: 500, damping: 35 }}
         />
       )}

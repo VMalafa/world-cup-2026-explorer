@@ -31,12 +31,12 @@ function Side({
   // Curated team → full learning data (flag with emoji fallback + greeting).
   if (team) {
     return (
-      <div className="flex flex-1 flex-col items-center gap-2 text-center">
-        <Flag team={team} size={88} />
-        <span className="text-xl font-extrabold leading-tight sm:text-2xl">
+      <div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
+        <Flag team={team} size={72} className="sm:!h-[66px] sm:!w-[88px]" />
+        <span className="break-words text-lg font-extrabold leading-tight sm:text-2xl">
           {team.name}
         </span>
-        <span className="text-sm text-slate-500">{team.hello}</span>
+        <span className="text-sm text-muted">{team.hello}</span>
       </div>
     );
   }
@@ -53,15 +53,14 @@ function Side({
           width={88}
           height={66}
           loading="lazy"
-          className="rounded-lg object-cover shadow-sm"
-          style={{ width: 88, height: 66 }}
+          className="h-[54px] w-[72px] rounded-lg object-cover shadow-sm sm:h-[66px] sm:w-[88px]"
         />
       ) : (
         <span className="text-5xl" role="img" aria-label={`Flag of ${label}`}>
           🏳️
         </span>
       )}
-      <span className="text-xl font-extrabold leading-tight sm:text-2xl">
+      <span className="break-words text-lg font-extrabold leading-tight sm:text-2xl">
         {label}
       </span>
     </div>
@@ -77,8 +76,8 @@ function ScoreOrVs({ match }: { match: Match }) {
 
   if (match.status === "scheduled") {
     return (
-      <div className="flex flex-col items-center gap-1 px-2">
-        <span className="font-display text-3xl font-extrabold text-slate-300">
+      <div className="flex shrink-0 flex-col items-center gap-1 px-2">
+        <span className="font-display text-3xl font-extrabold text-royal-200">
           vs
         </span>
       </div>
@@ -87,19 +86,19 @@ function ScoreOrVs({ match }: { match: Match }) {
 
   const isLive = match.status === "live";
   return (
-    <div className="flex flex-col items-center gap-1 px-2">
-      <div className="flex items-center gap-2 font-display text-4xl font-extrabold tabular-nums">
+    <div className="flex shrink-0 flex-col items-center gap-1 px-2">
+      <div className="flex items-center gap-1.5 font-display text-3xl font-extrabold tabular-nums sm:gap-2 sm:text-4xl">
         <span>{match.homeScore ?? 0}</span>
-        <span className="text-slate-300">:</span>
+        <span className="text-royal-200">:</span>
         <span>{match.awayScore ?? 0}</span>
       </div>
       {isLive ? (
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-red-500 px-3 py-1 text-xs font-extrabold uppercase text-white">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-unity px-3 py-1 text-xs font-extrabold uppercase text-white">
           <span className="h-2 w-2 animate-ping rounded-full bg-white" />
           Live {liveMinute(match, now)}&apos;
         </span>
       ) : (
-        <span className="rounded-full bg-slate-200 px-3 py-1 text-xs font-extrabold uppercase text-slate-600">
+        <span className="rounded-full bg-line px-3 py-1 text-xs font-extrabold uppercase text-muted">
           Full time
         </span>
       )}
@@ -113,13 +112,13 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08, type: "spring", stiffness: 220, damping: 24 }}
-      className="kid-card p-5 sm:p-7"
+      className="kid-card p-4 sm:p-7"
     >
       <div className="mb-4 flex items-center justify-between">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-sunshine/30 px-3 py-1 text-sm font-extrabold text-amber-700">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
           <TrophyIcon className="h-4 w-4" aria-hidden /> Group {match.group}
         </span>
-        <span className="text-sm font-bold text-slate-500">
+        <span className="text-sm font-bold text-muted">
           {new Date(match.kickoff).toLocaleTimeString(undefined, {
             hour: "numeric",
             minute: "2-digit",
@@ -135,7 +134,7 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
 
       {match.status === "scheduled" && (
         <div className="mt-5 flex flex-col items-center gap-2">
-          <span className="text-sm font-bold uppercase tracking-wide text-slate-500">
+          <span className="text-sm font-bold uppercase tracking-wide text-muted">
             Kicks off in
           </span>
           <CountdownTimer target={match.kickoff} />
@@ -143,8 +142,8 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
       )}
 
       {match.stadium && (
-        <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-sm font-semibold text-slate-600">
-          <MapPinIcon className="h-4 w-4 shrink-0 text-bubble" aria-hidden />
+        <div className="mt-5 flex items-center justify-center gap-1.5 text-center text-sm font-semibold text-muted">
+          <MapPinIcon className="h-4 w-4 shrink-0 text-unity" aria-hidden />
           <span>
             {match.stadium}
             {match.city ? `, ${match.city}` : ""}
@@ -167,7 +166,7 @@ export function MatchDashboard({
     return (
       <div className="grid gap-5 sm:grid-cols-2">
         {[0, 1].map((i) => (
-          <div key={i} className="kid-card h-64 animate-pulse bg-white/50" />
+          <div key={i} className="kid-card h-64 animate-pulse bg-white/60" />
         ))}
       </div>
     );
@@ -181,16 +180,16 @@ export function MatchDashboard({
         <h2 id="dash-heading" className="text-3xl font-extrabold sm:text-4xl">
           {heading.title}
         </h2>
-        <p className="mt-1 text-lg font-semibold text-slate-600">{heading.sub}</p>
-        <p className="mt-1 text-base font-bold text-sky-600">
+        <p className="mt-1 text-lg font-semibold text-muted">{heading.sub}</p>
+        <p className="mt-1 text-base font-bold text-royal">
           {prettyDate(featured.date)}
         </p>
         {source && (
           <span
             className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-extrabold uppercase ${
               source === "live"
-                ? "bg-grass/20 text-emerald-700"
-                : "bg-slate-200 text-slate-500"
+                ? "bg-cedar-100 text-cedar-700"
+                : "bg-line text-muted"
             }`}
             title={
               source === "live"

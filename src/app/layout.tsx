@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#38bdf8",
+  themeColor: "#234c9e",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -39,6 +39,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>
+        {/* The Malafa signature: four homelands pinned to the top of every page. */}
+        <div className="unity-ribbon-top" aria-hidden />
         <ReadingLevelProvider>{children}</ReadingLevelProvider>
       </body>
     </html>

@@ -7,8 +7,8 @@ import { factsForDay } from "@/data/funFacts";
 import { useReadingLevel } from "./ReadingLevel";
 
 const KIND_STYLE = {
-  geo: { label: "Geography", className: "bg-emerald-100 text-emerald-700" },
-  football: { label: "Football", className: "bg-sky-100 text-sky-700" },
+  geo: { label: "Geography", className: "bg-cedar-100 text-cedar-700" },
+  football: { label: "Football", className: "bg-royal-50 text-royal-700" },
 } as const;
 
 export function FunFactsCarousel({ dayIndex }: { dayIndex: number }) {
@@ -39,7 +39,7 @@ export function FunFactsCarousel({ dayIndex }: { dayIndex: number }) {
       <h2 id="facts-heading" className="mb-1 text-3xl font-extrabold sm:text-4xl">
         Did You Know? 🤔
       </h2>
-      <p className="mb-5 text-lg font-semibold text-slate-600">
+      <p className="mb-5 text-lg font-semibold text-muted">
         A fresh mix of facts every match day.
       </p>
 
@@ -54,7 +54,7 @@ export function FunFactsCarousel({ dayIndex }: { dayIndex: number }) {
           <button
             onClick={() => go(-1)}
             aria-label="Previous fact"
-            className="kid-btn bg-white !px-3 !py-3 text-slate-700 outline-sky"
+            className="kid-btn bg-white text-royal ring-1 ring-line !px-3 !py-3 outline-royal"
           >
             <ChevronLeftIcon className="h-6 w-6" aria-hidden />
           </button>
@@ -77,7 +77,7 @@ export function FunFactsCarousel({ dayIndex }: { dayIndex: number }) {
                 >
                   {kind.label}
                 </span>
-                <p className="text-balance text-xl font-bold leading-snug text-slate-800 sm:text-2xl">
+                <p className="text-balance text-xl font-bold leading-snug text-ink sm:text-2xl">
                   {pick(fact.text)}
                 </p>
               </motion.div>
@@ -87,7 +87,7 @@ export function FunFactsCarousel({ dayIndex }: { dayIndex: number }) {
           <button
             onClick={() => go(1)}
             aria-label="Next fact"
-            className="kid-btn bg-white !px-3 !py-3 text-slate-700 outline-sky"
+            className="kid-btn bg-white text-royal ring-1 ring-line !px-3 !py-3 outline-royal"
           >
             <ChevronRightIcon className="h-6 w-6" aria-hidden />
           </button>
@@ -102,7 +102,7 @@ export function FunFactsCarousel({ dayIndex }: { dayIndex: number }) {
               aria-label={`Fact ${idx + 1}`}
               onClick={() => setI(idx)}
               className={`h-3 rounded-full transition-all ${
-                idx === i ? "w-8 bg-sky" : "w-3 bg-slate-300 hover:bg-slate-400"
+                idx === i ? "w-8 bg-royal" : "w-3 bg-line hover:bg-royal-200"
               }`}
             />
           ))}

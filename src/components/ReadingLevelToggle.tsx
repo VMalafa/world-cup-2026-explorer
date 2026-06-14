@@ -19,7 +19,7 @@ export function ReadingLevelToggle({ compact = false }: { compact?: boolean }) {
     <div
       role="radiogroup"
       aria-label="Choose reading level"
-      className={`relative inline-flex rounded-full bg-white/80 p-1 shadow-soft ring-1 ring-black/5 ${
+      className={`relative inline-flex rounded-full bg-white p-1 shadow-card ring-1 ring-line ${
         compact ? "text-sm" : "text-base"
       }`}
     >
@@ -32,13 +32,13 @@ export function ReadingLevelToggle({ compact = false }: { compact?: boolean }) {
             aria-checked={active}
             onClick={() => setLevel(opt.key)}
             className={`relative z-10 flex items-center gap-1.5 rounded-full px-3 py-2 font-extrabold transition-colors sm:px-4 ${
-              active ? "text-white" : "text-slate-600 hover:text-slate-900"
+              active ? "text-white" : "text-muted hover:text-ink"
             }`}
           >
             {active && (
               <motion.span
                 layoutId="reading-pill"
-                className="absolute inset-0 -z-10 rounded-full bg-sky"
+                className="absolute inset-0 -z-10 rounded-full bg-royal"
                 transition={{ type: "spring", stiffness: 500, damping: 35 }}
               />
             )}

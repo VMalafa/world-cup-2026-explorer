@@ -4,6 +4,14 @@
 
 :root {
   color-scheme: light;
+
+  /* The four homelands, in warm-to-cool order. Used by the Unity Ribbon. */
+  --malafa-red: #d32f45;
+  --malafa-gold: #e5a81c;
+  --malafa-green: #0e9266;
+  --malafa-blue: #234c9e;
+
+  --malafa-ink: #16223f;
 }
 
 html {
@@ -13,13 +21,20 @@ html {
 
 body {
   font-family: var(--font-body), system-ui, sans-serif;
-  /* Soft sky-to-grass playground backdrop. */
-  background:
-    radial-gradient(1200px 600px at 50% -10%, #bae6fd 0%, transparent 60%),
-    linear-gradient(180deg, #e0f2fe 0%, #f0fdf4 100%);
+  /*
+   * A refined "match under the lights" backdrop: a cool near-white canvas with
+   * soft royal-blue floodlight from above and a faint trophy-gold warmth from
+   * the lower corners. No cream, no literal sky-and-grass — the warmth lives in
+   * the brand, not the background.
+   */
+  background-color: #f4f6fb;
+  background-image:
+    radial-gradient(1100px 520px at 50% -8%, rgba(35, 76, 158, 0.14) 0%, transparent 62%),
+    radial-gradient(700px 460px at 8% 108%, rgba(229, 168, 28, 0.1) 0%, transparent 60%),
+    radial-gradient(760px 480px at 96% 104%, rgba(14, 146, 102, 0.08) 0%, transparent 60%);
   background-attachment: fixed;
   min-height: 100dvh;
-  color: #1f2937;
+  color: var(--malafa-ink);
   /* Prevent the rubber-band glow from feeling broken on touch devices. */
   overscroll-behavior-y: none;
 }
@@ -29,47 +44,79 @@ body {
   h2,
   h3 {
     font-family: var(--font-display), system-ui, sans-serif;
-    line-height: 1.1;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    color: var(--malafa-ink);
+  }
+  p {
+    text-wrap: pretty;
   }
   /* Bigger default tap targets everywhere for little fingers. */
   button {
     touch-action: manipulation;
   }
+  /* A single, on-brand focus ring across every interactive element. */
+  :where(a, button, select, [tabindex]):focus-visible {
+    outline: 3px solid var(--malafa-blue);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
 }
 
 @layer components {
-  /* A chunky, kid-friendly card. */
+  /* A clean, refined card — crisp white, hairline ring, soft lifted shadow. */
   .kid-card {
-    @apply rounded-blob bg-white/90 shadow-soft ring-1 ring-black/5 backdrop-blur;
+    @apply rounded-blob bg-white shadow-card ring-1 ring-line;
   }
-  /* A bouncy primary action button. */
+  /* A tactile primary action button — still chunky, now brand-tuned. */
   .kid-btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-lg font-extrabold
-      shadow-pop transition-transform duration-150 active:translate-y-1 active:shadow-none
-      focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2;
+      shadow-pop transition-transform duration-150 ease-out active:translate-y-1 active:shadow-none;
+  }
+
+  /*
+   * The Unity Ribbon — the Malafa signature. Four equal bands for the four
+   * homelands (Cameroon · Netherlands · Lebanon · USA), warm to cool.
+   */
+  .unity-ribbon {
+    background: linear-gradient(
+      90deg,
+      var(--malafa-red) 0 25%,
+      var(--malafa-gold) 25% 50%,
+      var(--malafa-green) 50% 75%,
+      var(--malafa-blue) 75% 100%
+    );
+  }
+  /* A fixed hairline of the ribbon pinned to the very top of the viewport. */
+  .unity-ribbon-top {
+    @apply unity-ribbon pointer-events-none fixed inset-x-0 top-0 z-50 h-1.5;
   }
 }
 
 /* Respect families who prefer less motion. */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
   }
 }
 
-/* Leaflet tweaks so the map feels part of the playful theme. */
+/* Leaflet tweaks so the map feels part of the refined theme. */
 .leaflet-container {
   font-family: var(--font-body), system-ui, sans-serif;
-  background: #cce7ff;
+  background: #dbe5f5;
   border-radius: 1.5rem;
 }
 .leaflet-popup-content-wrapper {
   border-radius: 1rem;
+  box-shadow: 0 18px 40px -16px rgba(22, 34, 63, 0.28);
 }
 .leaflet-popup-content {
   margin: 0.75rem 1rem;

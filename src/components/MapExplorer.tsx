@@ -17,8 +17,8 @@ import { Flag } from "./Flag";
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[60vh] min-h-[360px] w-full items-center justify-center rounded-blob bg-sky-100">
-      <div className="flex flex-col items-center gap-3 text-sky-600">
+    <div className="flex h-[60vh] min-h-[360px] w-full items-center justify-center rounded-blob bg-royal-50">
+      <div className="flex flex-col items-center gap-3 text-royal">
         <span className="animate-float text-5xl" aria-hidden>
           🌍
         </span>
@@ -48,7 +48,7 @@ export function MapExplorer() {
         <h2 id="map-heading" className="text-3xl font-extrabold sm:text-4xl">
           Explore the World 🗺️
         </h2>
-        <p className="mt-1 text-lg font-semibold text-slate-600">
+        <p className="mt-1 text-lg font-semibold text-muted">
           Tap a dot to learn about a team. Tap a ⚽ to find a stadium!
         </p>
       </div>
@@ -62,7 +62,7 @@ export function MapExplorer() {
         {CONTINENTS.map((c) => (
           <li
             key={c}
-            className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-sm font-extrabold shadow-sm"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-sm font-extrabold shadow-sm"
           >
             <span
               className="h-3.5 w-3.5 rounded-full"
@@ -83,17 +83,26 @@ export function MapExplorer() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             className="kid-card mx-auto mt-4 flex max-w-xl items-center gap-4 p-5"
-            style={{ borderLeft: `8px solid ${CONTINENT_COLOR[team.continent]}` }}
           >
-            <Flag team={team} size={96} className="!h-[72px] !w-[96px] shrink-0" />
+            <span
+              className="shrink-0 rounded-xl ring-2 ring-white"
+              style={{ boxShadow: `0 0 0 4px ${CONTINENT_COLOR[team.continent]}` }}
+            >
+              <Flag team={team} size={96} className="!h-[72px] !w-[96px]" />
+            </span>
             <div className="text-left">
               <h3 className="text-2xl font-extrabold">
                 {team.flag} {team.name}
               </h3>
-              <p className="font-semibold text-slate-500">
+              <p className="flex flex-wrap items-center gap-x-1.5 font-semibold text-muted">
+                <span
+                  className="inline-block h-2.5 w-2.5 rounded-full"
+                  style={{ backgroundColor: CONTINENT_COLOR[team.continent] }}
+                  aria-hidden
+                />
                 🏙️ {team.capital} · {CONTINENT_LABEL[team.continent]} · Group {team.group}
               </p>
-              <p className="mt-1 text-base font-semibold leading-snug text-slate-700">
+              <p className="mt-1 text-base font-semibold leading-snug text-ink">
                 {pick(team.funFacts[0])}
               </p>
             </div>
@@ -103,7 +112,7 @@ export function MapExplorer() {
             key="hint"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-4 text-center font-semibold text-slate-500"
+            className="mt-4 text-center font-semibold text-muted"
           >
             👆 {TEAMS.length} teams are on the map. Tap one to start!
           </motion.p>

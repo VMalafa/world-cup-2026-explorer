@@ -396,12 +396,12 @@ export const CONTINENT_LABEL: Record<Team["continent"], string> = {
 
 /** Continent colours mirror tailwind.config.ts so JS + CSS agree. */
 export const CONTINENT_COLOR: Record<Team["continent"], string> = {
-  africa: "#f59e0b",
-  asia: "#ef4444",
-  europe: "#3b82f6",
-  namerica: "#10b981",
-  samerica: "#a855f7",
-  oceania: "#06b6d4",
+  africa: "#C98A12", // trophy gold
+  asia: "#D32F45", // unity red
+  europe: "#234C9E", // royal blue
+  namerica: "#0E9266", // cedar green
+  samerica: "#7C3AED", // violet (kept distinct)
+  oceania: "#0E7C9B", // teal (kept distinct)
 };
 
 export function getTeam(code: string): Team | undefined {

@@ -44,7 +44,7 @@ function TeamPicker({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full cursor-pointer rounded-full border-4 border-white bg-white/90 px-4 py-2 text-center text-lg font-extrabold shadow-soft focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky"
+        className="w-full cursor-pointer rounded-full border-2 border-line bg-white px-4 py-2 text-center text-lg font-extrabold shadow-soft focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky"
       >
         {TEAMS.map((t) => (
           <option key={t.code} value={t.code}>
@@ -72,25 +72,25 @@ function CompareColumn({
     >
       <Flag team={team} size={120} className="!h-[90px] !w-[120px]" />
       <h3 className="text-2xl font-extrabold">{team.name}</h3>
-      <p className="text-lg font-bold text-slate-500">{team.hello}</p>
+      <p className="text-lg font-bold text-muted">{team.hello}</p>
 
       <dl className="grid w-full grid-cols-1 gap-2 text-left">
-        <div className="rounded-2xl bg-slate-50 px-4 py-2">
-          <dt className="text-xs font-extrabold uppercase tracking-wide text-slate-400">
+        <div className="rounded-2xl bg-canvas px-4 py-2">
+          <dt className="text-xs font-extrabold uppercase tracking-wide text-muted">
             Capital city
           </dt>
           <dd className="text-lg font-bold">🏙️ {team.capital}</dd>
         </div>
-        <div className="rounded-2xl bg-slate-50 px-4 py-2">
-          <dt className="text-xs font-extrabold uppercase tracking-wide text-slate-400">
+        <div className="rounded-2xl bg-canvas px-4 py-2">
+          <dt className="text-xs font-extrabold uppercase tracking-wide text-muted">
             Continent
           </dt>
           <dd className="mt-1">
             <ContinentBadge team={team} />
           </dd>
         </div>
-        <div className="rounded-2xl bg-slate-50 px-4 py-2">
-          <dt className="text-xs font-extrabold uppercase tracking-wide text-slate-400">
+        <div className="rounded-2xl bg-canvas px-4 py-2">
+          <dt className="text-xs font-extrabold uppercase tracking-wide text-muted">
             Fun fact
           </dt>
           <dd className="text-base font-semibold leading-snug">
@@ -101,7 +101,7 @@ function CompareColumn({
 
       <button
         onClick={() => onZoom(team)}
-        className="kid-btn mt-1 bg-sky text-white outline-sky"
+        className="kid-btn mt-1 bg-royal text-white outline-royal"
       >
         <MagnifyingGlassPlusIcon className="h-5 w-5" aria-hidden /> Zoom in
       </button>
@@ -134,7 +134,7 @@ function ZoomModal({ team, onClose }: { team: Team; onClose: () => void }) {
         <button
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-3 top-3 rounded-full bg-slate-100 p-2 text-slate-600 hover:bg-slate-200"
+          className="absolute right-3 top-3 rounded-full bg-canvas p-2 text-muted hover:bg-line"
         >
           <XMarkIcon className="h-6 w-6" aria-hidden />
         </button>
@@ -153,15 +153,15 @@ function ZoomModal({ team, onClose }: { team: Team; onClose: () => void }) {
         </h3>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
           <ContinentBadge team={team} />
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-extrabold text-slate-600">
+          <span className="rounded-full bg-canvas px-3 py-1 text-sm font-extrabold text-muted">
             🏙️ {team.capital}
           </span>
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-extrabold text-slate-600">
+          <span className="rounded-full bg-canvas px-3 py-1 text-sm font-extrabold text-muted">
             🏆 Group {team.group}
           </span>
         </div>
-        <p className="mt-3 text-lg font-bold text-slate-500">
-          They say hello like this: <span className="text-sky-600">{team.hello}</span>
+        <p className="mt-3 text-lg font-bold text-muted">
+          They say hello like this: <span className="text-royal">{team.hello}</span>
         </p>
 
         <ul className="mt-5 space-y-3 text-left">
@@ -171,7 +171,7 @@ function ZoomModal({ team, onClose }: { team: Team; onClose: () => void }) {
               initial={{ opacity: 0, x: -16 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15 + i * 0.1 }}
-              className="flex gap-3 rounded-2xl bg-slate-50 p-3"
+              className="flex gap-3 rounded-2xl bg-canvas p-3"
             >
               <span className="text-2xl" aria-hidden>
                 ✨
@@ -216,7 +216,7 @@ export function CompareView({
         <h2 id="compare-heading" className="text-3xl font-extrabold sm:text-4xl">
           Compare Countries 🔍
         </h2>
-        <p className="mt-1 text-lg font-semibold text-slate-600">
+        <p className="mt-1 text-lg font-semibold text-muted">
           Pick two countries and see how they match up!
         </p>
         <div className="mt-3 flex justify-center">
@@ -234,7 +234,7 @@ export function CompareView({
           <button
             onClick={swap}
             aria-label="Swap countries"
-            className="kid-btn bg-bubble text-white outline-bubble"
+            className="kid-btn bg-unity text-white outline-unity"
           >
             <ArrowsRightLeftIcon className="h-6 w-6" aria-hidden />
           </button>
