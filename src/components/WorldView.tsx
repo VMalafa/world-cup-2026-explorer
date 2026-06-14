@@ -7,11 +7,13 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { COUNTRIES, getCountry } from "@/data/countries";
 import { CONTINENT_COLOR, CONTINENT_LABEL, getTeam } from "@/data/teams";
+import { langFor } from "@/data/languages";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore, type Stamp } from "@/lib/passport";
 import { useProfile } from "./Profiles";
 import { ProfileChip } from "./ProfileChip";
 import { Flag } from "./Flag";
+import { SpeakButton } from "./SpeakButton";
 
 // Leaflet touches `window`; load the Globe only on the client.
 const WorldMap = dynamic(() => import("./WorldMap"), {
@@ -185,6 +187,23 @@ export function WorldView() {
                   🏙️ {selectedCountry.capital} ·{" "}
                   {CONTINENT_LABEL[selectedCountry.continent]}
                 </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <SpeakButton
+                    text={`${selectedCountry.name}. Its capital city is ${selectedCountry.capital}.`}
+                    label={`Hear about ${selectedCountry.name}`}
+                  />
+                  {selectedCountry.hello && (
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-royal-50 px-3 py-1 font-extrabold text-ink">
+                      <span aria-hidden>🗣️</span> {selectedCountry.hello}
+                      <SpeakButton
+                        text={selectedCountry.hello}
+                        lang={langFor(selectedCountry.code)}
+                        label={`Say hello the ${selectedCountry.name} way`}
+                        className="!h-7 !w-7 !text-base"
+                      />
+                    </span>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}
