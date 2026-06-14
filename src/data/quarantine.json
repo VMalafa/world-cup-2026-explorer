@@ -1,0 +1,13 @@
+[
+  {
+    "code": "SEN",
+    "countryName": "Senegal",
+    "findings": [
+      {
+        "dimension": "accurate",
+        "field": "unverifiedClaims",
+        "message": "unverified: Lac Rose is the pinkest and saltiest lake on Earth — could not confirm; other lakes are saltier."
+      }
+    ]
+  }
+]
