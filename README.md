@@ -112,9 +112,21 @@ Copy `.env.example` to `.env.local` and set what you want:
 | --- | --- |
 | `USE_LIVE_DATA` | `true` to use a **live** provider you've wired in; anything else (default) = bundled curated data. Server-only runtime toggle. |
 | `API_FOOTBALL_KEY` | Optional — a key for whatever trusted provider you wire in. |
+| `GITHUB_FEEDBACK_TOKEN` | Optional — a fine-grained GitHub PAT (*Issues: Read & Write* on the repo) so the in-app **💬 Tell us!** button files real GitHub Issues. Without it the button still works but no issue is created. |
+| `GITHUB_FEEDBACK_REPO` | Optional — `owner/repo` to file feedback issues in. Defaults to this project's repo. |
 
 On Vercel: **Project → Settings → Environment Variables**. (CLI:
 `vercel env add USE_LIVE_DATA production`.)
+
+### In-app feedback → GitHub Issues
+
+The floating **💬 Tell us!** button (every screen) lets kids and grown-ups send a
+note. Each one becomes a GitHub Issue labelled `feedback` + a category
+(`feedback:love` / `feedback:bug` / `feedback:idea`), capturing the page,
+device, and time — but **not** the child's profile name (privacy). Issue creation
+runs server-side (`src/app/api/feedback/route.ts`) so the token never reaches the
+browser. No token = the button fails softly with a friendly "Thanks!", never an
+error.
 
 ### How live data works
 
