@@ -3,6 +3,7 @@ import { Baloo_2, Nunito } from "next/font/google";
 import "./globals.css";
 import { ProfileProvider } from "@/components/Profiles";
 import { ProfileGate } from "@/components/ProfileGate";
+import { FeedbackButton } from "@/components/FeedbackButton";
 
 const display = Baloo_2({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({
         <div className="unity-ribbon-top" aria-hidden />
         <ProfileProvider>
           <ProfileGate>{children}</ProfileGate>
+          <FeedbackButton />
         </ProfileProvider>
       </body>
     </html>
