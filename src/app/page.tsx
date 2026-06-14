@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useFeatured } from "@/lib/useFeatured";
 import { getTeam } from "@/data/teams";
@@ -63,6 +64,13 @@ export default function Home() {
           </div>
         </div>
         <div className="flex items-center gap-2.5">
+          <Link
+            href="/world"
+            className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2 font-extrabold text-ink shadow-card ring-1 ring-line hover:text-royal"
+          >
+            <span aria-hidden>🌍</span>
+            <span className="hidden sm:inline">World</span>
+          </Link>
           <ProfileChip />
           <ReadingLevelToggle compact />
         </div>

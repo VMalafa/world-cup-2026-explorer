@@ -56,9 +56,12 @@ function FlyToSelected({ team }: { team: Team | null }) {
 export default function WorldMap({
   selectedCode,
   onSelect,
+  earnedCodes,
 }: {
   selectedCode: string | null;
   onSelect: (code: string) => void;
+  /** Countries with a Passport Stamp — drawn with a gold ring. Optional. */
+  earnedCodes?: Set<string>;
 }) {
   const selectedTeam = TEAMS.find((t) => t.code === selectedCode) ?? null;
 
@@ -100,14 +103,16 @@ export default function WorldMap({
       {/* Selectable nation markers, coloured by continent */}
       {TEAMS.map((team) => {
         const selected = team.code === selectedCode;
+        const earned = earnedCodes?.has(team.code) ?? false;
         return (
           <CircleMarker
             key={team.code}
             center={[team.lat, team.lng]}
-            radius={selected ? 13 : 7}
+            radius={selected ? 13 : earned ? 8 : 7}
             pathOptions={{
-              color: "#ffffff",
-              weight: selected ? 3 : 1.5,
+              // Earned countries wear a gold ring; selection still wins.
+              color: selected ? "#ffffff" : earned ? "#C98A12" : "#ffffff",
+              weight: selected ? 3 : earned ? 3 : 1.5,
               fillColor: CONTINENT_COLOR[team.continent],
               fillOpacity: 0.95,
             }}
@@ -115,6 +120,7 @@ export default function WorldMap({
           >
             <Tooltip direction="top" offset={[0, -6]} opacity={1}>
               <span style={{ fontWeight: 800 }}>
+                {earned ? "✅ " : ""}
                 {team.flag} {team.name}
               </span>
             </Tooltip>
