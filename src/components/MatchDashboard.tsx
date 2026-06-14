@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
 import { liveMinute, prettyDate, type Featured } from "@/lib/schedule";
@@ -106,17 +107,39 @@ function ScoreOrVs({ match }: { match: Match }) {
   );
 }
 
-function MatchCard({ match, index }: { match: Match; index: number }) {
+function MatchCard({
+  match,
+  index,
+  featured = false,
+  clickable = false,
+}: {
+  match: Match;
+  index: number;
+  /** The auto-picked Match of the Day. */
+  featured?: boolean;
+  /** Both teams are curated, so the card opens a journey. */
+  clickable?: boolean;
+}) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08, type: "spring", stiffness: 220, damping: 24 }}
-      className="kid-card p-4 sm:p-7"
+      className={`kid-card h-full p-4 transition-transform sm:p-7 ${
+        clickable ? "hover:-translate-y-0.5" : ""
+      } ${featured ? "ring-2 ring-gold" : ""}`}
     >
       <div className="mb-4 flex items-center justify-between">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
-          <TrophyIcon className="h-4 w-4" aria-hidden /> Group {match.group}
+          {featured ? (
+            <>
+              <span aria-hidden>⭐</span> Match of the Day
+            </>
+          ) : (
+            <>
+              <TrophyIcon className="h-4 w-4" aria-hidden /> Group {match.group}
+            </>
+          )}
         </span>
         <span className="text-sm font-bold text-muted">
           {new Date(match.kickoff).toLocaleTimeString(undefined, {
@@ -149,6 +172,12 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
             {match.city ? `, ${match.city}` : ""}
           </span>
         </div>
+      )}
+
+      {clickable && (
+        <p className="mt-4 text-center text-sm font-extrabold text-royal">
+          {featured ? "Start the Match Day Journey" : "Explore these countries"} →
+        </p>
       )}
     </motion.article>
   );
@@ -202,9 +231,24 @@ export function MatchDashboard({
         )}
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        {featured.matches.map((m, i) => (
-          <MatchCard key={m.id} match={m} index={i} />
-        ))}
+        {featured.matches.map((m, i) => {
+          const curated = Boolean(getTeam(m.homeCode) && getTeam(m.awayCode));
+          const card = (
+            <MatchCard match={m} index={i} featured={i === 0} clickable={curated} />
+          );
+          return curated ? (
+            <Link
+              key={m.id}
+              href={`/journey?home=${m.homeCode}&away=${m.awayCode}`}
+              aria-label={`Start the Match Day Journey for ${getTeam(m.homeCode)?.name} versus ${getTeam(m.awayCode)?.name}`}
+              className="block rounded-blob"
+            >
+              {card}
+            </Link>
+          ) : (
+            <div key={m.id}>{card}</div>
+          );
+        })}
       </div>
     </section>
   );
