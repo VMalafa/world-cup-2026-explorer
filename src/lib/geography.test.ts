@@ -5,6 +5,7 @@ import {
   distanceKm,
   geographyFor,
   HOMELANDS,
+  nearestOcean,
   toCompass,
 } from "./geography";
 
@@ -35,6 +36,29 @@ describe("bearingDeg + toCompass", () => {
   });
   it("reads due west as W", () => {
     expect(toCompass(bearingDeg(origin, { lat: 0, lng: -10 }))).toBe("W");
+  });
+});
+
+describe("nearestOcean", () => {
+  // Only unambiguous cases are asserted — this is a coarse, capital-based
+  // derivation, accepted as "close enough" (issue #3 follow-up).
+  it("reads Brazil as the Atlantic", () => {
+    expect(nearestOcean({ lat: -15.79, lng: -47.88 })).toBe("atlantic");
+  });
+  it("reads Japan as the Pacific", () => {
+    expect(nearestOcean({ lat: 35.68, lng: 139.69 })).toBe("pacific");
+  });
+  it("reads the Netherlands as the Atlantic", () => {
+    expect(nearestOcean({ lat: 52.37, lng: 4.9 })).toBe("atlantic");
+  });
+  it("reads a mid–South-Indian-Ocean point as the Indian", () => {
+    expect(nearestOcean({ lat: -20, lng: 80 })).toBe("indian");
+  });
+  it("reads the high Arctic as the Arctic", () => {
+    expect(nearestOcean({ lat: 85, lng: 20 })).toBe("arctic");
+  });
+  it("reads a point off Antarctica as the Southern Ocean", () => {
+    expect(nearestOcean({ lat: -70, lng: 40 })).toBe("southern");
   });
 });
 
@@ -75,5 +99,9 @@ describe("geographyFor", () => {
   it("derives the hemisphere from latitude", () => {
     expect(geographyFor({ lat: -33.45, lng: -70.67 }).hemisphere).toBe("south");
     expect(geographyFor({ lat: 52.37, lng: 4.9 }).hemisphere).toBe("north");
+  });
+
+  it("includes the nearest ocean in the report", () => {
+    expect(geographyFor({ lat: 35.68, lng: 139.69 }).ocean).toBe("pacific");
   });
 });

@@ -29,6 +29,9 @@ export interface Homeland extends GeoPoint {
 /** 8-point compass — enough for "which way from home" for a pre-reader. */
 export type Compass = "N" | "NE" | "E" | "SE" | "S" | "SW" | "W" | "NW";
 
+/** The five world oceans, as a kid would name them. */
+export type Ocean = "pacific" | "atlantic" | "indian" | "arctic" | "southern";
+
 /** Where a Country sits relative to one Homeland: how far and which way. */
 export interface HomelandBearing {
   homeland: Homeland;
@@ -43,6 +46,8 @@ export interface HomelandBearing {
 /** The full derived-geography report for a Country (or any point). */
 export interface Geography {
   hemisphere: "north" | "south";
+  /** Nearest ocean — coarse, capital-based (see `nearestOcean`). */
+  ocean: Ocean;
   /** One entry per Homeland, always in canonical HOMELANDS order. */
   fromHomelands: HomelandBearing[];
 }
@@ -96,12 +101,84 @@ export function toCompass(bearing: number): Compass {
 }
 
 /**
+ * Sample points standing in for each ocean basin. `nearestOcean` returns the
+ * ocean whose closest sample is nearest the query point. This is deliberately
+ * *coarse* — derived from the capital, not coastline data — so a country that
+ * borders two oceans resolves to whichever its capital leans toward. Good
+ * enough for "which ocean is nearest home", not a precise maritime claim.
+ */
+const OCEAN_ANCHORS: Record<Ocean, GeoPoint[]> = {
+  atlantic: [
+    { lat: 40, lng: -40 },
+    { lat: 55, lng: -20 },
+    { lat: 0, lng: -25 },
+    { lat: -30, lng: -15 },
+    { lat: -50, lng: -40 },
+    // Western Atlantic: Caribbean approach + South America's east coast, so
+    // Jamaica/Argentina/Uruguay/Brazil don't fall to a Pacific anchor.
+    { lat: 20, lng: -55 },
+    { lat: 10, lng: -50 },
+    { lat: -20, lng: -38 },
+    { lat: -35, lng: -50 },
+  ],
+  pacific: [
+    { lat: 40, lng: -150 },
+    { lat: 0, lng: -140 },
+    { lat: -30, lng: -110 },
+    // Hug South America's Pacific coast so Chile/Peru don't fall to the far
+    // South Atlantic anchor.
+    { lat: -15, lng: -78 },
+    { lat: -33, lng: -78 },
+    { lat: -45, lng: -78 },
+    { lat: 40, lng: 160 },
+    { lat: 10, lng: 130 },
+    { lat: -30, lng: 170 },
+    { lat: 0, lng: 180 },
+  ],
+  indian: [
+    { lat: -10, lng: 75 },
+    { lat: -30, lng: 80 },
+    { lat: 10, lng: 65 },
+    { lat: 15, lng: 90 },
+    { lat: -10, lng: 100 },
+  ],
+  arctic: [
+    { lat: 85, lng: 0 },
+    { lat: 80, lng: -100 },
+    { lat: 80, lng: 100 },
+  ],
+  southern: [
+    { lat: -60, lng: 0 },
+    { lat: -60, lng: 90 },
+    { lat: -60, lng: 180 },
+    { lat: -60, lng: -90 },
+  ],
+};
+
+/** Coarse nearest-ocean for a point, by closest basin sample (see anchors). */
+export function nearestOcean(place: GeoPoint): Ocean {
+  let best: Ocean = "atlantic";
+  let bestKm = Infinity;
+  for (const ocean of Object.keys(OCEAN_ANCHORS) as Ocean[]) {
+    for (const anchor of OCEAN_ANCHORS[ocean]) {
+      const km = distanceKm(place, anchor);
+      if (km < bestKm) {
+        bestKm = km;
+        best = ocean;
+      }
+    }
+  }
+  return best;
+}
+
+/**
  * Derive how far and which way `place` sits from each of the four Homelands,
- * plus which hemisphere it's in. Pure function of coordinates.
+ * plus which hemisphere and nearest ocean it's in. Pure function of coordinates.
  */
 export function geographyFor(place: GeoPoint): Geography {
   return {
     hemisphere: place.lat >= 0 ? "north" : "south",
+    ocean: nearestOcean(place),
     fromHomelands: HOMELANDS.map((homeland) => {
       // Bearing/distance FROM home TO the country: "it's <compass> of home".
       const bearing = bearingDeg(homeland, place);
