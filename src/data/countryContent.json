@@ -414,5 +414,1125 @@
       "kinder": "Green, red, and yellow with a gold star.",
       "enriched": "Cameroon's flag has green, red, and yellow bands with a single gold star in the middle."
     }
+  },
+  "ALG": {
+    "wonders": {
+      "landmark": {
+        "name": "Sahara Desert",
+        "emoji": "🏜️",
+        "blurb": {
+          "kinder": "A giant sea of golden sand.",
+          "enriched": "The Sahara is a vast desert of rolling golden sand dunes that stretches across southern Algeria."
+        }
+      },
+      "animal": {
+        "name": "Fennec fox",
+        "emoji": "🦊",
+        "blurb": {
+          "kinder": "A tiny fox with huge ears.",
+          "enriched": "The fennec fox is a small desert fox whose very big ears help it stay cool."
+        }
+      },
+      "food": {
+        "name": "Couscous",
+        "emoji": "🍲",
+        "blurb": {
+          "kinder": "Tiny soft grains served with stew.",
+          "enriched": "Couscous is tiny steamed grains of wheat, often served with vegetables and a warm stew."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green and white with a red star and moon.",
+      "enriched": "Algeria's flag is green and white with a red crescent moon and star in the centre."
+    }
+  },
+  "BEL": {
+    "wonders": {
+      "landmark": {
+        "name": "Grand-Place",
+        "emoji": "🏛️",
+        "blurb": {
+          "kinder": "A grand old square in the city.",
+          "enriched": "The Grand-Place is a beautiful old market square in Brussels, framed by tall golden buildings."
+        }
+      },
+      "animal": {
+        "name": "Belgian draft horse",
+        "emoji": "🐴",
+        "blurb": {
+          "kinder": "A big, gentle, strong farm horse.",
+          "enriched": "The Belgian draft horse is a large, gentle horse once used to pull heavy farm loads."
+        }
+      },
+      "food": {
+        "name": "Waffles",
+        "emoji": "🧇",
+        "blurb": {
+          "kinder": "Warm waffles with squares to fill.",
+          "enriched": "Belgian waffles are light and crisp, with deep squares perfect for holding fruit or a little sugar."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Black, yellow, and red stripes.",
+      "enriched": "Belgium's flag has three upright stripes of black, yellow, and red."
+    }
+  },
+  "BRA": {
+    "wonders": {
+      "landmark": {
+        "name": "Amazon Rainforest",
+        "emoji": "🌳",
+        "blurb": {
+          "kinder": "A huge green forest full of life.",
+          "enriched": "The Amazon is an enormous rainforest, home to more kinds of plants and animals than almost anywhere."
+        }
+      },
+      "animal": {
+        "name": "Jaguar",
+        "emoji": "🐆",
+        "blurb": {
+          "kinder": "A spotted big cat of the forest.",
+          "enriched": "The jaguar is a strong, spotted cat that lives quietly in the Amazon rainforest."
+        }
+      },
+      "food": {
+        "name": "Pão de queijo",
+        "emoji": "🧀",
+        "blurb": {
+          "kinder": "Little warm cheese breads.",
+          "enriched": "Pão de queijo are small, chewy cheese breads, crisp outside and soft and warm inside."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green and yellow with a blue globe.",
+      "enriched": "Brazil's flag is green and yellow with a blue globe crossed by a band of stars."
+    }
+  },
+  "CAN": {
+    "wonders": {
+      "landmark": {
+        "name": "Niagara Falls",
+        "emoji": "🌊",
+        "blurb": {
+          "kinder": "Huge waterfalls roaring with mist.",
+          "enriched": "Niagara Falls is a set of giant waterfalls where water tumbles down in great clouds of mist."
+        }
+      },
+      "animal": {
+        "name": "Moose",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "A tall deer with wide flat antlers.",
+          "enriched": "The moose is a very tall deer with broad, flat antlers, at home in Canada's forests."
+        }
+      },
+      "food": {
+        "name": "Maple syrup",
+        "emoji": "🍁",
+        "blurb": {
+          "kinder": "Sweet syrup from maple trees.",
+          "enriched": "Maple syrup is a sweet, golden syrup made from the sap of Canada's maple trees."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red and white with a red maple leaf.",
+      "enriched": "Canada's flag is red and white with a single red maple leaf in the middle."
+    }
+  },
+  "CHI": {
+    "wonders": {
+      "landmark": {
+        "name": "Moai of Easter Island",
+        "emoji": "🗿",
+        "blurb": {
+          "kinder": "Giant carved stone figures.",
+          "enriched": "Easter Island, part of Chile, is famous for its giant carved stone figures called moai."
+        }
+      },
+      "animal": {
+        "name": "Andean condor",
+        "emoji": "🦅",
+        "blurb": {
+          "kinder": "A huge bird that soars over mountains.",
+          "enriched": "The Andean condor is a giant bird that glides high above Chile's mountains on wide wings."
+        }
+      },
+      "food": {
+        "name": "Empanadas",
+        "emoji": "🥟",
+        "blurb": {
+          "kinder": "Pastry pockets with tasty filling.",
+          "enriched": "Empanadas are baked pastry pockets filled with meat, cheese, or vegetables."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "White and red with a blue square and star.",
+      "enriched": "Chile's flag has white and red bands with a white star on a blue square."
+    }
+  },
+  "CIV": {
+    "wonders": {
+      "landmark": {
+        "name": "Yamoussoukro Basilica",
+        "emoji": "⛪",
+        "blurb": {
+          "kinder": "A huge church with a round roof.",
+          "enriched": "The basilica in Yamoussoukro is an enormous church with a tall, rounded dome you can see from afar."
+        }
+      },
+      "animal": {
+        "name": "African elephant",
+        "emoji": "🐘",
+        "blurb": {
+          "kinder": "A gentle giant with a long trunk.",
+          "enriched": "The African elephant gives Côte d'Ivoire its nickname and has a long trunk and big, flapping ears."
+        }
+      },
+      "food": {
+        "name": "Attiéké",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Soft grains made from cassava.",
+          "enriched": "Attiéké is a soft, fluffy side dish made from cassava, a little like couscous."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Orange, white, and green stripes.",
+      "enriched": "Côte d'Ivoire's flag has three upright stripes of orange, white, and green."
+    }
+  },
+  "COL": {
+    "wonders": {
+      "landmark": {
+        "name": "Cocora Valley",
+        "emoji": "🌴",
+        "blurb": {
+          "kinder": "Valley of very tall palm trees.",
+          "enriched": "Cocora Valley is famous for wax palms, some of the tallest palm trees in the world."
+        }
+      },
+      "animal": {
+        "name": "Cotton-top tamarin",
+        "emoji": "🐒",
+        "blurb": {
+          "kinder": "A tiny monkey with white fluffy hair.",
+          "enriched": "The cotton-top tamarin is a small monkey with a crest of white hair, found only in Colombia."
+        }
+      },
+      "food": {
+        "name": "Arepa",
+        "emoji": "🫓",
+        "blurb": {
+          "kinder": "A warm round corn cake.",
+          "enriched": "An arepa is a round corn cake, often split open and filled with cheese."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Yellow, blue, and red bands.",
+      "enriched": "Colombia's flag has a wide yellow band above thinner bands of blue and red."
+    }
+  },
+  "CRC": {
+    "wonders": {
+      "landmark": {
+        "name": "Arenal Volcano",
+        "emoji": "🌋",
+        "blurb": {
+          "kinder": "A tall cone-shaped volcano.",
+          "enriched": "Arenal is a tall, cone-shaped volcano surrounded by green rainforest and warm springs."
+        }
+      },
+      "animal": {
+        "name": "Sloth",
+        "emoji": "🦥",
+        "blurb": {
+          "kinder": "A slow, sleepy tree climber.",
+          "enriched": "The sloth moves very slowly through the trees and can sleep for much of the day."
+        }
+      },
+      "food": {
+        "name": "Gallo pinto",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Rice and beans cooked together.",
+          "enriched": "Gallo pinto is a breakfast of rice and beans cooked together with herbs and spices."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue, white, and a wide red band.",
+      "enriched": "Costa Rica's flag has blue and white bands with a wide red band across the middle."
+    }
+  },
+  "DEN": {
+    "wonders": {
+      "landmark": {
+        "name": "The Little Mermaid",
+        "emoji": "🧜",
+        "blurb": {
+          "kinder": "A small mermaid sitting by the sea.",
+          "enriched": "The Little Mermaid is a small bronze statue resting on a rock by Copenhagen's harbour."
+        }
+      },
+      "animal": {
+        "name": "Mute swan",
+        "emoji": "🦢",
+        "blurb": {
+          "kinder": "A graceful white bird on the water.",
+          "enriched": "The mute swan, Denmark's national bird, glides gracefully across calm lakes and ponds."
+        }
+      },
+      "food": {
+        "name": "Smørrebrød",
+        "emoji": "🥪",
+        "blurb": {
+          "kinder": "Open sandwiches piled with toppings.",
+          "enriched": "Smørrebrød are open sandwiches on rye bread, topped with fish, egg, or vegetables."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red with a white cross.",
+      "enriched": "Denmark's flag is red with a white cross, one of the oldest flags still flown today."
+    }
+  },
+  "ECU": {
+    "wonders": {
+      "landmark": {
+        "name": "Galápagos Islands",
+        "emoji": "🏝️",
+        "blurb": {
+          "kinder": "Islands full of rare animals.",
+          "enriched": "The Galápagos Islands belong to Ecuador and are home to giant tortoises and many rare animals."
+        }
+      },
+      "animal": {
+        "name": "Giant tortoise",
+        "emoji": "🐢",
+        "blurb": {
+          "kinder": "A huge, slow, long-living tortoise.",
+          "enriched": "The Galápagos giant tortoise is a very large tortoise that can live for over a hundred years."
+        }
+      },
+      "food": {
+        "name": "Llapingachos",
+        "emoji": "🥔",
+        "blurb": {
+          "kinder": "Cheesy potato pancakes.",
+          "enriched": "Llapingachos are golden potato pancakes filled with cheese and cooked until crisp."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Yellow, blue, and red bands.",
+      "enriched": "Ecuador's flag has a wide yellow band above blue and red, with a condor at its centre."
+    }
+  },
+  "ENG": {
+    "wonders": {
+      "landmark": {
+        "name": "Big Ben",
+        "emoji": "🕰️",
+        "blurb": {
+          "kinder": "A famous tall clock tower.",
+          "enriched": "Big Ben is the great bell inside a tall clock tower beside London's river."
+        }
+      },
+      "animal": {
+        "name": "Robin",
+        "emoji": "🐦",
+        "blurb": {
+          "kinder": "A small bird with a red front.",
+          "enriched": "The robin, with its bright red front, is England's much-loved national bird."
+        }
+      },
+      "food": {
+        "name": "Fish and chips",
+        "emoji": "🍟",
+        "blurb": {
+          "kinder": "Crispy fish with warm chips.",
+          "enriched": "Fish and chips is battered fish served with thick potato chips, often eaten by the seaside."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "White with a red cross.",
+      "enriched": "England's flag is white with a red cross, known as the cross of Saint George."
+    }
+  },
+  "FRA": {
+    "wonders": {
+      "landmark": {
+        "name": "Eiffel Tower",
+        "emoji": "🗼",
+        "blurb": {
+          "kinder": "A tall iron tower in Paris.",
+          "enriched": "The Eiffel Tower is a tall iron tower in Paris that sparkles with lights at night."
+        }
+      },
+      "animal": {
+        "name": "Gallic rooster",
+        "emoji": "🐓",
+        "blurb": {
+          "kinder": "A proud rooster, France's symbol.",
+          "enriched": "The rooster is a cheerful symbol of France, often seen on shirts and badges."
+        }
+      },
+      "food": {
+        "name": "Baguette",
+        "emoji": "🥖",
+        "blurb": {
+          "kinder": "A long, crusty loaf of bread.",
+          "enriched": "A baguette is a long, thin loaf of bread with a crisp crust and a soft inside."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue, white, and red stripes.",
+      "enriched": "France's flag has three upright stripes of blue, white, and red."
+    }
+  },
+  "GER": {
+    "wonders": {
+      "landmark": {
+        "name": "Neuschwanstein Castle",
+        "emoji": "🏰",
+        "blurb": {
+          "kinder": "A castle with tall pointed towers.",
+          "enriched": "Neuschwanstein is a fairy-tale castle with tall towers, set high on a hill in the mountains."
+        }
+      },
+      "animal": {
+        "name": "White stork",
+        "emoji": "🐦",
+        "blurb": {
+          "kinder": "A tall bird with long red legs.",
+          "enriched": "The white stork is a tall bird with long red legs that builds big nests on rooftops."
+        }
+      },
+      "food": {
+        "name": "Pretzel",
+        "emoji": "🥨",
+        "blurb": {
+          "kinder": "Soft bread twisted in a knot.",
+          "enriched": "A pretzel is soft bread twisted into a knot and sprinkled with a little salt."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Black, red, and gold bands.",
+      "enriched": "Germany's flag has three flat bands of black, red, and gold."
+    }
+  },
+  "GHA": {
+    "wonders": {
+      "landmark": {
+        "name": "Lake Volta",
+        "emoji": "🏞️",
+        "blurb": {
+          "kinder": "A very large lake made by people.",
+          "enriched": "Lake Volta is a huge lake in Ghana, one of the largest lakes ever made by people."
+        }
+      },
+      "animal": {
+        "name": "African grey parrot",
+        "emoji": "🦜",
+        "blurb": {
+          "kinder": "A clever grey bird that copies sounds.",
+          "enriched": "The African grey parrot is a smart grey bird known for copying voices and sounds."
+        }
+      },
+      "food": {
+        "name": "Jollof rice",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Tasty rice cooked in tomato sauce.",
+          "enriched": "Jollof rice is a much-loved dish of rice simmered in a rich tomato and pepper sauce."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red, gold, and green with a black star.",
+      "enriched": "Ghana's flag has red, gold, and green bands with a single black star in the middle."
+    }
+  },
+  "IRN": {
+    "wonders": {
+      "landmark": {
+        "name": "Persepolis",
+        "emoji": "🏛️",
+        "blurb": {
+          "kinder": "Ancient stone palaces from long ago.",
+          "enriched": "Persepolis is a place of ancient stone palaces and carvings built in Iran very long ago."
+        }
+      },
+      "animal": {
+        "name": "Persian cat",
+        "emoji": "🐱",
+        "blurb": {
+          "kinder": "A fluffy cat with a round face.",
+          "enriched": "The Persian cat is a gentle, fluffy cat with long hair and a soft, round face."
+        }
+      },
+      "food": {
+        "name": "Tahdig",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Crispy golden rice from the pan.",
+          "enriched": "Tahdig is the crispy golden layer of rice from the bottom of the pot, a special treat."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green, white, and red bands.",
+      "enriched": "Iran's flag has green, white, and red bands with an emblem in the centre."
+    }
+  },
+  "ITA": {
+    "wonders": {
+      "landmark": {
+        "name": "Colosseum",
+        "emoji": "🏛️",
+        "blurb": {
+          "kinder": "A huge round arena from long ago.",
+          "enriched": "The Colosseum is a giant round arena in Rome, built almost two thousand years ago."
+        }
+      },
+      "animal": {
+        "name": "Italian wolf",
+        "emoji": "🐺",
+        "blurb": {
+          "kinder": "A grey wolf of the mountains.",
+          "enriched": "The Italian wolf roams the forests and mountains and appears in many old Italian stories."
+        }
+      },
+      "food": {
+        "name": "Pizza",
+        "emoji": "🍕",
+        "blurb": {
+          "kinder": "Round bread with sauce and cheese.",
+          "enriched": "Pizza began in the city of Naples — a round flatbread topped with tomato and melted cheese."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green, white, and red stripes.",
+      "enriched": "Italy's flag has three upright stripes of green, white, and red."
+    }
+  },
+  "JAM": {
+    "wonders": {
+      "landmark": {
+        "name": "Dunn's River Falls",
+        "emoji": "🌊",
+        "blurb": {
+          "kinder": "Waterfalls you can climb like steps.",
+          "enriched": "Dunn's River Falls is a set of waterfalls that tumble down like natural steps toward the sea."
+        }
+      },
+      "animal": {
+        "name": "Doctor bird",
+        "emoji": "🐦",
+        "blurb": {
+          "kinder": "A shiny hummingbird with long tail feathers.",
+          "enriched": "The doctor bird is a green hummingbird with long tail feathers, found only in Jamaica."
+        }
+      },
+      "food": {
+        "name": "Ackee and saltfish",
+        "emoji": "🍳",
+        "blurb": {
+          "kinder": "Soft yellow fruit cooked with fish.",
+          "enriched": "Ackee and saltfish is Jamaica's national dish, a soft yellow fruit cooked with flaky fish."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Gold cross with green and black triangles.",
+      "enriched": "Jamaica's flag has a gold cross shape with green triangles above and below, and black at the sides."
+    }
+  },
+  "KOR": {
+    "wonders": {
+      "landmark": {
+        "name": "Gyeongbokgung Palace",
+        "emoji": "🏯",
+        "blurb": {
+          "kinder": "A grand palace with curved roofs.",
+          "enriched": "Gyeongbokgung is a grand old palace in Seoul with painted gates and sweeping curved roofs."
+        }
+      },
+      "animal": {
+        "name": "Tiger",
+        "emoji": "🐯",
+        "blurb": {
+          "kinder": "A large striped cat of the mountains.",
+          "enriched": "The tiger is a beloved symbol of Korea and appears in many old folk tales."
+        }
+      },
+      "food": {
+        "name": "Bibimbap",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "A bowl of rice with vegetables.",
+          "enriched": "Bibimbap is a bowl of rice topped with colourful vegetables and sauce, all mixed together."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "White with a red-and-blue circle.",
+      "enriched": "South Korea's flag is white with a red and blue circle and black marks in each corner."
+    }
+  },
+  "KSA": {
+    "wonders": {
+      "landmark": {
+        "name": "Hegra",
+        "emoji": "🪨",
+        "blurb": {
+          "kinder": "Ancient tombs carved into rock.",
+          "enriched": "Hegra is a place of ancient rooms and tombs carved into tall desert rock cliffs long ago."
+        }
+      },
+      "animal": {
+        "name": "Arabian camel",
+        "emoji": "🐪",
+        "blurb": {
+          "kinder": "A camel with one hump.",
+          "enriched": "The Arabian camel has one hump and can travel far across the desert without needing water."
+        }
+      },
+      "food": {
+        "name": "Kabsa",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Spiced rice with meat.",
+          "enriched": "Kabsa is a dish of fragrant spiced rice cooked with meat and sometimes dried fruit."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green with white writing.",
+      "enriched": "Saudi Arabia's flag is green with white Arabic writing and a sword beneath it."
+    }
+  },
+  "MAR": {
+    "wonders": {
+      "landmark": {
+        "name": "Chefchaouen",
+        "emoji": "🏙️",
+        "blurb": {
+          "kinder": "A town painted blue and white.",
+          "enriched": "Chefchaouen is a mountain town in Morocco where the streets and walls are painted bright blue."
+        }
+      },
+      "animal": {
+        "name": "Barbary macaque",
+        "emoji": "🐒",
+        "blurb": {
+          "kinder": "A monkey that lives in the mountains.",
+          "enriched": "The Barbary macaque is a furry monkey that lives in Morocco's cedar forests and mountains."
+        }
+      },
+      "food": {
+        "name": "Tagine",
+        "emoji": "🍲",
+        "blurb": {
+          "kinder": "A stew cooked in a cone-shaped pot.",
+          "enriched": "A tagine is a slow-cooked stew named after the cone-shaped clay pot it cooks in."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red with a green star.",
+      "enriched": "Morocco's flag is red with a green five-pointed star in the middle."
+    }
+  },
+  "NGA": {
+    "wonders": {
+      "landmark": {
+        "name": "Zuma Rock",
+        "emoji": "🪨",
+        "blurb": {
+          "kinder": "A giant rock rising from the land.",
+          "enriched": "Zuma Rock is an enormous rounded rock that rises high above the land near Abuja."
+        }
+      },
+      "animal": {
+        "name": "Eagle",
+        "emoji": "🦅",
+        "blurb": {
+          "kinder": "A strong eagle on Nigeria's badge.",
+          "enriched": "The eagle on Nigeria's badge stands for strength, and soars high on broad wings."
+        }
+      },
+      "food": {
+        "name": "Suya",
+        "emoji": "🍢",
+        "blurb": {
+          "kinder": "Spicy grilled meat on sticks.",
+          "enriched": "Suya is thin, spicy grilled meat served on sticks, a popular street snack in Nigeria."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green, white, and green stripes.",
+      "enriched": "Nigeria's flag has three upright stripes — green, white, and green."
+    }
+  },
+  "NOR": {
+    "wonders": {
+      "landmark": {
+        "name": "The Fjords",
+        "emoji": "🏞️",
+        "blurb": {
+          "kinder": "Deep blue water between tall cliffs.",
+          "enriched": "Norway's fjords are long arms of deep blue sea winding between steep, towering cliffs."
+        }
+      },
+      "animal": {
+        "name": "Reindeer",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "A deer with branching antlers.",
+          "enriched": "Reindeer roam the cold north of Norway and have wide hooves for walking on snow."
+        }
+      },
+      "food": {
+        "name": "Brunost",
+        "emoji": "🧀",
+        "blurb": {
+          "kinder": "Sweet brown cheese on bread.",
+          "enriched": "Brunost is a sweet brown cheese, often sliced thin onto bread or warm waffles."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red with a blue-and-white cross.",
+      "enriched": "Norway's flag is red with a blue cross outlined in white."
+    }
+  },
+  "PAN": {
+    "wonders": {
+      "landmark": {
+        "name": "Panama Canal",
+        "emoji": "🚢",
+        "blurb": {
+          "kinder": "A waterway for ships across the land.",
+          "enriched": "The Panama Canal is a famous waterway that lets ships travel between two great oceans."
+        }
+      },
+      "animal": {
+        "name": "Golden frog",
+        "emoji": "🐸",
+        "blurb": {
+          "kinder": "A small golden frog of good luck.",
+          "enriched": "The Panamanian golden frog is a bright yellow frog seen as a sign of good luck."
+        }
+      },
+      "food": {
+        "name": "Sancocho",
+        "emoji": "🍲",
+        "blurb": {
+          "kinder": "A warm chicken and vegetable soup.",
+          "enriched": "Sancocho is a hearty chicken soup with vegetables, often shared at family gatherings."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Four squares with a blue and red star.",
+      "enriched": "Panama's flag has four squares — white with a blue star and a red star, beside blue and red."
+    }
+  },
+  "PAR": {
+    "wonders": {
+      "landmark": {
+        "name": "Itaipú Dam",
+        "emoji": "💧",
+        "blurb": {
+          "kinder": "A wall that makes power from water.",
+          "enriched": "The Itaipú Dam is an enormous wall across a river that makes electricity from flowing water."
+        }
+      },
+      "animal": {
+        "name": "Maned wolf",
+        "emoji": "🐺",
+        "blurb": {
+          "kinder": "A tall wild dog with long legs.",
+          "enriched": "The maned wolf is a tall, reddish wild dog with long legs for seeing over the tall grass."
+        }
+      },
+      "food": {
+        "name": "Sopa paraguaya",
+        "emoji": "🍞",
+        "blurb": {
+          "kinder": "A warm corn and cheese bread.",
+          "enriched": "Sopa paraguaya is a soft, savoury cornbread baked with cheese, even though its name means soup."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red, white, and blue bands.",
+      "enriched": "Paraguay's flag has red, white, and blue bands with an emblem in the centre."
+    }
+  },
+  "POL": {
+    "wonders": {
+      "landmark": {
+        "name": "Wawel Castle",
+        "emoji": "🏰",
+        "blurb": {
+          "kinder": "A royal castle by the river.",
+          "enriched": "Wawel Castle stands on a hill above the river in Kraków and was once home to Polish kings."
+        }
+      },
+      "animal": {
+        "name": "European bison",
+        "emoji": "🦬",
+        "blurb": {
+          "kinder": "Europe's biggest land animal.",
+          "enriched": "The European bison, a large shaggy animal, roams Poland's ancient Białowieża Forest."
+        }
+      },
+      "food": {
+        "name": "Pierogi",
+        "emoji": "🥟",
+        "blurb": {
+          "kinder": "Dumplings filled with tasty things.",
+          "enriched": "Pierogi are soft dumplings filled with potato, cheese, or fruit, then boiled or lightly fried."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "White above red.",
+      "enriched": "Poland's flag is simply white on top and red below."
+    }
+  },
+  "POR": {
+    "wonders": {
+      "landmark": {
+        "name": "Belém Tower",
+        "emoji": "🏰",
+        "blurb": {
+          "kinder": "A stone tower guarding the river.",
+          "enriched": "Belém Tower is a carved stone tower that has watched over Lisbon's river for centuries."
+        }
+      },
+      "animal": {
+        "name": "Rooster of Barcelos",
+        "emoji": "🐓",
+        "blurb": {
+          "kinder": "A colourful rooster of good luck.",
+          "enriched": "The Rooster of Barcelos is a brightly painted rooster, a cheerful symbol of good luck in Portugal."
+        }
+      },
+      "food": {
+        "name": "Pastel de nata",
+        "emoji": "🥧",
+        "blurb": {
+          "kinder": "A little custard tart.",
+          "enriched": "Pastel de nata is a small, creamy custard tart with a crisp, flaky crust."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green and red with a shield.",
+      "enriched": "Portugal's flag is green and red with a shield and golden globe near the middle."
+    }
+  },
+  "QAT": {
+    "wonders": {
+      "landmark": {
+        "name": "Khor Al Adaid",
+        "emoji": "🏜️",
+        "blurb": {
+          "kinder": "Where the sea meets the desert.",
+          "enriched": "Khor Al Adaid is a quiet place in Qatar where the sea reaches deep into the desert sands."
+        }
+      },
+      "animal": {
+        "name": "Arabian oryx",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "A white antelope with long horns.",
+          "enriched": "The Arabian oryx is a pale desert antelope with long straight horns, the national animal of Qatar."
+        }
+      },
+      "food": {
+        "name": "Machboos",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Spiced rice with meat or fish.",
+          "enriched": "Machboos is a fragrant dish of spiced rice cooked with meat or fish and dried lime."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Maroon and white with a zigzag edge.",
+      "enriched": "Qatar's flag is maroon and white, divided by a zigzag line of nine points."
+    }
+  },
+  "RSA": {
+    "wonders": {
+      "landmark": {
+        "name": "Table Mountain",
+        "emoji": "⛰️",
+        "blurb": {
+          "kinder": "A mountain with a flat top.",
+          "enriched": "Table Mountain rises above Cape Town with a wide, flat top that often wears a cloud."
+        }
+      },
+      "animal": {
+        "name": "Springbok",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "A small leaping antelope.",
+          "enriched": "The springbok is a small antelope that can leap high into the air, a symbol of South Africa."
+        }
+      },
+      "food": {
+        "name": "Bobotie",
+        "emoji": "🍲",
+        "blurb": {
+          "kinder": "Spiced meat baked with egg on top.",
+          "enriched": "Bobotie is a baked dish of gently spiced minced meat with a soft, golden egg topping."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Six colours in a Y shape.",
+      "enriched": "South Africa's flag has six colours in a Y shape, standing for many peoples coming together."
+    }
+  },
+  "SCO": {
+    "wonders": {
+      "landmark": {
+        "name": "Edinburgh Castle",
+        "emoji": "🏰",
+        "blurb": {
+          "kinder": "A castle high on a rocky hill.",
+          "enriched": "Edinburgh Castle stands on top of an ancient rock, looking out over the whole city."
+        }
+      },
+      "animal": {
+        "name": "Unicorn",
+        "emoji": "🦄",
+        "blurb": {
+          "kinder": "Scotland's magical national animal.",
+          "enriched": "The unicorn, a magical horse with a single horn, is the national animal of Scotland."
+        }
+      },
+      "food": {
+        "name": "Shortbread",
+        "emoji": "🍪",
+        "blurb": {
+          "kinder": "Buttery biscuits that melt in your mouth.",
+          "enriched": "Shortbread is a sweet, buttery biscuit, crumbly and golden and lovely with a warm drink."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue with a white diagonal cross.",
+      "enriched": "Scotland's flag is blue with a white diagonal cross, the cross of Saint Andrew."
+    }
+  },
+  "SUI": {
+    "wonders": {
+      "landmark": {
+        "name": "The Matterhorn",
+        "emoji": "🏔️",
+        "blurb": {
+          "kinder": "A sharp, pointed snowy mountain.",
+          "enriched": "The Matterhorn is a tall mountain with a sharp, pointed peak high in the Swiss Alps."
+        }
+      },
+      "animal": {
+        "name": "St. Bernard dog",
+        "emoji": "🐶",
+        "blurb": {
+          "kinder": "A big gentle dog of the mountains.",
+          "enriched": "The St. Bernard is a large, kind dog once trained to help travellers lost in the snow."
+        }
+      },
+      "food": {
+        "name": "Cheese fondue",
+        "emoji": "🧀",
+        "blurb": {
+          "kinder": "Melted cheese to dip bread in.",
+          "enriched": "Fondue is a warm pot of melted cheese that people dip little pieces of bread into."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red with a white cross.",
+      "enriched": "Switzerland's flag is red with a bold white cross, and it has a square shape."
+    }
+  },
+  "TUN": {
+    "wonders": {
+      "landmark": {
+        "name": "El Jem Amphitheatre",
+        "emoji": "🏛️",
+        "blurb": {
+          "kinder": "A huge round arena of stone.",
+          "enriched": "El Jem is a giant stone arena in Tunisia, built long ago and still standing today."
+        }
+      },
+      "animal": {
+        "name": "Dorcas gazelle",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "A small, graceful desert gazelle.",
+          "enriched": "The Dorcas gazelle is a small, pale gazelle that can live in the desert with very little water."
+        }
+      },
+      "food": {
+        "name": "Brik",
+        "emoji": "🥟",
+        "blurb": {
+          "kinder": "A crispy pastry with a soft filling.",
+          "enriched": "Brik is a thin, crispy pastry folded around egg or potato and fried until golden."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red with a white circle, star, and moon.",
+      "enriched": "Tunisia's flag is red with a white circle holding a red crescent moon and star."
+    }
+  },
+  "URU": {
+    "wonders": {
+      "landmark": {
+        "name": "La Mano de Punta del Este",
+        "emoji": "🖐️",
+        "blurb": {
+          "kinder": "Giant fingers rising from the sand.",
+          "enriched": "La Mano is a sculpture of giant fingers that seem to rise right out of the beach sand."
+        }
+      },
+      "animal": {
+        "name": "Southern lapwing",
+        "emoji": "🐦",
+        "blurb": {
+          "kinder": "A bold bird that guards its nest.",
+          "enriched": "The tero, or southern lapwing, is a bold bird that calls loudly to protect its nest."
+        }
+      },
+      "food": {
+        "name": "Dulce de leche",
+        "emoji": "🍮",
+        "blurb": {
+          "kinder": "Sweet, creamy caramel spread.",
+          "enriched": "Dulce de leche is a sweet, creamy caramel made by slowly cooking milk and sugar together."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue and white stripes with a sun.",
+      "enriched": "Uruguay's flag has blue and white stripes with a golden sun in the upper corner."
+    }
+  },
+  "USA": {
+    "wonders": {
+      "landmark": {
+        "name": "Statue of Liberty",
+        "emoji": "🗽",
+        "blurb": {
+          "kinder": "A tall statue holding a torch.",
+          "enriched": "The Statue of Liberty stands in New York harbour, holding a torch high to welcome people."
+        }
+      },
+      "animal": {
+        "name": "Bald eagle",
+        "emoji": "🦅",
+        "blurb": {
+          "kinder": "A white-headed eagle, the country's symbol.",
+          "enriched": "The bald eagle, with its white head and broad wings, is the national bird of the United States."
+        }
+      },
+      "food": {
+        "name": "Hamburger",
+        "emoji": "🍔",
+        "blurb": {
+          "kinder": "A round bun with a tasty patty.",
+          "enriched": "A hamburger is a round bun filled with a cooked patty and toppings like cheese and lettuce."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Stars and stripes in red, white, and blue.",
+      "enriched": "The United States flag has fifty white stars and thirteen red and white stripes."
+    }
+  },
+  "UZB": {
+    "wonders": {
+      "landmark": {
+        "name": "Registan, Samarkand",
+        "emoji": "🕌",
+        "blurb": {
+          "kinder": "Grand tiled buildings with blue domes.",
+          "enriched": "The Registan in Samarkand is a square framed by grand buildings covered in bright blue tiles."
+        }
+      },
+      "animal": {
+        "name": "Snow leopard",
+        "emoji": "🐆",
+        "blurb": {
+          "kinder": "A spotted cat of the high mountains.",
+          "enriched": "The snow leopard is a pale, spotted cat that lives high up in Uzbekistan's mountains."
+        }
+      },
+      "food": {
+        "name": "Plov",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Rice cooked with carrots and meat.",
+          "enriched": "Plov is a much-loved dish of rice cooked with carrots, onions, and meat in one big pot."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue, white, and green with a moon and stars.",
+      "enriched": "Uzbekistan's flag has blue, white, and green bands with a crescent moon and twelve stars."
+    }
+  },
+  "WAL": {
+    "wonders": {
+      "landmark": {
+        "name": "Yr Wyddfa (Snowdon)",
+        "emoji": "🏔️",
+        "blurb": {
+          "kinder": "The tallest mountain in Wales.",
+          "enriched": "Yr Wyddfa, also called Snowdon, is the tallest mountain in Wales, with paths winding to the top."
+        }
+      },
+      "animal": {
+        "name": "Welsh dragon",
+        "emoji": "🐉",
+        "blurb": {
+          "kinder": "The red dragon of the Welsh flag.",
+          "enriched": "The red dragon is the proud symbol of Wales and appears right in the middle of its flag."
+        }
+      },
+      "food": {
+        "name": "Welsh cakes",
+        "emoji": "🍪",
+        "blurb": {
+          "kinder": "Little griddle cakes with currants.",
+          "enriched": "Welsh cakes are small, sweet cakes cooked on a griddle and dotted with currants."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Green and white with a red dragon.",
+      "enriched": "Wales's flag is green and white with a bright red dragon striding across it."
+    }
   }
 }
