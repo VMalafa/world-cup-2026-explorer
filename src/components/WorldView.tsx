@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
@@ -14,6 +13,7 @@ import { useProfile } from "./Profiles";
 import { ProfileChip } from "./ProfileChip";
 import { Flag } from "./Flag";
 import { SpeakButton } from "./SpeakButton";
+import { SurfaceNav } from "./SurfaceNav";
 
 // Leaflet touches `window`; load the Globe only on the client.
 const WorldMap = dynamic(() => import("./WorldMap"), {
@@ -62,15 +62,9 @@ export function WorldView() {
   if (hydrated && !activeProfile) return null; // first-run gate covers this
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 pb-16 pt-5">
+    <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 pb-28 pt-5">
       <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2 font-extrabold text-ink shadow-card ring-1 ring-line hover:text-royal"
-        >
-          <span aria-hidden>←</span> Today
-        </Link>
-        <h1 className="order-last w-full text-center text-[clamp(1.5rem,7vw,2rem)] font-extrabold sm:order-none sm:w-auto">
+        <h1 className="text-[clamp(1.5rem,7vw,2rem)] font-extrabold">
           <span className="text-royal">{activeProfile?.name}&rsquo;s</span> World{" "}
           <span aria-hidden>🌍</span>
         </h1>
@@ -209,6 +203,8 @@ export function WorldView() {
           )}
         </AnimatePresence>
       </section>
+
+      <SurfaceNav />
     </div>
   );
 }
