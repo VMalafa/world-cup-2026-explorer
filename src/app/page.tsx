@@ -97,7 +97,28 @@ export default function Home() {
             transition={{ duration: 0.25 }}
           >
             {tab === "today" && (
-              <MatchDashboard featured={featured} source={source} />
+              <div className="space-y-6">
+                <Link
+                  href="/journey"
+                  className="group flex items-center justify-between gap-3 rounded-blob bg-royal px-5 py-4 text-white shadow-pop transition-transform hover:-translate-y-0.5 sm:px-7 sm:py-5"
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="text-3xl sm:text-4xl" aria-hidden>🌍</span>
+                    <span>
+                      <span className="block text-lg font-extrabold sm:text-xl">
+                        Start today&rsquo;s Match Day Journey
+                      </span>
+                      <span className="block text-sm font-semibold text-white/80">
+                        Explore both countries on the globe
+                      </span>
+                    </span>
+                  </span>
+                  <span className="text-2xl font-extrabold transition-transform group-hover:translate-x-1" aria-hidden>
+                    →
+                  </span>
+                </Link>
+                <MatchDashboard featured={featured} source={source} />
+              </div>
             )}
             {tab === "map" && <MapExplorer />}
             {tab === "compare" && (
