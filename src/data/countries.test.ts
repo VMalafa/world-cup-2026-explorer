@@ -18,10 +18,16 @@ describe("Country / Team split", () => {
     expect(brazil.lng).toBeDefined();
   });
 
-  it("leaves Wonders + flag meaning absent until authored in #4", () => {
+  it("surfaces authored Wonders + flag meaning on every Country (issue #23 coverage)", () => {
     const brazil = getCountry("BRA")!;
-    expect(brazil.wonders).toBeUndefined();
-    expect(brazil.flagMeaning).toBeUndefined();
+    expect(brazil.wonders?.landmark.name).toBe("Amazon Rainforest");
+    expect(brazil.flagMeaning).toBeDefined();
+    // Coverage is complete: every tournament nation now has wonders authored,
+    // so no journey falls back to the "still gathering" message.
+    for (const c of COUNTRIES) {
+      expect(c.wonders, `${c.code} should have wonders`).toBeDefined();
+      expect(c.flagMeaning, `${c.code} should have a flag meaning`).toBeDefined();
+    }
   });
 });
 

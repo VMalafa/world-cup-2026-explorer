@@ -44,7 +44,7 @@ describe("content pipeline output (src/data is the Guardian's output)", () => {
     const japan = getCountry("JPN")!;
     expect(japan.wonders?.landmark.name).toBe("Mount Fuji");
     expect(japan.flagMeaning?.kinder).toContain("sun");
-    // A non-featured country has no content yet — and that's fine.
-    expect(getCountry("BRA")?.wonders).toBeUndefined();
+    // Coverage is now complete (issue #23): every country surfaces content.
+    expect(getCountry("BRA")?.wonders?.landmark.name).toBe("Amazon Rainforest");
   });
 });
