@@ -113,6 +113,13 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
   background: #dbe5f5;
   border-radius: 1.5rem;
+  /*
+   * Contain Leaflet's internal z-indexes (panes & controls go up to ~1000).
+   * Without a stacking context they leak out and paint over fixed page chrome
+   * like the floating Feedback button and the bottom nav. `isolate` keeps the
+   * whole map as one layer below them.
+   */
+  isolation: isolate;
 }
 .leaflet-popup-content-wrapper {
   border-radius: 1rem;
