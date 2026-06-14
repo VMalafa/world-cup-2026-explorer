@@ -21,7 +21,66 @@ export type Continent =
   | "samerica"
   | "oceania";
 
-/** A nation taking part in the tournament, plus learning metadata. */
+/**
+ * One curated kid-friendly highlight of a Country — a landmark, an animal, or a
+ * food — revealed by tapping and read aloud during a Match Day Journey.
+ */
+export interface Wonder {
+  /** Short name, e.g. "Eiffel Tower". */
+  name: string;
+  /** Emoji shown on the card. */
+  emoji: string;
+  /** The read-aloud line, written at both reading levels. */
+  blurb: DualText;
+}
+
+/**
+ * The small fixed set of Wonders shown for a Country: one landmark, one animal,
+ * one food. Authored + Guardian-gated in issue #4; the shape lives here.
+ */
+export interface Wonders {
+  landmark: Wonder;
+  animal: Wonder;
+  food: Wonder;
+}
+
+/**
+ * A nation treated as the unit of *learning* — the place and culture a child
+ * explores (CONTEXT.md: **Country**). This is the footballing **Team**'s
+ * geography/culture facet, split out so the journey reads learning content
+ * without footballing concerns (group, line-up, score). Built from `TEAMS` via
+ * `toCountry` in `src/data/countries.ts`; the live app still uses `Team`.
+ */
+export interface Country {
+  /** FIFA-style 3-letter code; the stable id shared with the Country's Team. */
+  code: string;
+  name: string;
+  /** Emoji flag — instant, no network needed. */
+  flag: string;
+  /** ISO 3166-1 alpha-2 (lowercase) for flagcdn.com images. */
+  iso2: string;
+  capital: string;
+  continent: Continent;
+  /** Capital coordinates — the spine of all derived geography. */
+  lat: number;
+  lng: number;
+  /** A friendly "hello" in the Country's main language, for read-aloud fun. */
+  hello?: string;
+  /** Headline fun facts, dual-level. */
+  funFacts: DualText[];
+  /** The three Wonders shown in a journey. Optional until authored (issue #4). */
+  wonders?: Wonders;
+  /** One-line meaning of the flag, dual-level. Optional until authored (issue #4). */
+  flagMeaning?: DualText;
+}
+
+/**
+ * A nation taking part in the tournament, plus learning metadata.
+ *
+ * NOTE: `Team` still carries both footballing facets (`group`) and the learning
+ * facets that now also live on `Country`. The live app reads `Team`; new journey
+ * code reads `Country` (see `src/data/countries.ts`). The two share `code`.
+ */
 export interface Team {
   /** FIFA-style 3-letter code, also used as the stable id. */
   code: string;
