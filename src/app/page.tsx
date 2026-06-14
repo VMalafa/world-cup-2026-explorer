@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useFeatured } from "@/lib/useFeatured";
 import { getTeam } from "@/data/teams";
 import { ReadingLevelToggle } from "@/components/ReadingLevelToggle";
+import { ProfileChip } from "@/components/ProfileChip";
 import { MatchDashboard } from "@/components/MatchDashboard";
 import { MapExplorer } from "@/components/MapExplorer";
 import { CompareView } from "@/components/CompareView";
@@ -61,7 +62,10 @@ export default function Home() {
             </span>
           </div>
         </div>
-        <ReadingLevelToggle compact />
+        <div className="flex items-center gap-2.5">
+          <ProfileChip />
+          <ReadingLevelToggle compact />
+        </div>
       </header>
 
       {/* Desktop / tablet tab bar */}
