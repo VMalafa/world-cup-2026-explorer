@@ -1,0 +1,53 @@
+"use client";
+
+import { useEffect, type ElementType } from "react";
+
+import { useSpeak, type SpeakOptions } from "@/lib/useSpeak";
+
+/**
+ * A line of journey text paired with its audio affordance. Every line is
+ * tappable to hear it; pass `autoRead` (for the youngest) to have it read itself
+ * aloud when it appears. Falls back to plain text when speech is unavailable.
+ */
+export function SpeakableText({
+  text,
+  lang,
+  autoRead = false,
+  as: Tag = "p",
+  className = "",
+  textClassName = "",
+}: {
+  text: string;
+  lang?: SpeakOptions["lang"];
+  /** Read aloud automatically when shown — for non-readers. */
+  autoRead?: boolean;
+  as?: ElementType;
+  className?: string;
+  textClassName?: string;
+}) {
+  const { supported, speaking, speak, stop } = useSpeak();
+
+  useEffect(() => {
+    if (supported && autoRead) speak(text, { lang });
+    // Re-read whenever the line itself changes.
+  }, [supported, autoRead, text, lang, speak]);
+
+  return (
+    <Tag className={`flex items-center gap-2 ${className}`}>
+      <span className={textClassName}>{text}</span>
+      {supported && (
+        <button
+          type="button"
+          onClick={() => (speaking ? stop() : speak(text, { lang }))}
+          aria-label={speaking ? "Stop reading" : "Read aloud"}
+          aria-pressed={speaking}
+          className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-royal-50 text-lg text-royal ring-1 ring-royal-100 transition-colors hover:bg-royal-100 ${
+            speaking ? "animate-pulse" : ""
+          }`}
+        >
+          <span aria-hidden>{speaking ? "⏸️" : "🔊"}</span>
+        </button>
+      )}
+    </Tag>
+  );
+}
