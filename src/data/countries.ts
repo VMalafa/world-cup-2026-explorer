@@ -1,6 +1,7 @@
 import type { Country, Team } from "@/types";
 
 import { TEAMS } from "./teams";
+import { COUNTRY_CONTENT } from "./countryContent";
 
 /**
  * Project a footballing **Team** onto its learning **Country** facet.
@@ -13,7 +14,11 @@ import { TEAMS } from "./teams";
 export function toCountry(team: Team): Country {
   // Destructure away the footballing facets; keep the learning ones.
   const { group: _group, ...learning } = team;
-  return learning;
+  // Merge in Guardian-approved Wonders + flag meaning, if any exist yet (#4).
+  const content = COUNTRY_CONTENT[team.code];
+  return content
+    ? { ...learning, wonders: content.wonders, flagMeaning: content.flagMeaning }
+    : learning;
 }
 
 /** The 48 tournament nations as learning Countries (geography spine intact). */
