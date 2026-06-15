@@ -56,8 +56,9 @@ journey and paid off by the post-match "what happened?" beat. Never gates a
 
 **Wonders**:
 The small curated set of kid-friendly highlights shown for a **Country** in a
-journey — typically a landmark, an animal, and a food — each revealed by tapping
-and read aloud.
+journey — typically a landmark, an animal, and a food — each revealed by tapping,
+read aloud, and shown as a children's-atlas **illustration** (with an emoji as the
+graceful fallback before the picture exists). See ADR-0004.
 
 **Content Guardian**:
 The automated reviewer (an AI agent, run at authoring time, not in the live app)
