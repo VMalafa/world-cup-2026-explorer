@@ -117,16 +117,20 @@ export function WondersStation({
       />
     );
   }
-  const items = [country.wonders.landmark, country.wonders.animal, country.wonders.food];
+  const slots = [
+    { slot: "landmark", wonder: country.wonders.landmark },
+    { slot: "animal", wonder: country.wonders.animal },
+    { slot: "food", wonder: country.wonders.food },
+  ] as const;
   return (
     <div className="space-y-3">
       <p className="text-center font-semibold text-muted">
         Tap each card to discover a wonder of {country.name}!
       </p>
       <ul className="space-y-3">
-        {items.map((w) => (
-          <li key={w.name}>
-            <WonderCard wonder={w} pick={pick} />
+        {slots.map(({ slot, wonder }) => (
+          <li key={wonder.name}>
+            <WonderCard wonder={wonder} code={country.code} slot={slot} pick={pick} />
           </li>
         ))}
       </ul>
@@ -134,7 +138,17 @@ export function WondersStation({
   );
 }
 
-function WonderCard({ wonder, pick }: { wonder: Wonder; pick: (t: DualText) => string }) {
+function WonderCard({
+  wonder,
+  code,
+  slot,
+  pick,
+}: {
+  wonder: Wonder;
+  code: string;
+  slot: string;
+  pick: (t: DualText) => string;
+}) {
   const [revealed, setRevealed] = useState(false);
   const reduce = useReducedMotion();
 
@@ -158,11 +172,48 @@ function WonderCard({ wonder, pick }: { wonder: Wonder; pick: (t: DualText) => s
       transition={{ duration: reduce ? 0 : 0.3 }}
       className="kid-card flex items-start gap-3 p-4"
     >
-      <span className="text-4xl" aria-hidden>{wonder.emoji}</span>
+      <WonderArt code={code} slot={slot} emoji={wonder.emoji} name={wonder.name} />
       <div>
         <p className="font-extrabold text-ink">{wonder.name}</p>
         <SpeakableText autoRead text={pick(wonder.blurb)} textClassName="font-semibold text-muted" />
       </div>
     </motion.div>
+  );
+}
+
+/**
+ * A wonder's children's-atlas illustration (ADR-0004), loaded by convention
+ * from `/public/wonders/<code>-<slot>.png`. Until that picture is generated and
+ * dropped in, this gracefully falls back to the wonder's emoji — so the journey
+ * is never broken by a missing image (Design Principle 3).
+ */
+function WonderArt({
+  code,
+  slot,
+  emoji,
+  name,
+}: {
+  code: string;
+  slot: string;
+  emoji: string;
+  name: string;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return <span className="text-4xl" aria-hidden>{emoji}</span>;
+  }
+  return (
+    // A plain <img> keeps this offline-friendly: drop a PNG in and it appears,
+    // miss one and onError swaps in the emoji. No optimizer round-trip needed.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/wonders/${code.toLowerCase()}-${slot}.png`}
+      alt={name}
+      width={64}
+      height={64}
+      className="h-16 w-16 shrink-0 rounded-blob object-cover ring-1 ring-line"
+      onError={() => setFailed(true)}
+    />
   );
 }
