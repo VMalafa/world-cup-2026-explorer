@@ -1,0 +1,57 @@
+# Daily refresh of the committed REAL match snapshot (ADR-0005).
+#
+# The live app is live-first; this snapshot is its last-good fallback so a brief
+# provider outage never forces fabricated fixtures. Running daily keeps the
+# fallback real and current to within ~a day, with the live feed covering the
+# minute-to-minute scores in between.
+#
+# Requires a repo secret FOOTBALL_DATA_TOKEN (Settings → Secrets → Actions).
+#
+# Why GitHub Actions and not Vercel Cron: this job must COMMIT a static file back
+# to the repo (the snapshot is committed data per ADR-0005, no runtime storage).
+# Vercel Cron only invokes an HTTP endpoint and cannot write to git, so it can't
+# do this job. The contents:write permission below is the reason this lives here.
+name: refresh-snapshot
+
+on:
+  schedule:
+    # 06:00 UTC daily — before most kickoffs, after the prior day's results settle.
+    - cron: "0 6 * * *"
+  workflow_dispatch: {} # allow a manual run from the Actions tab
+
+permissions:
+  contents: write # to commit the refreshed snapshot
+
+concurrency:
+  group: refresh-snapshot
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Refresh snapshot from the live provider
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+        run: npm run refresh:snapshot
+
+      - name: Commit if the snapshot changed
+        run: |
+          if git diff --quiet -- src/data/matchesSnapshot.json; then
+            echo "Snapshot unchanged — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/matchesSnapshot.json
+          git commit -m "chore: refresh real match snapshot (ADR-0005)"
+          git push

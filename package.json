@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "author:content": "tsx scripts/authorContent.mts",
-    "gen:wonders": "tsx scripts/generateWonders.mts"
+    "gen:wonders": "tsx scripts/generateWonders.mts",
+    "refresh:snapshot": "tsx scripts/refreshSnapshot.mts"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

@@ -2,7 +2,10 @@
 
 ## Status
 
-accepted
+amended by ADR-0006 — Web Speech is now the *fallback*; authored lines play
+pre-generated natural audio. The hybrid upgrade this ADR anticipated was expanded
+from greetings-only to all authored read-aloud, because the robotic default voice
+(issue #29) hurt every line, not just greetings.
 
 ## Context & decision
 

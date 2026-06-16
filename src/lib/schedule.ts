@@ -1,5 +1,5 @@
 import type { Match } from "@/types";
-import { MATCHES } from "@/data/matches";
+import { MATCHES_SNAPSHOT } from "@/data/matchesSnapshot";
 
 /** Format a Date as a local YYYY-MM-DD string. */
 export function toDateKey(d: Date): string {
@@ -158,9 +158,14 @@ export function getFeaturedFrom(
   };
 }
 
-/** Convenience wrapper over the bundled curated schedule. */
+/**
+ * Convenience wrapper over the committed REAL snapshot — the fallback when the
+ * live provider is unavailable. `applyDerive` is false: the snapshot carries real
+ * statuses/scores, so we never layer mock scores on it (and never invent
+ * fixtures). See ADR-0005.
+ */
 export function getFeatured(now: Date = new Date()): Featured {
-  return getFeaturedFrom(MATCHES, now, true);
+  return getFeaturedFrom(MATCHES_SNAPSHOT, now, false);
 }
 
 /** Friendly long date like "Saturday 13 June". */
