@@ -37,7 +37,11 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
+      # Use `npm install` (not `npm ci`): the committed lockfile is missing some
+      # Linux-only optional deps (e.g. @emnapi/core), which makes the strict
+      # `npm ci` fail on the runner. `npm install` reconciles that the same way
+      # Vercel's build does. We don't commit any lockfile change from CI.
+      - run: npm install --no-audit --no-fund
 
       - name: Refresh snapshot from the live provider
         env:
