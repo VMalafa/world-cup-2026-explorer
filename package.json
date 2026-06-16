@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "author:content": "tsx scripts/authorContent.mts",
     "gen:wonders": "tsx scripts/generateWonders.mts",
+    "gen:wonder-photos": "tsx scripts/generateWonderPhotos.mts",
     "refresh:snapshot": "tsx scripts/refreshSnapshot.mts"
   },
   "dependencies": {
