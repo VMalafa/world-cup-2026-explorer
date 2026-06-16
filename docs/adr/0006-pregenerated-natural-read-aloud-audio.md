@@ -2,7 +2,23 @@
 
 ## Status
 
-accepted (amends ADR-0001)
+partially superseded — see the correction below.
+
+> Correction (issue #29 implementation): the plan below assumed pre-generated TTS
+> could run through the **Vercel AI Gateway**, like the Wonder images (ADR-0004).
+> It can't — the installed `@ai-sdk/gateway` exposes only `languageModel` and
+> `imageModel`, **no speech**. Natural cloud TTS would need a separate provider
+> key (OpenAI / ElevenLabs) that isn't set up, plus a new dependency and a large
+> batch of committed audio.
+>
+> So the **pre-generated-audio path is deferred**, and the immediate #29 fix is an
+> **upgraded on-device Web Speech** (`useSpeak`): actively select the best
+> available *neural* voice (iOS Siri/Enhanced, desktop Natural/Premium) instead of
+> the robotic default, and fix the field reliability bugs — voices loading late
+> (`voiceschanged`), long lines truncating (sentence chunking), and the ~15s
+> Chrome/iOS pause/cut-off (a `resume()` keepalive). This fixes both halves of #29
+> ("robotic" and "doesn't always work") at zero cost and offline. The clip-first
+> runtime layer described below can still drop in later behind a real TTS key.
 
 ## Context & decision
 
