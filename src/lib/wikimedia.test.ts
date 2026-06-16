@@ -6,6 +6,8 @@ import {
   buildSearchQuery,
   toWonderPhoto,
   extForMime,
+  isJunkTitle,
+  scoreCandidate,
   type CommonsImageInfo,
 } from "./wikimedia";
 
@@ -44,6 +46,40 @@ describe("extForMime", () => {
     expect(extForMime("image/jpeg")).toBe("jpg");
     expect(extForMime("image/png")).toBe("png");
     expect(extForMime(undefined)).toBe("jpg");
+  });
+});
+
+describe("isJunkTitle", () => {
+  it("flags maps, satellites, screenshots, logos, diagrams", () => {
+    for (const t of [
+      "Sahara satellite hires",
+      "Locator map of France",
+      "Tenes Empanadas Graciela 0.11.1 screenshot",
+      "Coat of arms of Spain",
+      "Flag of Brazil",
+    ]) {
+      expect(isJunkTitle(t)).toBe(true);
+    }
+  });
+  it("passes real photo titles", () => {
+    for (const t of ["Eiffel Tower at sunrise", "Fennec Fox Vulpes zerda", "Jollof rice with egg"]) {
+      expect(isJunkTitle(t)).toBe(false);
+    }
+  });
+});
+
+describe("scoreCandidate", () => {
+  it("drops junk below zero", () => {
+    expect(scoreCandidate("Sahara satellite map", "Sahara Desert")).toBeLessThan(0);
+  });
+  it("rewards titles that share the subject's significant words", () => {
+    const onTopic = scoreCandidate("Eiffel Tower at night", "Eiffel Tower");
+    const offTopic = scoreCandidate("A street in Paris", "Eiffel Tower");
+    expect(onTopic).toBeGreaterThan(offTopic);
+  });
+  it("ignores short words when matching", () => {
+    // "the" shouldn't count; no significant overlap → 0.
+    expect(scoreCandidate("On the river", "The Alps")).toBe(0);
   });
 });
 
