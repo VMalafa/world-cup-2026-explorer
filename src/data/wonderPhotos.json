@@ -27,6 +27,27 @@
     "license": "CC BY 2.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Glacial_iceberg_in_Argentina.jpg"
   },
+  "aus-animal": {
+    "file": "aus-animal.jpg",
+    "title": "Eastern Grey Kangaroo Feeding edited",
+    "author": "Eastern_Grey_Kangaroo_Feeding.jpg : Toby Hudson derivative work: Durova ( talk )",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Eastern_Grey_Kangaroo_Feeding_edited.jpg"
+  },
+  "aus-food": {
+    "file": "aus-food.jpg",
+    "title": "Vegemiteontoast large",
+    "author": "Tristanb",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vegemiteontoast_large.jpg"
+  },
+  "aus-landmark": {
+    "file": "aus-landmark.jpg",
+    "title": "Petermann Ranges (AU), Uluru-Kata Tjuta National Park, Uluru, Kuniya Walk -- 2019 -- 3636",
+    "author": "Dietmar Rabich",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Petermann_Ranges_(AU),_Uluru-Kata_Tjuta_National_Park,_Uluru,_Kuniya_Walk_--_2019_--_3636.jpg"
+  },
   "aut-animal": {
     "file": "aut-animal.jpg",
     "title": "Marmota marmota 07",
@@ -47,6 +68,90 @@
     "author": "Glg",
     "license": "CC BY-SA 2.0 de",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cumulus_cloud_above_Lechtaler_Alps_at_tannheim,_Austria.jpg"
+  },
+  "bra-animal": {
+    "file": "bra-animal.jpg",
+    "title": "Jaguar head shot-edit2",
+    "author": "Cburnett at English Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jaguar_head_shot-edit2.jpg"
+  },
+  "bra-food": {
+    "file": "bra-food.jpg",
+    "title": "Pão de queijo 2",
+    "author": "Melsj",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:P%C3%A3o_de_queijo_2.jpg"
+  },
+  "bra-landmark": {
+    "file": "bra-landmark.jpg",
+    "title": "Noite no Teatro Amazonas (cropped)",
+    "author": "Susan Valentim",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Noite_no_Teatro_Amazonas_(cropped).jpg"
+  },
+  "can-animal": {
+    "file": "can-animal.jpg",
+    "title": "Moose in Grand Teton National Park 3 (8007698498)",
+    "author": "Tony Hisgett from Birmingham, UK",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Moose_in_Grand_Teton_National_Park_3_(8007698498).jpg"
+  },
+  "can-food": {
+    "file": "can-food.jpg",
+    "title": "Maple syrup",
+    "author": "User:Miguel Andrade",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Maple_syrup.jpg"
+  },
+  "can-landmark": {
+    "file": "can-landmark.jpg",
+    "title": "Niagara-Falls-Horseshoe-Falls-view",
+    "author": "Photo (c)2007 Helen Filatova",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Niagara-Falls-Horseshoe-Falls-view.jpg"
+  },
+  "civ-animal": {
+    "file": "civ-animal.jpg",
+    "title": "African bush elephants (Loxodonta africana) female with six-week-old baby",
+    "author": "Charles J. Sharp",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:African_bush_elephants_(Loxodonta_africana)_female_with_six-week-old_baby.jpg"
+  },
+  "civ-food": {
+    "file": "civ-food.jpg",
+    "title": "Attiéké Bénin",
+    "author": "Chado07",
+    "license": "CC0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Atti%C3%A9k%C3%A9_B%C3%A9nin.jpg"
+  },
+  "civ-landmark": {
+    "file": "civ-landmark.jpg",
+    "title": "Notre-Dame-de-la-Paix de Yamoussoukro 2",
+    "author": "Gregor Rom",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Notre-Dame-de-la-Paix_de_Yamoussoukro_2.jpg"
+  },
+  "col-animal": {
+    "file": "col-animal.jpg",
+    "title": "Cotton-top tamarin (Saguinus oedipus)",
+    "author": "Turtolt",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cotton-top_tamarin_(Saguinus_oedipus).jpg"
+  },
+  "col-food": {
+    "file": "col-food.jpg",
+    "title": "Arepa de trigo",
+    "author": "Pintoandres90",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arepa_de_trigo.JPG"
+  },
+  "col-landmark": {
+    "file": "col-landmark.jpg",
+    "title": "Cocora Valley",
+    "author": "Ricardo Gonzalez Arango",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cocora_Valley.jpg"
   },
   "cro-animal": {
     "file": "cro-animal.jpg",
@@ -90,6 +195,20 @@
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Tower_2014-09-21_205MP.jpg"
   },
+  "ger-animal": {
+    "file": "ger-animal.jpg",
+    "title": "White Stork Weißstorch Ciconia ciconia",
+    "author": "Richard Bartz",
+    "license": "CC BY-SA 2.5",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:White_Stork_Wei%C3%9Fstorch_Ciconia_ciconia.jpg"
+  },
+  "ger-landmark": {
+    "file": "ger-landmark.jpg",
+    "title": "Neuschwanstein Castle LOC print rotated",
+    "author": "Unknown author Unknown author",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_LOC_print_rotated.jpg"
+  },
   "gha-animal": {
     "file": "gha-animal.jpg",
     "title": "Psittacus erithacus qtl1",
@@ -104,6 +223,83 @@
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jollof_rice_with_vegetable.jpg"
   },
+  "kor-animal": {
+    "file": "kor-animal.jpg",
+    "title": "Sibirischer tiger de edit02",
+    "author": "S. Taheri , edited by Fir0002",
+    "license": "CC BY-SA 2.5",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sibirischer_tiger_de_edit02.jpg"
+  },
+  "kor-food": {
+    "file": "kor-food.jpg",
+    "title": "Korean.food-Bibimbap-02",
+    "author": "abex (a flickr user)",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Korean.food-Bibimbap-02.jpg"
+  },
+  "kor-landmark": {
+    "file": "kor-landmark.jpg",
+    "title": "Gyeonghoeru (Royal Banquet Hall) at Gyeongbokgung Palace, Seoul",
+    "author": "Frank Schulenburg",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gyeonghoeru_(Royal_Banquet_Hall)_at_Gyeongbokgung_Palace,_Seoul.jpg"
+  },
+  "mar-animal": {
+    "file": "mar-animal.jpg",
+    "title": "Gibraltar Barbary Macaque",
+    "author": "RedCoat",
+    "license": "CC BY-SA 2.5",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gibraltar_Barbary_Macaque.jpg"
+  },
+  "mar-food": {
+    "file": "mar-food.jpg",
+    "title": "Tagine (3645135776)",
+    "author": "Karen and Brad Emerson",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tagine_(3645135776).jpg"
+  },
+  "mex-animal": {
+    "file": "mex-animal.jpg",
+    "title": "Axolotl Ambystoma mexicanum Aquarium Zoo Berlin, 2007",
+    "author": "Kristof Magnusson",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Axolotl_Ambystoma_mexicanum_Aquarium_Zoo_Berlin,_2007.jpg"
+  },
+  "mex-food": {
+    "file": "mex-food.jpg",
+    "title": "001 Tacos de carnitas, carne asada y al pastor",
+    "author": "Larry Miller",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg"
+  },
+  "mex-landmark": {
+    "file": "mex-landmark.jpg",
+    "title": "Chichén Itzá - 17",
+    "author": "Carlos Delgado",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chich%C3%A9n_Itz%C3%A1_-_17.jpg"
+  },
+  "ned-animal": {
+    "file": "ned-animal.jpg",
+    "title": "Holstein Friesian UK Yorkshire July 2011",
+    "author": "Littledumpy34",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Holstein_Friesian_UK_Yorkshire_July_2011.jpg"
+  },
+  "ned-food": {
+    "file": "ned-food.jpg",
+    "title": "Stroopwafels 01",
+    "author": "Takeaway",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Stroopwafels_01.jpg"
+  },
+  "ned-landmark": {
+    "file": "ned-landmark.jpg",
+    "title": "The windmills of Kinderdijk",
+    "author": "Tarod",
+    "license": "CC BY-SA 3.0 nl",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_windmills_of_Kinderdijk.JPG"
+  },
   "pan-animal": {
     "file": "pan-animal.jpg",
     "title": "Golden mantella",
@@ -117,6 +313,20 @@
     "author": "User:Stan Shebs",
     "license": "CC BY-SA 3.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Panama_Canal_Gatun_Locks.jpg"
+  },
+  "par-food": {
+    "file": "par-food.jpg",
+    "title": "Sopa Paraguaya",
+    "author": "Aterovi",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sopa_Paraguaya.jpg"
+  },
+  "par-landmark": {
+    "file": "par-landmark.jpg",
+    "title": "J37 816 embalse Itaipú, presa",
+    "author": "Falk2",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:J37_816_embalse_Itaip%C3%BA,_presa.jpg"
   },
   "por-animal": {
     "file": "por-animal.jpg",
@@ -138,5 +348,96 @@
     "author": "Alvesgaspar",
     "license": "CC BY-SA 3.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Torre_Bel%C3%A9m_April_2009-4a.jpg"
+  },
+  "qat-animal": {
+    "file": "qat-animal.jpg",
+    "title": "Arabian oryx (oryx leucoryx)",
+    "author": "Charles J. Sharp",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arabian_oryx_(oryx_leucoryx).jpg"
+  },
+  "qat-food": {
+    "file": "qat-food.jpg",
+    "title": "Kabsa",
+    "author": "Basel15 at en.wikipedia",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kabsa.jpg"
+  },
+  "qat-landmark": {
+    "file": "qat-landmark.jpg",
+    "title": "Dunes at Khawr al Udayd in 2004",
+    "author": "Em and Ernie @ Flickr",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dunes_at_Khawr_al_Udayd_in_2004.jpg"
+  },
+  "rsa-animal": {
+    "file": "rsa-animal.jpg",
+    "title": "Springbok (Antidorcas marsupialis) young 2w",
+    "author": "Charles J. Sharp",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Springbok_(Antidorcas_marsupialis)_young_2w.jpg"
+  },
+  "sco-food": {
+    "file": "sco-food.jpg",
+    "title": "Shortbread fingers",
+    "author": "User:Dave souza",
+    "license": "CC BY-SA 2.5",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shortbread_fingers.jpg"
+  },
+  "sco-landmark": {
+    "file": "sco-landmark.jpg",
+    "title": "Edinburgh Castle gate 20211019",
+    "author": "Daniel Kraft",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_gate_20211019.jpg"
+  },
+  "sui-animal": {
+    "file": "sui-animal.jpg",
+    "title": "St Bernard with barrel",
+    "author": "Daniel Steger",
+    "license": "CC BY-SA 2.5",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:St_Bernard_with_barrel.JPG"
+  },
+  "sui-food": {
+    "file": "sui-food.jpg",
+    "title": "Full cheese fondue set - in Switzerland",
+    "author": "EquatorialSky at English Wikipedia",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Full_cheese_fondue_set_-_in_Switzerland.JPG"
+  },
+  "sui-landmark": {
+    "file": "sui-landmark.jpg",
+    "title": "Matterhorn Riffelsee 2005-06-11",
+    "author": "Dirk Beyer",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Matterhorn_Riffelsee_2005-06-11.jpg"
+  },
+  "usa-animal": {
+    "file": "usa-animal.jpg",
+    "title": "Bald Eagle - \"Helga\" - Haliaeetus leucocephalus2",
+    "author": "Paul Friel",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bald_Eagle_-_%22Helga%22_-_Haliaeetus_leucocephalus2.jpg"
+  },
+  "usa-food": {
+    "file": "usa-food.jpg",
+    "title": "NCI Visuals Food Hamburger",
+    "author": "Len Rizzi (photographer)",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NCI_Visuals_Food_Hamburger.jpg"
+  },
+  "uzb-animal": {
+    "file": "uzb-animal.jpg",
+    "title": "Snow leopard portrait",
+    "author": "Tambako The Jaguar",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Snow_leopard_portrait.jpg"
+  },
+  "uzb-landmark": {
+    "file": "uzb-landmark.jpg",
+    "title": "Registan Samarkand Uzbekistan",
+    "author": "Stomac",
+    "license": "CC BY-SA 2.0 fr",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Registan_Samarkand_Uzbekistan.JPG"
   }
 }
