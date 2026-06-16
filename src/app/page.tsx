@@ -1,22 +1,45 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 
 import { useFeatured } from "@/lib/useFeatured";
+import { getDay, matchDates, toDateKey } from "@/lib/schedule";
 import { ReadingLevelToggle } from "@/components/ReadingLevelToggle";
 import { ProfileChip } from "@/components/ProfileChip";
 import { MatchDashboard } from "@/components/MatchDashboard";
+import { DateStrip } from "@/components/DateStrip";
 import { SurfaceNav } from "@/components/SurfaceNav";
 
 /**
  * Today — one of the two primary surfaces (with World). It surfaces the Match
  * of the Day and opens the Match Day Journey; the day's other fixtures stay
- * followable below. The old Compare/Heroes/Facts tabs are gone (#10) — their
- * value lives inside the journey now.
+ * followable below, and a date strip lets a child peek a few days ahead or back
+ * and open any day's fixtures (issue #31). The old Compare/Heroes/Facts tabs are
+ * gone (#10) — their value lives inside the journey now.
  */
 export default function Home() {
-  // Fetches /api/matches (live or bundled), polls, and falls back gracefully.
-  const { featured, source } = useFeatured();
+  // Fetches /api/matches (live or snapshot), polls, and falls back gracefully.
+  const { featured, allMatches, source } = useFeatured();
+
+  // Which day's fixtures to show. Null = follow the auto-picked featured day.
+  const [pickedDate, setPickedDate] = useState<string | null>(null);
+  const activeDate = pickedDate ?? featured?.date ?? null;
+
+  const days = useMemo(
+    () =>
+      matchDates(allMatches).map((date) => ({
+        date,
+        count: allMatches.filter((m) => m.date === date).length,
+      })),
+    [allMatches],
+  );
+
+  // The day to render: the picked one, else the auto-featured day.
+  const day = useMemo(() => {
+    if (!activeDate) return featured;
+    return getDay(allMatches, activeDate, new Date(), false) ?? featured;
+  }, [activeDate, allMatches, featured]);
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-4xl flex-col px-4 pb-28 pt-5">
@@ -71,8 +94,16 @@ export default function Home() {
           </span>
         </Link>
 
-        {/* The day's fixtures — still followable; tap any to start its journey */}
-        <MatchDashboard featured={featured} source={source} />
+        {/* Peek a few days ahead or back; tap a day to see its fixtures */}
+        <DateStrip
+          days={days}
+          selected={activeDate}
+          todayKey={toDateKey(new Date())}
+          onSelect={setPickedDate}
+        />
+
+        {/* The chosen day's fixtures — tap any to start its own journey (#30) */}
+        <MatchDashboard featured={day} source={source} />
       </main>
 
       <SurfaceNav />

@@ -1,7 +1,29 @@
 import { describe, it, expect } from "vitest";
 
-import { matchClock } from "./schedule";
+import { matchClock, matchDates, getDay } from "./schedule";
 import type { Match } from "@/types";
+
+/** A minimal scheduled match on a given date. */
+function fixture(date: string, home: string, away: string): Match {
+  return {
+    id: `${date}-${home}-${away}`,
+    date,
+    kickoff: `${date}T16:00:00Z`,
+    homeCode: home,
+    awayCode: away,
+    stadium: "",
+    city: "",
+    group: "A",
+    status: "scheduled",
+  };
+}
+
+const SCHEDULE: Match[] = [
+  fixture("2026-06-15", "ESP", "CPV"),
+  fixture("2026-06-15", "BEL", "EGY"),
+  fixture("2026-06-13", "BRA", "MAR"),
+  fixture("2026-06-17", "FRA", "NED"),
+];
 
 const KICKOFF = "2026-06-14T16:00:00Z";
 
@@ -64,5 +86,44 @@ describe("matchClock", () => {
   it("caps the synthesized minute at 90", () => {
     const { match, now } = liveAt(200);
     expect(matchClock(match, now)).toEqual({ kind: "playing", minute: 90 });
+  });
+});
+
+describe("matchDates", () => {
+  it("returns distinct dates sorted ascending", () => {
+    expect(matchDates(SCHEDULE)).toEqual([
+      "2026-06-13",
+      "2026-06-15",
+      "2026-06-17",
+    ]);
+  });
+
+  it("is empty for no matches", () => {
+    expect(matchDates([])).toEqual([]);
+  });
+});
+
+describe("getDay", () => {
+  const now = new Date("2026-06-15T12:00:00Z");
+
+  it("returns only that date's matches", () => {
+    const day = getDay(SCHEDULE, "2026-06-15", now);
+    expect(day?.matches.map((m) => m.homeCode)).toEqual(["ESP", "BEL"]);
+  });
+
+  it("classifies today / upcoming / recent relative to now", () => {
+    expect(getDay(SCHEDULE, "2026-06-15", now)?.kind).toBe("today");
+    expect(getDay(SCHEDULE, "2026-06-17", now)?.kind).toBe("upcoming");
+    expect(getDay(SCHEDULE, "2026-06-13", now)?.kind).toBe("recent");
+  });
+
+  it("marks isToday and carries the dayIndex within the tournament", () => {
+    const today = getDay(SCHEDULE, "2026-06-15", now);
+    expect(today?.isToday).toBe(true);
+    expect(today?.dayIndex).toBe(1); // second of [13, 15, 17]
+  });
+
+  it("returns null for a date with no fixtures", () => {
+    expect(getDay(SCHEDULE, "2026-06-16", now)).toBeNull();
   });
 });
