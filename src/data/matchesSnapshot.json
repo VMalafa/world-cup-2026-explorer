@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-16T02:54:54.831Z",
+  "capturedAt": "2026-06-16T08:10:12.120Z",
   "source": "football-data.org",
   "competition": "WC",
   "season": "2026",
@@ -284,10 +284,9 @@
       "stadium": "",
       "city": "",
       "group": "G",
-      "status": "live",
+      "status": "finished",
       "homeScore": 2,
       "awayScore": 2,
-      "halftime": false,
       "homeName": "Iran",
       "awayName": "New Zealand",
       "homeFlag": "https://crests.football-data.org/iran.svg",
