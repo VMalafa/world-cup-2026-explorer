@@ -62,9 +62,12 @@ the new ADRs; terms (**Standings**, **Insight**) are in [CONTEXT.md](../CONTEXT.
 - **Days-ahead + Standings (#31).** A light date strip on Today (today ± a few
   days, each day's fixtures explorable) + the playing group's **Standings** shown
   in-context — no new tab, two-surface minimalism preserved.
-- **Natural read-aloud (ADR-0006, amends ADR-0001).** Pre-generated natural TTS
-  audio for authored lines (incl. native greetings); Web Speech becomes the
-  fallback. Fixes both "robotic" and the CriOS flakiness (#29).
+- **Better read-aloud (ADR-0001 upgraded; ADR-0006 deferred).** The AI Gateway
+  can't do TTS, so pre-generated cloud audio is deferred (needs a separate TTS
+  key). The shipped #29 fix upgrades on-device Web Speech: select the best neural
+  voice (iOS Siri/Enhanced) instead of the robotic default, and fix the CriOS
+  reliability bugs (late voice load, long-line truncation, ~15s pause). Free,
+  offline, fixes both "robotic" and "doesn't always work".
 - **Wonders are real photos (ADR-0007, supersedes ADR-0004).** Real openly-
   licensed Wikimedia Commons photos, AI-vision + human-glance vetted, emoji
   fallback, required attribution, parent-facing "learn more" link (#28). (The
