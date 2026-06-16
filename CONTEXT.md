@@ -8,10 +8,11 @@ product evolves.
 ## Language
 
 **Match Day Journey**:
-The core daily experience: a short, guided, *finishable* quest built from the
-**Match of the Day**, teaching the two **Countries** playing it. An ordered
-sequence of **Stations** ending in a reward. Replaces the old passive scoreboard
-as the primary loop.
+The core experience: a short, guided, *finishable* quest built from **any**
+**Match**, teaching the two **Countries** playing it. The day's **Match of the
+Day** is the featured one, but every fixture opens its own journey (issue #30).
+An ordered sequence of **Stations** ending in a reward. Replaces the old passive
+scoreboard as the primary loop.
 _Avoid_: "Today tab", "dashboard", "scoreboard" (those name the old passive view).
 
 **Station**:
@@ -38,8 +39,9 @@ Each **Profile** has its own **Passport** and reading level. Stored on-device.
 
 **Passport**:
 The persistent collection of every **Country** a child has explored — the
-come-back hook. Lives in the **World** surface; gains a **Stamp** each time a
-**Match Day Journey** is finished.
+come-back hook, filled gradually across all 48. Lives in the **World** surface;
+gains a **Stamp** the *first* time each **Country**'s journey is finished
+(one stamp per **Country**, ever — revisiting never re-stamps).
 
 **Stamp**:
 The reward earned for a **Country** when its part of a **Match Day Journey** is
@@ -57,8 +59,10 @@ journey and paid off by the post-match "what happened?" beat. Never gates a
 **Wonders**:
 The small curated set of kid-friendly highlights shown for a **Country** in a
 journey — typically a landmark, an animal, and a food — each revealed by tapping,
-read aloud, and shown as a children's-atlas **illustration** (with an emoji as the
-graceful fallback before the picture exists). See ADR-0004.
+read aloud, and shown as a **real, openly-licensed photo** (Wikimedia Commons,
+AI-vision + human vetted) with a credited source and an emoji as the graceful
+fallback. A "learn more" link to the source is parent-facing only. See ADR-0007
+(supersedes the AI-illustration approach in ADR-0004).
 
 **Content Guardian**:
 The automated reviewer (an AI agent, run at authoring time, not in the live app)
@@ -87,7 +91,23 @@ One scheduled fixture between two **Teams** on a given day, with kickoff, venue,
 status, and score.
 
 **Match of the Day**:
-The single **Match** the app features each day for its full **Match Day
-Journey** (its two **Countries** are the day's lesson). Auto-picked by the app,
-overridable by tapping any other **Match**. Other fixtures stay followable but
-are not the day's lesson.
+The **Match** the app auto-features and highlights each day (a ⭐ on the
+dashboard) as the suggested **Match Day Journey**. It is the *default* lesson,
+not the *only* one: **every** fixture now opens its own full journey (issue #30).
+The Match of the Day is a spotlight, not a gate.
+_Avoid_: implying other fixtures can't be journeyed — they can.
+
+**Insight**:
+A bite-size, **source-verifiable** football fact about a **Team** (e.g. "making
+their World Cup debut", titles won, qualifying result), pulled by the ADR-0005
+daily cron — never AI-authored or an unverifiable quote (issue #33). Shown in-app
+as a flag-accented list in the **Match Day Journey** for the two playing
+**Countries**. "Shared within the application" means *surfaced in-app*, not
+socially exported.
+_Avoid_: editorial narrative or quotes (out of scope — can't be auto-verified).
+
+**Standings**:
+A **Group**'s live table — each **Team**'s points, played, and goal difference —
+*derived* from committed real **Match** results, never authored. The "where does
+my country stand?" view (issue #31). Current to within ~a day (see ADR-0005).
+_Avoid_: "league table" (this is group-stage standings within one **Group**).

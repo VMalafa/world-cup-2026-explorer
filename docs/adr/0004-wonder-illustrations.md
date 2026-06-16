@@ -2,7 +2,12 @@
 
 ## Status
 
-accepted (amends ADR-0002)
+superseded by ADR-0007 — Wonders now use real openly-licensed **photos**
+(Wikimedia Commons), not AI illustrations. Note: the illustrations described
+below were never actually rendered/committed (only the generator + a prompt
+manifest existed; the live fallback was always the emoji), so nothing shipped was
+discarded. The build-time + contact-sheet + emoji-fallback machinery here is
+reused by ADR-0007.
 
 ## Context & decision
 

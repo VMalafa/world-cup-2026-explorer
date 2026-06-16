@@ -193,8 +193,8 @@ export function MatchDashboard({
   source,
 }: {
   featured: Featured | null;
-  /** Whether the data is live or the bundled sample, for the little badge. */
-  source?: "live" | "sample" | null;
+  /** Whether the data is live or the last-good real snapshot, for the badge. */
+  source?: "live" | "snapshot" | null;
 }) {
   if (!featured) {
     return (
@@ -228,10 +228,10 @@ export function MatchDashboard({
             title={
               source === "live"
                 ? "Showing real fixtures & scores from the live data source"
-                : "Showing the built-in sample schedule"
+                : "The live feed is resting — showing the most recent real scores we saved"
             }
           >
-            {source === "live" ? "🟢 Live data" : "⚪ Sample data"}
+            {source === "live" ? "🟢 Live scores" : "⚪ Recent scores"}
           </span>
         )}
       </div>

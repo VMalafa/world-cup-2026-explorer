@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { MATCHES } from "@/data/matches";
-import { deriveLive } from "@/lib/schedule";
+import { MATCHES_SNAPSHOT, SNAPSHOT_CAPTURED_AT } from "@/data/matchesSnapshot";
 import { fetchFootballDataMatches } from "@/lib/providers/footballData";
 import { fetchApiFootballMatches } from "@/lib/providers/apiFootball";
 import type { Match } from "@/types";
@@ -8,16 +7,14 @@ import type { Match } from "@/types";
 /**
  * Match data endpoint.
  *
- * Serves the bundled, curated 2026 schedule with a live-feeling status/score
- * derived from the current time — so the app works with zero setup and zero
- * API keys, and depends on NO external server.
+ * Live-first, never-fake (ADR-0005). Real fixtures/results come from the live
+ * provider (football-data.org). When the live fetch is momentarily unavailable
+ * (rate limit, timeout, transient error) the route falls back to a committed
+ * REAL snapshot — last-good data that is stale at worst, never fabricated.
  *
- * LIVE DATA SEAM:
- * There is intentionally no live provider wired in. To add one, implement
- * `fetchLiveMatches()` below so it returns our `Match[]` shape from a source
- * YOU trust, and set USE_LIVE_DATA=true. If the provider is unreachable or
- * returns nothing, the route transparently falls back to the bundled schedule,
- * so the app is never blank. See the README, section "Using live data".
+ * It deliberately NEVER serves the old synthetic `buildSchedule()`, which
+ * invented fixtures that looked real ("Brazil vs Tunisia") — the shared root
+ * cause of issues #32 and #30.
  */
 
 // Run on every request so the runtime env toggle is always respected.
@@ -42,8 +39,9 @@ export async function GET() {
   // Server-only runtime toggle (NOT NEXT_PUBLIC_), changeable without a rebuild.
   const useLive = process.env.USE_LIVE_DATA === "true";
 
-  let matches: Match[] = MATCHES;
-  let source: "live" | "sample" = "sample";
+  // Fall back to the committed REAL snapshot — never the synthetic generator.
+  let matches: Match[] = MATCHES_SNAPSHOT;
+  let source: "live" | "snapshot" = "snapshot";
   let note: string | undefined;
 
   if (useLive) {
@@ -54,27 +52,26 @@ export async function GET() {
         source = "live";
       } else {
         note =
-          "Live mode is on, but the provider returned no data (missing/invalid API_FOOTBALL_KEY, plan/season restriction, or rate limit). Using bundled data.";
+          "Live mode is on, but the provider returned no data (missing/invalid token, plan/season restriction, or rate limit). Serving the last-good real snapshot.";
       }
     } catch (err) {
-      note = `Live fetch failed: ${err instanceof Error ? err.message : String(err)}`;
-      console.error("[api/matches] live fetch failed; using bundled data", err);
+      note = `Live fetch failed: ${err instanceof Error ? err.message : String(err)}. Serving the last-good real snapshot.`;
+      console.error("[api/matches] live fetch failed; using real snapshot", err);
     }
   } else {
-    note = "Using the built-in curated schedule.";
+    note = "Live mode is off. Serving the committed real snapshot.";
   }
 
-  // Sample data needs clock-derived scores; live data (if ever wired in) already
-  // carries real status & scores, so it is left untouched.
-  const result =
-    source === "sample" ? matches.map((m) => deriveLive(m, now)) : matches;
-
+  // The snapshot is real (stale at worst); the live feed already carries real
+  // status & scores. Neither gets mock-score derivation — we never fabricate.
   return NextResponse.json({
     source,
     note,
     liveEnabled: useLive,
+    // When serving the snapshot, expose its capture time so staleness is honest.
+    snapshotCapturedAt: source === "snapshot" ? SNAPSHOT_CAPTURED_AT : undefined,
     generatedAt: now.toISOString(),
-    count: result.length,
-    matches: result,
+    count: matches.length,
+    matches,
   });
 }

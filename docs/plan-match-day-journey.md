@@ -42,6 +42,58 @@ countries in the first ~week of featured matches.
 - **M3 — The ritual closes.** Match moment + Prediction; nav restructure; a
   minimal followable fixtures list (issues #9, #10).
 
+## v1.1 — the enhancement pass (from 2026-06-15 feedback, issues #28–#33)
+
+Resolved in a grilling session against the live kids' feedback. Decisions are in
+the new ADRs; terms (**Standings**, **Insight**) are in [CONTEXT.md](../CONTEXT.md).
+
+- **Live-first data, never-fake fallback (ADR-0005).** Corrected premise:
+  football-data.org is *already* live in production. #32 ("Brazil vs Tunisia") and
+  #30 ("can't explore Spain") were the **same bug** — the route silently falls back
+  to the synthetic `buildSchedule()` (which invents fixtures) when the live fetch
+  hiccups. Fix: keep live as primary, **remove `buildSchedule()` from the live
+  path**, and fall back to a **real cron-committed snapshot** (last-good real data).
+  Data is always live → real-snapshot → honest-empty, never fabricated. *This cron
+  also powers Standings (#31) and Insight facts (#33).*
+- **Every fixture is explorable (#30).** The **Match Day Journey** is no longer
+  exclusive to the **Match of the Day** — every match opens its own full journey;
+  the Match of the Day is now a ⭐ spotlight, not a gate. Stamps stay one-per-
+  Country-ever (already true in code), so the Passport keeps its meaning.
+- **Days-ahead + Standings (#31).** A light date strip on Today (today ± a few
+  days, each day's fixtures explorable) + the playing group's **Standings** shown
+  in-context — no new tab, two-surface minimalism preserved.
+- **Natural read-aloud (ADR-0006, amends ADR-0001).** Pre-generated natural TTS
+  audio for authored lines (incl. native greetings); Web Speech becomes the
+  fallback. Fixes both "robotic" and the CriOS flakiness (#29).
+- **Wonders are real photos (ADR-0007, supersedes ADR-0004).** Real openly-
+  licensed Wikimedia Commons photos, AI-vision + human-glance vetted, emoji
+  fallback, required attribution, parent-facing "learn more" link (#28). (The
+  ADR-0004 illustrations were never rendered — only a generator + manifest — so
+  nothing shipped was lost.)
+- **Insights (#33).** Source-verifiable, cron-pulled team facts shown as a flag-
+  accented list in the journey. No AI narrative or unverifiable quotes.
+
+### Build order (dependency-honouring)
+
+1. **Kill the silent synthetic fallback (#32 + #30).** Remove `buildSchedule()`
+   from the live path; add the daily cron that commits a real snapshot; route
+   serves live → snapshot → honest-empty. Fixes both trust bugs at the root.
+2. **All-fixtures-explorable (#30) + date strip (#31a)** — every match clickable
+   into a journey; browse days ahead/behind. (Live data already maps team codes,
+   so journeys link today.)
+3. **Standings (#31b) + Insights (#33)** — Standings from the provider/snapshot;
+   Insights from cron-pulled verifiable facts.
+4. **Wonder photos (#28)** and **natural audio (#29)** — two independent build-
+   time content pipelines; parallelisable with the above.
+
+### Source (resolved)
+
+football-data.org is **already wired and live** (`footballData.ts`,
+`FOOTBALL_DATA_TOKEN`, `USE_LIVE_DATA=true` in Vercel prod) — competition `WC`,
+season 2026, real crests. It is the source for fixtures/results/standings + the
+cron snapshot. Wikidata remains a candidate for Insight facts football-data
+doesn't carry (e.g. "World Cup debut").
+
 ## Deferred (fast-follows, explicitly out of v1)
 
 Post-match "what happened?" beat · "Meet a hero" + flag-quiz stations · recorded
