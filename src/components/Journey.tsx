@@ -11,10 +11,12 @@ import { getTeam } from "@/data/teams";
 import { buildJourney, type Station } from "@/lib/journey";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
+import type { StandingRow } from "@/lib/standings";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
 import { FindItStation, SayHelloStation, WondersStation } from "./Stations";
 import { MatchMoment } from "./MatchMoment";
+import { Standings } from "./Standings";
 
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
@@ -44,6 +46,8 @@ export function Journey({
   awayCode,
   matchId = `${homeCode}-${awayCode}`,
   kickoff,
+  group = "",
+  standings = [],
 }: {
   homeCode: string;
   awayCode: string;
@@ -51,6 +55,10 @@ export function Journey({
   matchId?: string;
   /** ISO kickoff for the Match moment countdown, if known. */
   kickoff?: string;
+  /** Group letter of this fixture (group stage); empty for knockouts. */
+  group?: string;
+  /** The playing group's standings, derived from real results (issue #31). */
+  standings?: StandingRow[];
 }) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
@@ -162,6 +170,13 @@ export function Journey({
                     matchId={matchId}
                     kickoff={kickoff}
                   />
+                  {group && standings.length > 0 && (
+                    <Standings
+                      group={group}
+                      rows={standings}
+                      highlight={[homeCode, awayCode]}
+                    />
+                  )}
                 </>
               )}
             </motion.div>
