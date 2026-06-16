@@ -17,6 +17,7 @@ import { Flag } from "./Flag";
 import { FindItStation, SayHelloStation, WondersStation } from "./Stations";
 import { MatchMoment } from "./MatchMoment";
 import { Standings } from "./Standings";
+import { Insights, type TeamInsights } from "./Insights";
 
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
@@ -48,6 +49,7 @@ export function Journey({
   kickoff,
   group = "",
   standings = [],
+  insights = [],
 }: {
   homeCode: string;
   awayCode: string;
@@ -59,6 +61,8 @@ export function Journey({
   group?: string;
   /** The playing group's standings, derived from real results (issue #31). */
   standings?: StandingRow[];
+  /** Verifiable facts for each playing country (issue #33). */
+  insights?: TeamInsights[];
 }) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
@@ -170,6 +174,7 @@ export function Journey({
                     matchId={matchId}
                     kickoff={kickoff}
                   />
+                  <Insights teams={insights} />
                   {group && standings.length > 0 && (
                     <Standings
                       group={group}

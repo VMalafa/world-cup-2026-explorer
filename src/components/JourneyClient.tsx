@@ -6,7 +6,10 @@ import type { Match } from "@/types";
 import { getTeam } from "@/data/teams";
 import { useFeatured } from "@/lib/useFeatured";
 import { computeStandings } from "@/lib/standings";
+import { computeInsights } from "@/lib/insights";
 import { Journey } from "./Journey";
+
+const nameOf = (code: string) => getTeam(code)?.name ?? code;
 
 /**
  * Resolves which Match Day Journey to run: an explicit `?home=&away=` override
@@ -53,6 +56,12 @@ export function JourneyClient() {
   const group = match?.group ?? "";
   const standings = group ? computeStandings(allMatches, group) : [];
 
+  // Verifiable facts for each playing country, derived from the real results.
+  const insights = [
+    { code: homeCode, facts: computeInsights(allMatches, homeCode, { group, nameOf }) },
+    { code: awayCode, facts: computeInsights(allMatches, awayCode, { group, nameOf }) },
+  ];
+
   return (
     <Journey
       homeCode={homeCode}
@@ -61,6 +70,7 @@ export function JourneyClient() {
       kickoff={match?.kickoff}
       group={group}
       standings={standings}
+      insights={insights}
     />
   );
 }
