@@ -1,1 +1,142 @@
-{}
+{
+  "alg-animal": {
+    "file": "alg-animal.jpg",
+    "title": "Fennec Fox Vulpes zerda",
+    "author": "Drew Avery",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fennec_Fox_Vulpes_zerda.jpg"
+  },
+  "alg-food": {
+    "file": "alg-food.jpg",
+    "title": "Chicken Orange Couscous-01",
+    "author": "Evan",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chicken_Orange_Couscous-01.jpg"
+  },
+  "arg-animal": {
+    "file": "arg-animal.jpg",
+    "title": "Vultur gryphus head (Linnaeus, 1758)",
+    "author": "Michael Gäbler",
+    "license": "CC BY 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vultur_gryphus_head_(Linnaeus,_1758).jpg"
+  },
+  "arg-landmark": {
+    "file": "arg-landmark.jpg",
+    "title": "Glacial iceberg in Argentina",
+    "author": "IlyaHaykinson",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Glacial_iceberg_in_Argentina.jpg"
+  },
+  "aut-animal": {
+    "file": "aut-animal.jpg",
+    "title": "Marmota marmota 07",
+    "author": "Kuebi = Armin Kübelbeck",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Marmota_marmota_07.jpg"
+  },
+  "aut-food": {
+    "file": "aut-food.jpg",
+    "title": "Sachertorte DSC03027 retouched",
+    "author": "Wikimedia Commons",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sachertorte_DSC03027_retouched.jpg"
+  },
+  "aut-landmark": {
+    "file": "aut-landmark.jpg",
+    "title": "Cumulus cloud above Lechtaler Alps at tannheim, Austria",
+    "author": "Glg",
+    "license": "CC BY-SA 2.0 de",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cumulus_cloud_above_Lechtaler_Alps_at_tannheim,_Austria.jpg"
+  },
+  "cro-animal": {
+    "file": "cro-animal.jpg",
+    "title": "Dalmatien",
+    "author": "Desaix83 , d'après le travail de Le dalmatien",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dalmatien.jpg"
+  },
+  "cro-food": {
+    "file": "cro-food.jpg",
+    "title": "Fritule(miske)",
+    "author": "No machine-readable author provided. Žiga assumed (based on copyright claims).",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fritule(miske).JPG"
+  },
+  "cro-landmark": {
+    "file": "cro-landmark.jpg",
+    "title": "A bridge in Plitvice lakes national park, Croatia",
+    "author": "Someone35",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:A_bridge_in_Plitvice_lakes_national_park,_Croatia.jpg"
+  },
+  "eng-animal": {
+    "file": "eng-animal.jpg",
+    "title": "Erithacus rubecula -Netherlands-8",
+    "author": "Arjan Haverkamp",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_-Netherlands-8.jpg"
+  },
+  "eng-food": {
+    "file": "eng-food.jpg",
+    "title": "Fish and chips",
+    "author": "Andrew Dunn",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fish_and_chips.jpg"
+  },
+  "eng-landmark": {
+    "file": "eng-landmark.jpg",
+    "title": "Elizabeth Tower 2014-09-21 205MP",
+    "author": "Colin",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Tower_2014-09-21_205MP.jpg"
+  },
+  "gha-animal": {
+    "file": "gha-animal.jpg",
+    "title": "Psittacus erithacus qtl1",
+    "author": "Quartl",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Psittacus_erithacus_qtl1.jpg"
+  },
+  "gha-food": {
+    "file": "gha-food.jpg",
+    "title": "Jollof rice with vegetable",
+    "author": "Segun Famisa",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jollof_rice_with_vegetable.jpg"
+  },
+  "pan-animal": {
+    "file": "pan-animal.jpg",
+    "title": "Golden mantella",
+    "author": "Wikimedia Commons",
+    "license": "CC BY-SA 2.5",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Golden_mantella.JPG"
+  },
+  "pan-landmark": {
+    "file": "pan-landmark.jpg",
+    "title": "Panama Canal Gatun Locks",
+    "author": "User:Stan Shebs",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Panama_Canal_Gatun_Locks.jpg"
+  },
+  "por-animal": {
+    "file": "por-animal.jpg",
+    "title": "PA2900302 galo emiliarocha medio",
+    "author": "Adriculas",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:PA2900302_galo_emiliarocha_medio.jpg"
+  },
+  "por-food": {
+    "file": "por-food.jpg",
+    "title": "Pastel de nata septembre 2015",
+    "author": "Photo Claude TRUONG-NGOC",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pastel_de_nata_septembre_2015.jpg"
+  },
+  "por-landmark": {
+    "file": "por-landmark.jpg",
+    "title": "Torre Belém April 2009-4a",
+    "author": "Alvesgaspar",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Torre_Bel%C3%A9m_April_2009-4a.jpg"
+  }
+}
