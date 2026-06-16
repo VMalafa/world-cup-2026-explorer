@@ -60,8 +60,24 @@ const NO_VISION = has("--no-vision");
 const MODEL = val("--model") ?? "anthropic/claude-sonnet-4.6";
 const ONLY = val("--only")?.split(",").map((c) => c.trim().toUpperCase());
 const CANDIDATES = Number(val("--candidates") ?? "6");
+// Wikimedia rate-limits bursts; pause between calls (override with --throttle=ms).
+const THROTTLE = Number(val("--throttle") ?? "800");
 
 const UA = "WorldCupExplorer/1.0 (kids learning app; wonder photo sourcing)";
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** GET with a friendly UA and exponential backoff on 429 (rate limit). */
+async function httpGet(url: string, attempt = 0): Promise<Response> {
+  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  if (res.status === 429 && attempt < 5) {
+    const wait = 1000 * 2 ** attempt;
+    console.log(`      … rate-limited, waiting ${wait}ms then retrying`);
+    await sleep(wait);
+    return httpGet(url, attempt + 1);
+  }
+  return res;
+}
 
 // --- Wikimedia Commons ------------------------------------------------------
 interface CommonsPage {
@@ -87,7 +103,7 @@ async function searchCommons(query: string): Promise<
       iiurlwidth: "800", // a committed-friendly thumbnail
     });
 
-  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  const res = await httpGet(url);
   if (!res.ok) throw new Error(`Commons HTTP ${res.status}`);
   const json = (await res.json()) as { query?: { pages?: Record<string, CommonsPage> } };
   const pages = Object.values(json.query?.pages ?? {});
@@ -138,7 +154,7 @@ async function visionApproves(
 }
 
 async function download(url: string): Promise<Uint8Array> {
-  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  const res = await httpGet(url);
   if (!res.ok) throw new Error(`download HTTP ${res.status}`);
   return new Uint8Array(await res.arrayBuffer());
 }
@@ -166,6 +182,9 @@ for (const country of countries) {
     }
     const wonder = wonders[slot];
     const query = buildSearchQuery(wonder.name);
+
+    // Be a good Commons citizen — pace the requests to avoid 429s.
+    await sleep(THROTTLE);
 
     try {
       const candidates = await searchCommons(query);
@@ -230,5 +249,9 @@ console.log(
   DRY_RUN
     ? "\nDry run complete — no images downloaded, no manifest written."
     : `\nDone. Sourced ${sourced}, skipped ${skipped} existing, ${missed} unresolved.\n` +
+        (missed > 0
+          ? "Some were unresolved (often a Wikimedia rate limit). Just re-run the " +
+            "same command — the manifest is incremental, so it only retries the gaps.\n"
+          : "") +
         "Review them at /wonders-sheet before committing public/wonders + src/data/wonderPhotos.json.",
 );
