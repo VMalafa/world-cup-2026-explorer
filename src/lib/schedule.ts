@@ -107,6 +107,41 @@ export interface Featured {
   dayIndex: number;
 }
 
+/** Every distinct match date in a list, sorted ascending (YYYY-MM-DD). */
+export function matchDates(source: Match[]): string[] {
+  return Array.from(new Set(source.map((m) => m.date))).sort();
+}
+
+/** Classify a date relative to today for the dashboard heading. */
+function kindFor(date: string, todayKey: string): Featured["kind"] {
+  if (date === todayKey) return "today";
+  return date > todayKey ? "upcoming" : "recent";
+}
+
+/**
+ * The fixtures for ONE specific date as a `Featured` — powers the date strip
+ * (issue #31), so a child can browse a chosen day's games instead of only the
+ * auto-picked one. Returns null when no match is played that day. `applyDerive`
+ * stays false for real data (live or snapshot already carry real scores).
+ */
+export function getDay(
+  source: Match[],
+  date: string,
+  now: Date = new Date(),
+  applyDerive = false,
+): Featured | null {
+  const onDay = source.filter((m) => m.date === date);
+  if (!onDay.length) return null;
+  const todayKey = toDateKey(now);
+  return {
+    date,
+    isToday: date === todayKey,
+    kind: kindFor(date, todayKey),
+    matches: applyDerive ? onDay.map((m) => deriveLive(m, now)) : onDay,
+    dayIndex: matchDates(source).indexOf(date),
+  };
+}
+
 /**
  * Choose the match day to feature, from ANY list of matches:
  *   1. Matches on the real current date, else

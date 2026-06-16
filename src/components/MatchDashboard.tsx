@@ -238,8 +238,11 @@ export function MatchDashboard({
       <div className="grid gap-5 sm:grid-cols-2">
         {featured.matches.map((m, i) => {
           const curated = Boolean(getTeam(m.homeCode) && getTeam(m.awayCode));
+          // The ⭐ Match of the Day is a spotlight only on the real today; on
+          // other browsed days every fixture is an equal journey (#30).
+          const isMatchOfTheDay = featured.kind === "today" && i === 0;
           const card = (
-            <MatchCard match={m} index={i} featured={i === 0} clickable={curated} />
+            <MatchCard match={m} index={i} featured={isMatchOfTheDay} clickable={curated} />
           );
           return curated ? (
             <Link

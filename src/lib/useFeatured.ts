@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import type { Match } from "@/types";
+import { MATCHES_SNAPSHOT } from "@/data/matchesSnapshot";
 import { getFeatured, getFeaturedFrom, type Featured } from "./schedule";
 
 export interface FeaturedState {
   featured: Featured | null;
+  /** Every fetched match, so the UI can browse days beyond the featured one. */
+  allMatches: Match[];
   /** "live" | "snapshot" — where the data came from this fetch. */
   source: "live" | "snapshot" | null;
   loading: boolean;
@@ -23,6 +26,7 @@ export interface FeaturedState {
 export function useFeatured(pollMs = 30000): FeaturedState {
   const [state, setState] = useState<FeaturedState>({
     featured: null,
+    allMatches: [],
     source: null,
     loading: true,
   });
@@ -41,11 +45,21 @@ export function useFeatured(pollMs = 30000): FeaturedState {
         if (!alive) return;
         // Both live and snapshot carry real scores — never layer mock scores on.
         const featured = getFeaturedFrom(data.matches, new Date(), false);
-        setState({ featured, source: data.source, loading: false });
+        setState({
+          featured,
+          allMatches: data.matches,
+          source: data.source,
+          loading: false,
+        });
       } catch {
         if (!alive) return;
         // Network/API failure → the committed REAL snapshot, never fabricated.
-        setState({ featured: getFeatured(new Date()), source: "snapshot", loading: false });
+        setState({
+          featured: getFeatured(new Date()),
+          allMatches: MATCHES_SNAPSHOT,
+          source: "snapshot",
+          loading: false,
+        });
       }
     }
 
