@@ -70,8 +70,11 @@ the new ADRs; terms (**Standings**, **Insight**) are in [CONTEXT.md](../CONTEXT.
   fallback, required attribution, parent-facing "learn more" link (#28). (The
   ADR-0004 illustrations were never rendered — only a generator + manifest — so
   nothing shipped was lost.)
-- **Insights (#33).** Source-verifiable, cron-pulled team facts shown as a flag-
-  accented list in the journey. No AI narrative or unverifiable quotes.
+- **Insights (#33) — deferred.** A results-derived version was built (branch
+  `feat/team-insights`, closed PR #38) but skipped: too thin to be worth showing
+  (circular before kickoff; the standing duplicated the Standings table). The
+  genuinely interesting example facts are historical/editorial and can't be
+  auto-verified from results. Revisit only with a curated, verified facts source.
 
 ### Build order (dependency-honouring)
 
@@ -81,8 +84,8 @@ the new ADRs; terms (**Standings**, **Insight**) are in [CONTEXT.md](../CONTEXT.
 2. **All-fixtures-explorable (#30) + date strip (#31a)** — every match clickable
    into a journey; browse days ahead/behind. (Live data already maps team codes,
    so journeys link today.)
-3. **Standings (#31b) + Insights (#33)** — Standings from the provider/snapshot;
-   Insights from cron-pulled verifiable facts.
+3. **Standings (#31b)** — from the provider/snapshot. (Insights #33 deferred —
+   see above.)
 4. **Wonder photos (#28)** and **natural audio (#29)** — two independent build-
    time content pipelines; parallelisable with the above.
 
