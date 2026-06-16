@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-16T02:28:39.598Z",
+  "capturedAt": "2026-06-16T02:54:54.831Z",
   "source": "football-data.org",
   "competition": "WC",
   "season": "2026",
@@ -162,7 +162,7 @@
       "homeScore": 7,
       "awayScore": 1,
       "homeName": "Germany",
-      "awayName": "CuraÃ§ao",
+      "awayName": "Curaçao",
       "homeFlag": "https://crests.football-data.org/759.svg",
       "awayFlag": "https://crests.football-data.org/curacao.svg",
       "matchday": "1"
@@ -285,7 +285,7 @@
       "city": "",
       "group": "G",
       "status": "live",
-      "homeScore": 1,
+      "homeScore": 2,
       "awayScore": 2,
       "halftime": false,
       "homeName": "Iran",
@@ -593,7 +593,7 @@
       "group": "E",
       "status": "scheduled",
       "homeName": "Ecuador",
-      "awayName": "CuraÃ§ao",
+      "awayName": "Curaçao",
       "homeFlag": "https://crests.football-data.org/791.svg",
       "awayFlag": "https://crests.football-data.org/curacao.svg",
       "matchday": "2"
@@ -928,7 +928,7 @@
       "city": "",
       "group": "E",
       "status": "scheduled",
-      "homeName": "CuraÃ§ao",
+      "homeName": "Curaçao",
       "awayName": "Ivory Coast",
       "homeFlag": "https://crests.football-data.org/curacao.svg",
       "awayFlag": "https://crests.football-data.org/787.svg",
