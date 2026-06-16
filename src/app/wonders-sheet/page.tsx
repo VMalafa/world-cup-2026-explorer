@@ -4,13 +4,15 @@ import { useState } from "react";
 
 import { COUNTRIES } from "@/data/countries";
 import { COUNTRY_CONTENT } from "@/data/countryContent";
+import { getWonderPhoto } from "@/data/wonderPhotos";
 
 /**
- * Wonder illustration contact sheet — an AUTHORING/review tool (ADR-0004), not
- * part of the child-facing app and not linked from the nav. After running
- * `npm run gen:wonders`, open `/wonders-sheet` to eyeball every generated
- * picture (the one human pass that stands in for pixel review) before committing
- * the PNGs. Cells with no image yet show the emoji fallback the app would use.
+ * Wonder photo contact sheet — an AUTHORING/review tool (ADR-0007), not part of
+ * the child-facing app and not linked from the nav. After running
+ * `npm run gen:wonder-photos`, open `/wonders-sheet` to eyeball every sourced
+ * photo (the one human pass for safety/quality) before committing them. Cells
+ * with no photo yet show the emoji fallback the app would use; each photo shows
+ * its author + license so attribution can be sanity-checked too.
  */
 const SLOTS = ["landmark", "animal", "food"] as const;
 
@@ -64,18 +66,18 @@ function Cell({
   emoji: string;
 }) {
   const [failed, setFailed] = useState(false);
-  const file = `${code.toLowerCase()}-${slot}.png`;
+  const photo = getWonderPhoto(code, slot);
   return (
     <figure className="overflow-hidden rounded-lg ring-1 ring-line">
       <div className="flex aspect-square items-center justify-center bg-royal-50">
-        {failed ? (
+        {!photo || failed ? (
           <span className="text-5xl grayscale" aria-hidden>
             {emoji}
           </span>
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={`/wonders/${file}`}
+            src={`/wonders/${photo.file}`}
             alt={name}
             className="h-full w-full object-cover"
             onError={() => setFailed(true)}
@@ -84,7 +86,13 @@ function Cell({
       </div>
       <figcaption className="px-2 py-1.5">
         <p className="truncate text-xs font-bold text-ink">{name}</p>
-        <p className="font-mono text-[10px] text-muted">{file}</p>
+        {photo ? (
+          <p className="truncate text-[10px] text-muted" title={`${photo.author} · ${photo.license}`}>
+            {photo.author} · {photo.license}
+          </p>
+        ) : (
+          <p className="font-mono text-[10px] text-line">no photo yet</p>
+        )}
       </figcaption>
     </figure>
   );
