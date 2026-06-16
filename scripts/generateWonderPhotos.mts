@@ -36,6 +36,7 @@ import {
   buildSearchQuery,
   toWonderPhoto,
   extForMime,
+  scoreCandidate,
   type CommonsImageInfo,
   type WonderPhoto,
 } from "../src/lib/wikimedia";
@@ -85,8 +86,16 @@ interface CommonsPage {
   imageinfo?: (CommonsImageInfo & { thumburl?: string })[];
 }
 
-/** Search Commons for free still-photo candidates of `query`, best-first. */
-async function searchCommons(query: string): Promise<
+/**
+ * Search Commons for free still-photo candidates of `query`, ranked best-first
+ * by how well each title fits `subject` (junk titles — maps/screenshots/logos —
+ * are dropped). This is what keeps a `--no-vision` run from picking a satellite
+ * map or a board-game screenshot.
+ */
+async function searchCommons(
+  query: string,
+  subject: string,
+): Promise<
   { info: CommonsImageInfo; thumburl: string; attribution: Omit<WonderPhoto, "file"> }[]
 > {
   const url =
@@ -118,7 +127,12 @@ async function searchCommons(query: string): Promise<
     if (!thumburl) continue;
     out.push({ info, thumburl, attribution: { ...attribution, title: attribution.title || p.title } });
   }
-  return out;
+  // Drop junk-titled candidates and put the most on-subject ones first.
+  return out
+    .map((c) => ({ c, score: scoreCandidate(c.attribution.title, subject) }))
+    .filter((x) => x.score >= 0)
+    .sort((a, b) => b.score - a.score)
+    .map((x) => x.c);
 }
 
 /** Ask the vision model whether a photo is a clear, kid-safe shot of the subject. */
@@ -187,7 +201,7 @@ for (const country of countries) {
     await sleep(THROTTLE);
 
     try {
-      const candidates = await searchCommons(query);
+      const candidates = await searchCommons(query, wonder.name);
       if (candidates.length === 0) {
         console.warn(`  ✗ ${key}: no free candidate for "${query}"`);
         missed++;

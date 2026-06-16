@@ -93,3 +93,31 @@ export function toWonderPhoto(
 export function extForMime(mime: string | undefined): "jpg" | "png" {
   return /png/i.test(mime ?? "") ? "png" : "jpg";
 }
+
+// Titles that signal a non-photo (maps, screenshots, diagrams, logos…) — the
+// failure modes seen in practice (a Sahara satellite map, an "Empanadas"
+// board-game screenshot). A free JPEG/PNG can still be one of these, so the mime
+// check isn't enough; the title is the tell.
+const JUNK_TITLE =
+  /\b(map|satellite|screenshot|diagram|chart|logo|icon|coat of arms|flag of|locator|topographic|blueprint|seal|emblem|banknote|coin|graph|infographic|poster|stamp|svg|plan of|cross.?section|schematic)\b/i;
+
+/** True when a candidate's title smells like a non-photo (skip it). */
+export function isJunkTitle(title: string): boolean {
+  return JUNK_TITLE.test(title);
+}
+
+/**
+ * Rank a candidate by how well its title fits the wonder subject. Junk titles
+ * score below zero (so they're dropped); otherwise score by how many of the
+ * subject's significant words appear, so the most on-topic photo wins when no AI
+ * vision check is available.
+ */
+export function scoreCandidate(title: string, subject: string): number {
+  if (isJunkTitle(title)) return -1;
+  const t = title.toLowerCase();
+  let score = 0;
+  for (const w of subject.toLowerCase().split(/\s+/)) {
+    if (w.length > 3 && t.includes(w)) score += 1;
+  }
+  return score;
+}
