@@ -18,6 +18,8 @@ const COMPASS_WORD: Record<Compass, string> = {
 
 const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
 
+export type WonderSlot = "landmark" | "animal" | "food";
+
 /**
  * Find it — the globe has flown to the Country; the child taps its dot. On a
  * correct tap we reveal where it sits absolutely (continent + ocean) and
@@ -106,9 +108,13 @@ export function SayHelloStation({ country }: { country: Country }) {
 export function WondersStation({
   country,
   pick,
+  activeSlot = "landmark",
+  onActiveSlotChange,
 }: {
   country: Country;
   pick: (t: DualText) => string;
+  activeSlot?: WonderSlot;
+  onActiveSlotChange?: (slot: WonderSlot) => void;
 }) {
   if (!country.wonders) {
     return (
@@ -132,7 +138,14 @@ export function WondersStation({
       <ul className="space-y-3">
         {slots.map(({ slot, wonder }) => (
           <li key={wonder.name}>
-            <WonderCard wonder={wonder} code={country.code} slot={slot} pick={pick} />
+            <WonderCard
+              wonder={wonder}
+              code={country.code}
+              slot={slot}
+              pick={pick}
+              active={activeSlot === slot}
+              onActivate={() => onActiveSlotChange?.(slot)}
+            />
           </li>
         ))}
       </ul>
@@ -145,11 +158,15 @@ function WonderCard({
   code,
   slot,
   pick,
+  active,
+  onActivate,
 }: {
   wonder: Wonder;
   code: string;
-  slot: string;
+  slot: WonderSlot;
   pick: (t: DualText) => string;
+  active: boolean;
+  onActivate: () => void;
 }) {
   const [revealed, setRevealed] = useState(false);
   const reduce = useReducedMotion();
@@ -159,8 +176,13 @@ function WonderCard({
     return (
       <button
         type="button"
-        onClick={() => setRevealed(true)}
-        className="flex w-full items-center gap-3 rounded-blob bg-royal-50 px-4 py-5 text-left ring-1 ring-royal-100 transition-transform hover:-translate-y-0.5"
+        onClick={() => {
+          onActivate();
+          setRevealed(true);
+        }}
+        className={`flex w-full items-center gap-3 rounded-blob px-4 py-5 text-left ring-1 transition-transform hover:-translate-y-0.5 ${
+          active ? "bg-gold-100 ring-gold-300" : "bg-royal-50 ring-royal-100"
+        }`}
       >
         <span className="text-4xl grayscale" aria-hidden>{wonder.emoji}</span>
         <span className="text-lg font-extrabold text-royal">Tap to discover ✨</span>
@@ -173,7 +195,10 @@ function WonderCard({
       initial={reduce ? false : { rotateY: 90, opacity: 0 }}
       animate={{ rotateY: 0, opacity: 1 }}
       transition={{ duration: reduce ? 0 : 0.3 }}
-      className="kid-card flex flex-col gap-3 p-4"
+      onClick={onActivate}
+      className={`kid-card flex cursor-pointer flex-col gap-3 p-4 transition ${
+        active ? "ring-2 ring-gold-300" : ""
+      }`}
     >
       <div className="flex items-start gap-3">
         <WonderArt photo={photo} emoji={wonder.emoji} name={wonder.name} />
@@ -199,15 +224,17 @@ function PhotoCredit({ photo }: { photo: WonderPhoto }) {
       <span>
         Photo: {photo.author} · {photo.license}
       </span>
-      <a
-        href={photo.sourceUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        // Parent affordance: opens Wikimedia in a new tab, away from the journey.
-        className="font-bold text-royal underline decoration-dotted underline-offset-2"
-      >
-        Learn more ↗
-      </a>
+      {photo.sourceUrl && (
+        <a
+          href={photo.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          // Parent affordance: opens Wikimedia in a new tab, away from the journey.
+          className="font-bold text-royal underline decoration-dotted underline-offset-2"
+        >
+          Learn more ↗
+        </a>
+      )}
     </p>
   );
 }

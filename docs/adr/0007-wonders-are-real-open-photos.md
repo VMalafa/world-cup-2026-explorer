@@ -4,6 +4,14 @@
 
 accepted (supersedes ADR-0004)
 
+> **Update 2026-06-20 — temporary divergence.** The shipping `wonderPhotos.json`
+> currently points at **AI-generated prototype images** (`*-generated.png`,
+> license "AI-generated prototype", no source URL) rather than the real Wikimedia
+> photos this ADR mandates. This was committed deliberately as a prototype
+> baseline; it is **not** a considered reversal of this decision. Either restore
+> real open photos or record a superseding ADR before treating AI-generated
+> wonder imagery as the intended approach.
+
 ## Context & decision
 
 Issue #28 asked that **Wonders** use real, openly-available information and

@@ -1,80 +1,94 @@
 {
   "alg-animal": {
-    "file": "alg-animal.jpg",
-    "title": "Fennec Fox Vulpes zerda",
-    "author": "Drew Avery",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fennec_Fox_Vulpes_zerda.jpg"
+    "file": "alg-animal-generated.png",
+    "title": "Fennec fox with Algerian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "alg-food": {
-    "file": "alg-food.jpg",
-    "title": "Chicken Orange Couscous-01",
-    "author": "Evan",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chicken_Orange_Couscous-01.jpg"
+    "file": "alg-food-generated.png",
+    "title": "Couscous with Algerian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "alg-landmark": {
+    "file": "alg-landmark-generated.png",
+    "title": "Sahara Desert with Algerian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "arg-animal": {
-    "file": "arg-animal.jpg",
-    "title": "Vultur gryphus head (Linnaeus, 1758)",
-    "author": "Michael Gäbler",
-    "license": "CC BY 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vultur_gryphus_head_(Linnaeus,_1758).jpg"
+    "file": "arg-animal-generated.png",
+    "title": "Andean condor with Argentine soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "arg-food": {
+    "file": "arg-food-generated.png",
+    "title": "Empanadas with Argentine soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "arg-landmark": {
-    "file": "arg-landmark.jpg",
-    "title": "Glacial iceberg in Argentina",
-    "author": "IlyaHaykinson",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Glacial_iceberg_in_Argentina.jpg"
+    "file": "arg-landmark-generated.png",
+    "title": "Perito Moreno Glacier with Argentine soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "aus-animal": {
-    "file": "aus-animal.jpg",
-    "title": "Eastern Grey Kangaroo Feeding edited",
-    "author": "Eastern_Grey_Kangaroo_Feeding.jpg : Toby Hudson derivative work: Durova ( talk )",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Eastern_Grey_Kangaroo_Feeding_edited.jpg"
+    "file": "aus-animal-generated.png",
+    "title": "Kangaroo with Australian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "aus-food": {
-    "file": "aus-food.jpg",
-    "title": "Vegemiteontoast large",
-    "author": "Tristanb",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vegemiteontoast_large.jpg"
+    "file": "aus-food-generated.png",
+    "title": "Vegemite with Australian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "aus-landmark": {
-    "file": "aus-landmark.jpg",
-    "title": "Petermann Ranges (AU), Uluru-Kata Tjuta National Park, Uluru, Kuniya Walk -- 2019 -- 3636",
-    "author": "Dietmar Rabich",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Petermann_Ranges_(AU),_Uluru-Kata_Tjuta_National_Park,_Uluru,_Kuniya_Walk_--_2019_--_3636.jpg"
+    "file": "aus-landmark-generated.png",
+    "title": "Uluru with Australian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "aut-animal": {
-    "file": "aut-animal.jpg",
-    "title": "Marmota marmota 07",
-    "author": "Kuebi = Armin Kübelbeck",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Marmota_marmota_07.jpg"
+    "file": "aut-animal-generated.png",
+    "title": "Alpine marmot with Austrian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "aut-food": {
-    "file": "aut-food.jpg",
-    "title": "Sachertorte DSC03027 retouched",
-    "author": "Wikimedia Commons",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sachertorte_DSC03027_retouched.jpg"
+    "file": "aut-food-generated.png",
+    "title": "Sachertorte with Austrian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "aut-landmark": {
-    "file": "aut-landmark.jpg",
-    "title": "Cumulus cloud above Lechtaler Alps at tannheim, Austria",
-    "author": "Glg",
-    "license": "CC BY-SA 2.0 de",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cumulus_cloud_above_Lechtaler_Alps_at_tannheim,_Austria.jpg"
+    "file": "aut-landmark-generated.png",
+    "title": "The Alps with Austrian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "bra-animal": {
-    "file": "bra-animal.jpg",
-    "title": "Jaguar head shot-edit2",
-    "author": "Cburnett at English Wikipedia",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jaguar_head_shot-edit2.jpg"
+    "file": "bra-animal-generated.png",
+    "title": "Jaguar with Brazilian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "bra-food": {
     "file": "bra-food.jpg",
@@ -91,25 +105,25 @@
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Noite_no_Teatro_Amazonas_(cropped).jpg"
   },
   "can-animal": {
-    "file": "can-animal.jpg",
-    "title": "Moose in Grand Teton National Park 3 (8007698498)",
-    "author": "Tony Hisgett from Birmingham, UK",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Moose_in_Grand_Teton_National_Park_3_(8007698498).jpg"
+    "file": "can-animal-generated.png",
+    "title": "Moose with Canadian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "can-food": {
-    "file": "can-food.jpg",
-    "title": "Maple syrup",
-    "author": "User:Miguel Andrade",
-    "license": "Public domain",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Maple_syrup.jpg"
+    "file": "can-food-generated.png",
+    "title": "Maple syrup with Canadian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "can-landmark": {
-    "file": "can-landmark.jpg",
-    "title": "Niagara-Falls-Horseshoe-Falls-view",
-    "author": "Photo (c)2007 Helen Filatova",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Niagara-Falls-Horseshoe-Falls-view.jpg"
+    "file": "can-landmark-generated.png",
+    "title": "Niagara Falls with Canadian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "civ-animal": {
     "file": "civ-animal.jpg",
@@ -132,68 +146,96 @@
     "license": "CC BY-SA 4.0",
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Notre-Dame-de-la-Paix_de_Yamoussoukro_2.jpg"
   },
+  "cmr-landmark": {
+    "file": "cmr-landmark-generated.png",
+    "title": "Mount Cameroon with Cameroonian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
   "col-animal": {
-    "file": "col-animal.jpg",
-    "title": "Cotton-top tamarin (Saguinus oedipus)",
-    "author": "Turtolt",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cotton-top_tamarin_(Saguinus_oedipus).jpg"
+    "file": "col-animal-generated.png",
+    "title": "Cotton-top tamarin with Colombian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "col-food": {
-    "file": "col-food.jpg",
-    "title": "Arepa de trigo",
-    "author": "Pintoandres90",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arepa_de_trigo.JPG"
+    "file": "col-food-generated.png",
+    "title": "Arepa with Colombian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "col-landmark": {
-    "file": "col-landmark.jpg",
-    "title": "Cocora Valley",
-    "author": "Ricardo Gonzalez Arango",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cocora_Valley.jpg"
+    "file": "col-landmark-generated.png",
+    "title": "Cocora Valley with Colombian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "cro-animal": {
-    "file": "cro-animal.jpg",
-    "title": "Dalmatien",
-    "author": "Desaix83 , d'après le travail de Le dalmatien",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dalmatien.jpg"
+    "file": "cro-animal-generated.png",
+    "title": "Dalmatian dog with Croatian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "cro-food": {
-    "file": "cro-food.jpg",
-    "title": "Fritule(miske)",
-    "author": "No machine-readable author provided. Žiga assumed (based on copyright claims).",
-    "license": "Public domain",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fritule(miske).JPG"
+    "file": "cro-food-generated.png",
+    "title": "Fritule with Croatian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "cro-landmark": {
-    "file": "cro-landmark.jpg",
-    "title": "A bridge in Plitvice lakes national park, Croatia",
-    "author": "Someone35",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:A_bridge_in_Plitvice_lakes_national_park,_Croatia.jpg"
+    "file": "cro-landmark-generated.png",
+    "title": "Plitvice Lakes with Croatian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "eng-animal": {
-    "file": "eng-animal.jpg",
-    "title": "Erithacus rubecula -Netherlands-8",
-    "author": "Arjan Haverkamp",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_-Netherlands-8.jpg"
+    "file": "eng-animal-generated.png",
+    "title": "Robin with English soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "eng-food": {
-    "file": "eng-food.jpg",
-    "title": "Fish and chips",
-    "author": "Andrew Dunn",
-    "license": "CC BY-SA 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fish_and_chips.jpg"
+    "file": "eng-food-generated.png",
+    "title": "Fish and chips with English soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "eng-landmark": {
-    "file": "eng-landmark.jpg",
-    "title": "Elizabeth Tower 2014-09-21 205MP",
-    "author": "Colin",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Tower_2014-09-21_205MP.jpg"
+    "file": "eng-landmark-generated.png",
+    "title": "Big Ben with English soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "fra-animal": {
+    "file": "fra-animal-generated.png",
+    "title": "Gallic rooster with French soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "fra-food": {
+    "file": "fra-food-generated.png",
+    "title": "Baguette with French soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "fra-landmark": {
+    "file": "fra-landmark-generated.png",
+    "title": "Eiffel Tower with French soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "ger-animal": {
     "file": "ger-animal.jpg",
@@ -210,74 +252,116 @@
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_LOC_print_rotated.jpg"
   },
   "gha-animal": {
-    "file": "gha-animal.jpg",
-    "title": "Psittacus erithacus qtl1",
-    "author": "Quartl",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Psittacus_erithacus_qtl1.jpg"
+    "file": "gha-animal-generated.png",
+    "title": "African grey parrot with Ghanaian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "gha-food": {
-    "file": "gha-food.jpg",
-    "title": "Jollof rice with vegetable",
-    "author": "Segun Famisa",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jollof_rice_with_vegetable.jpg"
+    "file": "gha-food-generated.png",
+    "title": "Jollof rice with Ghanaian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "gha-landmark": {
+    "file": "gha-landmark-generated.png",
+    "title": "Lake Volta with Ghanaian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "irn-animal": {
+    "file": "irn-animal-generated.png",
+    "title": "Persian cat with Iranian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "irn-food": {
+    "file": "irn-food-generated.png",
+    "title": "Tahdig with Iranian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "irn-landmark": {
+    "file": "irn-landmark-generated.png",
+    "title": "Persepolis with Iranian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "jpn-landmark": {
+    "file": "jpn-landmark-generated.png",
+    "title": "Mount Fuji with Japanese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "kor-animal": {
-    "file": "kor-animal.jpg",
-    "title": "Sibirischer tiger de edit02",
-    "author": "S. Taheri , edited by Fir0002",
-    "license": "CC BY-SA 2.5",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sibirischer_tiger_de_edit02.jpg"
+    "file": "kor-animal-generated.png",
+    "title": "Tiger with Korean soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "kor-food": {
-    "file": "kor-food.jpg",
-    "title": "Korean.food-Bibimbap-02",
-    "author": "abex (a flickr user)",
-    "license": "CC BY-SA 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Korean.food-Bibimbap-02.jpg"
+    "file": "kor-food-generated.png",
+    "title": "Bibimbap with Korean soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "kor-landmark": {
-    "file": "kor-landmark.jpg",
-    "title": "Gyeonghoeru (Royal Banquet Hall) at Gyeongbokgung Palace, Seoul",
-    "author": "Frank Schulenburg",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gyeonghoeru_(Royal_Banquet_Hall)_at_Gyeongbokgung_Palace,_Seoul.jpg"
+    "file": "kor-landmark-generated.png",
+    "title": "Gyeongbokgung Palace with Korean soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "mar-animal": {
-    "file": "mar-animal.jpg",
-    "title": "Gibraltar Barbary Macaque",
-    "author": "RedCoat",
-    "license": "CC BY-SA 2.5",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gibraltar_Barbary_Macaque.jpg"
+    "file": "mar-animal-generated.png",
+    "title": "Barbary macaque with Moroccan soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "mar-food": {
-    "file": "mar-food.jpg",
-    "title": "Tagine (3645135776)",
-    "author": "Karen and Brad Emerson",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tagine_(3645135776).jpg"
+    "file": "mar-food-generated.png",
+    "title": "Tagine with Moroccan soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "mar-landmark": {
+    "file": "mar-landmark-generated.png",
+    "title": "Chefchaouen with Moroccan soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "mex-animal": {
-    "file": "mex-animal.jpg",
-    "title": "Axolotl Ambystoma mexicanum Aquarium Zoo Berlin, 2007",
-    "author": "Kristof Magnusson",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Axolotl_Ambystoma_mexicanum_Aquarium_Zoo_Berlin,_2007.jpg"
+    "file": "mex-animal-generated.png",
+    "title": "Axolotl with Mexican soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "mex-food": {
-    "file": "mex-food.jpg",
-    "title": "001 Tacos de carnitas, carne asada y al pastor",
-    "author": "Larry Miller",
-    "license": "CC BY-SA 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:001_Tacos_de_carnitas,_carne_asada_y_al_pastor.jpg"
+    "file": "mex-food-generated.png",
+    "title": "Tacos with Mexican soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "mex-landmark": {
-    "file": "mex-landmark.jpg",
-    "title": "Chichén Itzá - 17",
-    "author": "Carlos Delgado",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Chich%C3%A9n_Itz%C3%A1_-_17.jpg"
+    "file": "mex-landmark-generated.png",
+    "title": "Chichén Itzá with Mexican soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "ned-animal": {
     "file": "ned-animal.jpg",
@@ -294,25 +378,74 @@
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:Stroopwafels_01.jpg"
   },
   "ned-landmark": {
-    "file": "ned-landmark.jpg",
-    "title": "The windmills of Kinderdijk",
-    "author": "Tarod",
-    "license": "CC BY-SA 3.0 nl",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_windmills_of_Kinderdijk.JPG"
+    "file": "ned-landmark-generated.png",
+    "title": "Kinderdijk windmills with Dutch soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "nzl-animal": {
+    "file": "nzl-animal-generated.png",
+    "title": "Kiwi bird with New Zealand soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "nzl-food": {
+    "file": "nzl-food-generated.png",
+    "title": "Pavlova with New Zealand soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "nzl-landmark": {
+    "file": "nzl-landmark-generated.png",
+    "title": "Milford Sound with New Zealand soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "nor-animal": {
+    "file": "nor-animal-generated.png",
+    "title": "Reindeer with Norwegian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "nor-food": {
+    "file": "nor-food-generated.png",
+    "title": "Brunost with Norwegian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "nor-landmark": {
+    "file": "nor-landmark-generated.png",
+    "title": "Norwegian fjords with soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "pan-animal": {
-    "file": "pan-animal.jpg",
-    "title": "Golden mantella",
-    "author": "Wikimedia Commons",
-    "license": "CC BY-SA 2.5",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Golden_mantella.JPG"
+    "file": "pan-animal-generated.png",
+    "title": "Golden frog with Panamanian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "pan-food": {
+    "file": "pan-food-generated.png",
+    "title": "Sancocho with Panamanian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "pan-landmark": {
-    "file": "pan-landmark.jpg",
-    "title": "Panama Canal Gatun Locks",
-    "author": "User:Stan Shebs",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Panama_Canal_Gatun_Locks.jpg"
+    "file": "pan-landmark-generated.png",
+    "title": "Panama Canal with Panamanian soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "par-food": {
     "file": "par-food.jpg",
@@ -329,115 +462,171 @@
     "sourceUrl": "https://commons.wikimedia.org/wiki/File:J37_816_embalse_Itaip%C3%BA,_presa.jpg"
   },
   "por-animal": {
-    "file": "por-animal.jpg",
-    "title": "PA2900302 galo emiliarocha medio",
-    "author": "Adriculas",
-    "license": "Public domain",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:PA2900302_galo_emiliarocha_medio.jpg"
+    "file": "por-animal-generated.png",
+    "title": "Rooster of Barcelos with Portuguese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "por-food": {
-    "file": "por-food.jpg",
-    "title": "Pastel de nata septembre 2015",
-    "author": "Photo Claude TRUONG-NGOC",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pastel_de_nata_septembre_2015.jpg"
+    "file": "por-food-generated.png",
+    "title": "Pastel de nata with Portuguese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "por-landmark": {
-    "file": "por-landmark.jpg",
-    "title": "Torre Belém April 2009-4a",
-    "author": "Alvesgaspar",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Torre_Bel%C3%A9m_April_2009-4a.jpg"
+    "file": "por-landmark-generated.png",
+    "title": "Belém Tower with Portuguese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "qat-animal": {
-    "file": "qat-animal.jpg",
-    "title": "Arabian oryx (oryx leucoryx)",
-    "author": "Charles J. Sharp",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arabian_oryx_(oryx_leucoryx).jpg"
+    "file": "qat-animal-generated.png",
+    "title": "Arabian oryx with Qatari soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "qat-food": {
-    "file": "qat-food.jpg",
-    "title": "Kabsa",
-    "author": "Basel15 at en.wikipedia",
-    "license": "Public domain",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kabsa.jpg"
+    "file": "qat-food-generated.png",
+    "title": "Machboos with Qatari soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "qat-landmark": {
-    "file": "qat-landmark.jpg",
-    "title": "Dunes at Khawr al Udayd in 2004",
-    "author": "Em and Ernie @ Flickr",
-    "license": "CC BY-SA 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dunes_at_Khawr_al_Udayd_in_2004.jpg"
+    "file": "qat-landmark-generated.png",
+    "title": "Khor Al Adaid with Qatari soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "rsa-animal": {
-    "file": "rsa-animal.jpg",
-    "title": "Springbok (Antidorcas marsupialis) young 2w",
-    "author": "Charles J. Sharp",
-    "license": "CC BY-SA 4.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Springbok_(Antidorcas_marsupialis)_young_2w.jpg"
+    "file": "rsa-animal-generated.png",
+    "title": "Springbok with South African soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "rsa-food": {
+    "file": "rsa-food-generated.png",
+    "title": "Bobotie with South African soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "rsa-landmark": {
+    "file": "rsa-landmark-generated.png",
+    "title": "Table Mountain with South African soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "sen-animal": {
+    "file": "sen-animal-generated.png",
+    "title": "Lion with Senegalese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "sen-food": {
+    "file": "sen-food-generated.png",
+    "title": "Thieboudienne with Senegalese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "sen-landmark": {
+    "file": "sen-landmark-generated.png",
+    "title": "Lac Rose with Senegalese soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "sco-food": {
-    "file": "sco-food.jpg",
-    "title": "Shortbread fingers",
-    "author": "User:Dave souza",
-    "license": "CC BY-SA 2.5",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shortbread_fingers.jpg"
+    "file": "sco-food-generated.png",
+    "title": "Shortbread with Scottish soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "sco-landmark": {
-    "file": "sco-landmark.jpg",
-    "title": "Edinburgh Castle gate 20211019",
-    "author": "Daniel Kraft",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_gate_20211019.jpg"
+    "file": "sco-landmark-generated.png",
+    "title": "Edinburgh Castle with Scottish soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "sco-animal": {
+    "file": "sco-animal-generated.png",
+    "title": "Unicorn symbol with Scottish soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "sui-animal": {
-    "file": "sui-animal.jpg",
-    "title": "St Bernard with barrel",
-    "author": "Daniel Steger",
-    "license": "CC BY-SA 2.5",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:St_Bernard_with_barrel.JPG"
+    "file": "sui-animal-generated.png",
+    "title": "St. Bernard dog with Swiss soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "sui-food": {
-    "file": "sui-food.jpg",
-    "title": "Full cheese fondue set - in Switzerland",
-    "author": "EquatorialSky at English Wikipedia",
-    "license": "Public domain",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Full_cheese_fondue_set_-_in_Switzerland.JPG"
+    "file": "sui-food-generated.png",
+    "title": "Cheese fondue with Swiss soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "sui-landmark": {
-    "file": "sui-landmark.jpg",
-    "title": "Matterhorn Riffelsee 2005-06-11",
-    "author": "Dirk Beyer",
-    "license": "CC BY-SA 3.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Matterhorn_Riffelsee_2005-06-11.jpg"
+    "file": "sui-landmark-generated.png",
+    "title": "Matterhorn with Swiss soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "usa-animal": {
-    "file": "usa-animal.jpg",
-    "title": "Bald Eagle - \"Helga\" - Haliaeetus leucocephalus2",
-    "author": "Paul Friel",
-    "license": "CC BY 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bald_Eagle_-_%22Helga%22_-_Haliaeetus_leucocephalus2.jpg"
+    "file": "usa-animal-generated.png",
+    "title": "Bald eagle with American soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "usa-food": {
-    "file": "usa-food.jpg",
-    "title": "NCI Visuals Food Hamburger",
-    "author": "Len Rizzi (photographer)",
-    "license": "Public domain",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:NCI_Visuals_Food_Hamburger.jpg"
+    "file": "usa-food-generated.png",
+    "title": "Hamburger with American soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "usa-landmark": {
+    "file": "usa-landmark-generated.png",
+    "title": "Statue of Liberty with American soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "uzb-animal": {
-    "file": "uzb-animal.jpg",
-    "title": "Snow leopard portrait",
-    "author": "Tambako The Jaguar",
-    "license": "CC BY-SA 2.0",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Snow_leopard_portrait.jpg"
+    "file": "uzb-animal-generated.png",
+    "title": "Snow leopard with Uzbek soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
+  },
+  "uzb-food": {
+    "file": "uzb-food-generated.png",
+    "title": "Plov with Uzbek soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   },
   "uzb-landmark": {
-    "file": "uzb-landmark.jpg",
-    "title": "Registan Samarkand Uzbekistan",
-    "author": "Stomac",
-    "license": "CC BY-SA 2.0 fr",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Registan_Samarkand_Uzbekistan.JPG"
+    "file": "uzb-landmark-generated.png",
+    "title": "Registan with Uzbek soccer heritage",
+    "author": "OpenAI image generation",
+    "license": "AI-generated prototype",
+    "sourceUrl": ""
   }
 }
