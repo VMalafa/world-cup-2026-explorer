@@ -3,10 +3,15 @@ import { describe, it, expect } from "vitest";
 import { geographyFor, HOMELANDS } from "@/lib/geography";
 
 import { COUNTRIES, getCountry } from "./countries";
+import { TEAMS } from "./teams";
 
 describe("Country / Team split", () => {
-  it("projects all 48 tournament nations into Countries", () => {
-    expect(COUNTRIES).toHaveLength(48);
+  it("projects every Team into a Country — a superset of the 48 qualified teams (ADR-0008)", () => {
+    // The curated roster deliberately exceeds the 48 qualified teams: it adds
+    // every real fixture's nation while keeping non-playing Countries (e.g. the
+    // Homeland Cameroon) explorable. The invariant is 1:1 with TEAMS, not 48.
+    expect(COUNTRIES).toHaveLength(TEAMS.length);
+    expect(COUNTRIES.length).toBeGreaterThanOrEqual(48);
   });
 
   it("drops the footballing-only facet (group) from a Country", () => {
