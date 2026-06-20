@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
 import { matchClock, prettyDate, type Featured } from "@/lib/schedule";
 import { getTeam } from "@/data/teams";
@@ -125,11 +125,14 @@ function MatchCard({
   /** Both teams are curated, so the card opens a journey. */
   clickable?: boolean;
 }) {
+  const reduce = useReducedMotion();
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08, type: "spring", stiffness: 220, damping: 24 }}
+      // A tactile press so a small child sees the tap land before the journey opens (#45b).
+      whileTap={clickable && !reduce ? { scale: 0.98 } : undefined}
       className={`kid-card h-full p-4 transition-transform sm:p-7 ${
         clickable ? "hover:-translate-y-0.5" : ""
       } ${featured ? "ring-2 ring-gold" : ""}`}
@@ -180,9 +183,13 @@ function MatchCard({
       )}
 
       {clickable && (
-        <p className="mt-4 text-center text-sm font-extrabold text-royal">
-          {featured ? "Start the Match Day Journey" : "Explore these countries"} →
-        </p>
+        <div className="mt-4 flex justify-center">
+          {/* A filled pill reads as a real "tap me" button for small hands (#45b). */}
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-royal px-4 py-2 text-sm font-extrabold text-white shadow-pop">
+            {featured ? "Start the Match Day Journey" : "Explore these countries"}
+            <span aria-hidden>→</span>
+          </span>
+        </div>
       )}
     </motion.article>
   );

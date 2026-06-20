@@ -10,6 +10,7 @@ import { geographyFor, type Compass } from "@/lib/geography";
 import { getWonderPhoto } from "@/data/wonderPhotos";
 import type { WonderPhoto } from "@/lib/wikimedia";
 import { SpeakableText } from "./SpeakableText";
+import { ConfirmBadge } from "./ConfirmBadge";
 
 const COMPASS_WORD: Record<Compass, string> = {
   N: "north", NE: "north-east", E: "east", SE: "south-east",
@@ -47,6 +48,10 @@ export function FindItStation({ country, found }: { country: Country; found: boo
 
   return (
     <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <ConfirmBadge label="You found it!" tone="cedar" />
+        <span aria-hidden className="text-2xl">🎉</span>
+      </div>
       <SpeakableText
         autoRead
         text={`You found ${country.name}!`}
