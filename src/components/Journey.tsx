@@ -8,13 +8,14 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Country } from "@/types";
 import { getCountry } from "@/data/countries";
 import { getTeam } from "@/data/teams";
+import { getWonderPhoto } from "@/data/wonderPhotos";
 import { buildJourney, type Station } from "@/lib/journey";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
 import type { StandingRow } from "@/lib/standings";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
-import { FindItStation, SayHelloStation, WondersStation } from "./Stations";
+import { FindItStation, SayHelloStation, WondersStation, type WonderSlot } from "./Stations";
 import { MatchMoment } from "./MatchMoment";
 import { Standings } from "./Standings";
 
@@ -69,9 +70,13 @@ export function Journey({
   const [finished, setFinished] = useState(false);
   // The Country the child last tapped on the globe — drives "Find it".
   const [tappedCode, setTappedCode] = useState<string | null>(null);
+  const [activeWonderSlot, setActiveWonderSlot] = useState<WonderSlot>("landmark");
 
   // A fresh Station starts un-tapped.
-  useEffect(() => setTappedCode(null), [step]);
+  useEffect(() => {
+    setTappedCode(null);
+    setActiveWonderSlot("landmark");
+  }, [step]);
 
   if (!journey) {
     return (
@@ -102,14 +107,32 @@ export function Journey({
 
   return (
     <Shell>
-      {/* Globe spine — always present, focused on the current Country */}
-      <div className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5">
-        <WorldMap
-          selectedCode={finished || !station ? null : station.countryCode}
-          onSelect={setTappedCode}
-          earnedCodes={journeyCodes}
-        />
-      </div>
+      <AnimatePresence mode="wait">
+        {station?.kind === "wonders" && country ? (
+          <motion.div
+            key={`${country.code}-wonder-stage`}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+          >
+            <WonderStage country={country} activeSlot={activeWonderSlot} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="globe-stage"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+            className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5"
+          >
+            <WorldMap
+              selectedCode={finished || !station ? null : station.countryCode}
+              onSelect={setTappedCode}
+              earnedCodes={journeyCodes}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {finished ? (
         <FinishCard countries={journey.countries} />
@@ -157,7 +180,14 @@ export function Journey({
                     <FindItStation country={country} found={tappedCode === country.code} />
                   )}
                   {station.kind === "hello" && <SayHelloStation country={country} />}
-                  {station.kind === "wonders" && <WondersStation country={country} pick={pick} />}
+                  {station.kind === "wonders" && (
+                    <WondersStation
+                      country={country}
+                      pick={pick}
+                      activeSlot={activeWonderSlot}
+                      onActiveSlotChange={setActiveWonderSlot}
+                    />
+                  )}
                 </>
               ) : (
                 <>
@@ -209,6 +239,54 @@ export function Journey({
         </>
       )}
     </Shell>
+  );
+}
+
+function WonderStage({
+  country,
+  activeSlot,
+}: {
+  country: Country;
+  activeSlot: WonderSlot;
+}) {
+  const wonder = country.wonders?.[activeSlot];
+  const photo = getWonderPhoto(country.code, activeSlot);
+
+  return (
+    <section className="overflow-hidden rounded-blob bg-ink shadow-soft ring-1 ring-black/10">
+      <div className="relative flex h-[46vh] min-h-[320px] max-h-[560px] items-end justify-start overflow-hidden">
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={photo.file}
+            src={`/wonders/${photo.file}`}
+            alt={wonder?.name ?? `${country.name} wonder`}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-royal-50">
+            <span className="text-8xl grayscale" aria-hidden>
+              {wonder?.emoji ?? country.flag}
+            </span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent" />
+        <div className="relative z-10 w-full p-5 text-white sm:p-7">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-sm font-extrabold text-ink shadow-card">
+            <Flag team={getTeam(country.code)!} size={26} className="!h-[19px] !w-[26px]" />
+            {country.name}
+          </div>
+          <h2 className="max-w-xl text-3xl font-extrabold leading-tight sm:text-5xl">
+            {wonder?.name ?? "Wonder"}
+          </h2>
+          <p className="mt-2 max-w-xl text-sm font-bold text-white/85 sm:text-base">
+            {photo
+              ? `${photo.author} · ${photo.license}`
+              : "Picture coming soon. The journey still works with the emoji fallback."}
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 
