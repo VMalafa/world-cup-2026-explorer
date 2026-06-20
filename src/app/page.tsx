@@ -46,7 +46,14 @@ export default function Home() {
       <header className="mb-5 flex flex-col items-center gap-4 sm:mb-7 sm:flex-row sm:justify-between sm:gap-3">
         <div className="flex flex-col items-center gap-1.5 sm:items-start">
           <h1 className="flex items-center gap-2 text-center text-[clamp(1.5rem,7vw,2rem)] font-extrabold tracking-tight sm:text-left sm:text-4xl">
-            <span className="animate-float" aria-hidden>⚽</span>
+            {/* The ball gets a soft four-homes halo so it reads festive, not flat (#45c). */}
+            <span className="relative inline-flex shrink-0 items-center justify-center">
+              <span
+                className="unity-ribbon absolute inset-0 -m-1 rounded-full opacity-40 blur-[7px]"
+                aria-hidden
+              />
+              <span className="animate-float relative" aria-hidden>⚽</span>
+            </span>
             <span>
               <span className="text-royal">World Cup</span>{" "}
               <span className="text-unity">Explorer</span>

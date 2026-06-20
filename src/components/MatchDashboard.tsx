@@ -16,6 +16,17 @@ const HEADING: Record<Featured["kind"], { title: string; sub: string }> = {
   recent: { title: "Latest Matches", sub: "Look back at the last match day." },
 };
 
+// A continent-coloured ring around each flag — functional colour that teaches
+// where a team is from while warming up the card (DESIGN.md continent coding, #45c).
+const CONTINENT_RING: Record<string, string> = {
+  africa: "ring-continent-africa",
+  asia: "ring-continent-asia",
+  europe: "ring-continent-europe",
+  namerica: "ring-continent-namerica",
+  samerica: "ring-continent-samerica",
+  oceania: "ring-continent-oceania",
+};
+
 function Side({
   code,
   name,
@@ -33,7 +44,11 @@ function Side({
   if (team) {
     return (
       <div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
-        <Flag team={team} size={72} className="sm:!h-[66px] sm:!w-[88px]" />
+        <Flag
+          team={team}
+          size={72}
+          className={`ring-2 ring-offset-2 ring-offset-white ${CONTINENT_RING[team.continent] ?? "ring-line"} sm:!h-[66px] sm:!w-[88px]`}
+        />
         <span className="break-words text-lg font-extrabold leading-tight sm:text-2xl">
           {team.name}
         </span>
@@ -133,10 +148,12 @@ function MatchCard({
       transition={{ delay: index * 0.08, type: "spring", stiffness: 220, damping: 24 }}
       // A tactile press so a small child sees the tap land before the journey opens (#45b).
       whileTap={clickable && !reduce ? { scale: 0.98 } : undefined}
-      className={`kid-card h-full p-4 transition-transform sm:p-7 ${
+      className={`kid-card relative h-full overflow-hidden p-4 transition-transform sm:p-7 ${
         clickable ? "hover:-translate-y-0.5" : ""
       } ${featured ? "ring-2 ring-gold" : ""}`}
     >
+      {/* The Unity Ribbon — four homes, one game — warms each card on-brand (#45c). */}
+      <span className="unity-ribbon absolute inset-x-0 top-0 h-1.5" aria-hidden />
       <div className="mb-4 flex items-center justify-between">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
           {featured ? (
