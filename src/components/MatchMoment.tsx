@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import type { Country } from "@/types";
 import { getTeam } from "@/data/teams";
+import { langFor } from "@/data/languages";
+import { farewellFor } from "@/data/farewells";
 import { browserKeyValue } from "@/lib/storage";
 import { createPredictionStore } from "@/lib/prediction";
 import { useProfile } from "./Profiles";
@@ -127,8 +129,72 @@ export function MatchMoment({
           </p>
         </div>
       )}
+
+      {pick && <Sendoff pick={pick} home={home} away={away} />}
+
       <p className="mt-3 text-sm font-semibold text-muted">
         Guessing is just for fun — finishing the journey earns your stamps either way.
+      </p>
+    </div>
+  );
+}
+
+/**
+ * The Send-off (issue #47) — after a Prediction, wish the picked Team good luck
+ * in its own language (native line read aloud + an English gloss). A tie wishes
+ * both Teams luck, in both languages; only the English headline auto-reads, so
+ * the two native lines don't cancel each other (useSpeak stops on a new line).
+ */
+function Sendoff({ pick, home, away }: { pick: string; home: Country; away: Country }) {
+  if (pick === DRAW) {
+    return (
+      <div className="mt-4 flex flex-col items-center gap-2">
+        <SpeakableText
+          autoRead
+          text="Good luck to both teams!"
+          className="justify-center"
+          textClassName="text-lg font-extrabold text-royal"
+        />
+        <div className="flex flex-col items-center gap-1.5">
+          {[home, away].map((c) => {
+            const fw = farewellFor(c.code);
+            return (
+              <div key={c.code} className="text-center">
+                <SpeakableText
+                  lang={langFor(c.code)}
+                  text={fw.native}
+                  className="justify-center"
+                  textClassName="font-extrabold text-ink"
+                />
+                <p className="text-xs font-semibold text-muted">
+                  “{fw.gloss}” — {c.name}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  const country = pick === home.code ? home : pick === away.code ? away : null;
+  if (!country) return null;
+  const fw = farewellFor(country.code);
+
+  return (
+    <div className="mt-4 flex flex-col items-center gap-1.5">
+      <SpeakableText
+        autoRead
+        lang={langFor(country.code)}
+        text={fw.native}
+        className="justify-center"
+        textClassName="text-xl font-extrabold text-royal sm:text-2xl"
+      />
+      {fw.native !== fw.gloss && (
+        <p className="text-sm font-semibold text-muted">“{fw.gloss}”</p>
+      )}
+      <p className="text-sm font-semibold text-muted">
+        Good luck, {country.name}! <span aria-hidden>🍀</span>
       </p>
     </div>
   );
