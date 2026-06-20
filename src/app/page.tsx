@@ -79,7 +79,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 space-y-6">
+      <main className="flex-1 space-y-5">
         {/* The Match of the Day opens the journey */}
         <Link
           href="/journey"

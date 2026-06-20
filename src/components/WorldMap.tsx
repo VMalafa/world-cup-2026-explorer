@@ -57,11 +57,18 @@ export default function WorldMap({
   selectedCode,
   onSelect,
   earnedCodes,
+  heightClass = "h-[60vh] min-h-[360px]",
 }: {
   selectedCode: string | null;
   onSelect: (code: string) => void;
   /** Countries with a Passport Stamp — drawn with a gold ring. Optional. */
   earnedCodes?: Set<string>;
+  /**
+   * Height utility classes for the map. Defaults to the large free-explore
+   * globe; the Match Day Journey passes a shorter one so the globe, station,
+   * and Next button fit a small screen together (issue #45a).
+   */
+  heightClass?: string;
 }) {
   const selectedTeam = TEAMS.find((t) => t.code === selectedCode) ?? null;
 
@@ -73,7 +80,7 @@ export default function WorldMap({
       maxZoom={6}
       worldCopyJump
       scrollWheelZoom
-      className="h-[60vh] min-h-[360px] w-full"
+      className={`${heightClass} w-full`}
       // Keep the world from scrolling infinitely off into grey.
       maxBounds={[
         [-85, -180],

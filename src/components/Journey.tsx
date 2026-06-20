@@ -22,7 +22,7 @@ import { Standings } from "./Standings";
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[44vh] min-h-[280px] w-full items-center justify-center rounded-blob bg-royal-50">
+    <div className="flex h-[38vh] min-h-[260px] w-full items-center justify-center rounded-blob bg-royal-50">
       <span className="animate-float text-5xl" aria-hidden>
         🌍
       </span>
@@ -129,6 +129,7 @@ export function Journey({
               selectedCode={finished || !station ? null : station.countryCode}
               onSelect={setTappedCode}
               earnedCodes={journeyCodes}
+              heightClass="h-[38vh] min-h-[260px]"
             />
           </motion.div>
         )}
@@ -139,7 +140,7 @@ export function Journey({
       ) : (
         <>
           {/* Progress */}
-          <div className="mt-5 flex items-center justify-between gap-3">
+          <div className="mt-3 flex items-center justify-between gap-3">
             <p className="font-bold text-muted">
               Step <span className="text-royal">{step + 1}</span> of {total}
             </p>
@@ -213,7 +214,7 @@ export function Journey({
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="mt-5 flex items-center justify-between gap-3">
+          <div className="mt-4 flex items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setStep((s) => Math.max(0, s - 1))}
@@ -254,7 +255,7 @@ function WonderStage({
 
   return (
     <section className="overflow-hidden rounded-blob bg-ink shadow-soft ring-1 ring-black/10">
-      <div className="relative flex h-[46vh] min-h-[320px] max-h-[560px] items-end justify-start overflow-hidden">
+      <div className="relative flex h-[38vh] min-h-[260px] max-h-[460px] items-end justify-start overflow-hidden">
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
