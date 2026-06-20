@@ -204,7 +204,14 @@ function WonderCard({
         <WonderArt photo={photo} emoji={wonder.emoji} name={wonder.name} />
         <div>
           <p className="font-extrabold text-ink">{wonder.name}</p>
-          <SpeakableText autoRead text={pick(wonder.blurb)} textClassName="font-semibold text-muted" />
+          <SpeakableText
+            autoRead
+            text={pick(wonder.blurb)}
+            // Speak the wonder's name before its description so a non-reader
+            // hears what they're exploring first (issue #46).
+            speakText={`${wonder.name}. ${pick(wonder.blurb)}`}
+            textClassName="font-semibold text-muted"
+          />
         </div>
       </div>
       {photo && <PhotoCredit photo={photo} />}

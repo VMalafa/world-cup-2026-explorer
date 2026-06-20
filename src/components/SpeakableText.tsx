@@ -11,6 +11,7 @@ import { useSpeak, type SpeakOptions } from "@/lib/useSpeak";
  */
 export function SpeakableText({
   text,
+  speakText,
   lang,
   autoRead = false,
   as: Tag = "p",
@@ -18,6 +19,12 @@ export function SpeakableText({
   textClassName = "",
 }: {
   text: string;
+  /**
+   * What to read aloud, when it should differ from what's shown. Lets a card
+   * display just the blurb but speak "Name. Blurb" so a non-reader hears the
+   * subject before its description (issue #46). Defaults to `text`.
+   */
+  speakText?: string;
   lang?: SpeakOptions["lang"];
   /** Read aloud automatically when shown — for non-readers. */
   autoRead?: boolean;
@@ -26,11 +33,12 @@ export function SpeakableText({
   textClassName?: string;
 }) {
   const { supported, speaking, speak, stop } = useSpeak();
+  const spoken = speakText ?? text;
 
   useEffect(() => {
-    if (supported && autoRead) speak(text, { lang });
-    // Re-read whenever the line itself changes.
-  }, [supported, autoRead, text, lang, speak]);
+    if (supported && autoRead) speak(spoken, { lang });
+    // Re-read whenever the spoken line itself changes.
+  }, [supported, autoRead, spoken, lang, speak]);
 
   return (
     <Tag className={`flex items-center gap-2 ${className}`}>
@@ -38,7 +46,7 @@ export function SpeakableText({
       {supported && (
         <button
           type="button"
-          onClick={() => (speaking ? stop() : speak(text, { lang }))}
+          onClick={() => (speaking ? stop() : speak(spoken, { lang }))}
           aria-label={speaking ? "Stop reading" : "Read aloud"}
           aria-pressed={speaking}
           className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-royal-50 text-lg text-royal ring-1 ring-royal-100 transition-colors hover:bg-royal-100 ${
