@@ -39,9 +39,9 @@ Each **Profile** has its own **Passport** and reading level. Stored on-device.
 
 **Passport**:
 The persistent collection of every **Country** a child has explored — the
-come-back hook, filled gradually across all 48. Lives in the **World** surface;
-gains a **Stamp** the *first* time each **Country**'s journey is finished
-(one stamp per **Country**, ever — revisiting never re-stamps).
+come-back hook, filled gradually across the whole curated roster. Lives in the
+**World** surface; gains a **Stamp** the *first* time each **Country**'s journey
+is finished (one stamp per **Country**, ever — revisiting never re-stamps).
 
 **Stamp**:
 The reward earned for a **Country** when its part of a **Match Day Journey** is
@@ -54,7 +54,15 @@ a child can revisit any **Country** on the **Globe** and see their **Passport**.
 **Prediction**:
 A child's pre-kickoff guess of the **Match of the Day** winner, made during the
 journey and paid off by the post-match "what happened?" beat. Never gates a
-**Stamp** — learning earns stamps, watching does not.
+**Stamp** — learning earns stamps, watching does not. Making a pick triggers a
+**Send-off** (below).
+
+**Send-off**:
+The warm farewell played right after a **Prediction** is made — "Goodbye and good
+luck!" read aloud in the picked **Team**'s own language (native script + an
+English gloss), reusing the same read-aloud path as the say-hello **Station**
+(ADR-0001). Picking "a tie" wishes both **Teams** luck, in both languages (issue
+#47).
 
 **Wonders**:
 The small curated set of kid-friendly highlights shown for a **Country** in a
@@ -77,10 +85,13 @@ accurate, age-appropriate, relevant, culturally respectful, mindful, and
 altruistic/global. Defined in full in ADR-0002.
 
 **Country**:
-A nation in the tournament, treated as the unit of learning (not just a team
-that plays). Carries the learning content a child explores.
+A nation treated as the unit of learning (not just a team that plays). Carries
+the learning content a child explores. The curated **Country** roster is a
+deliberate **superset** of the tournament's qualified **Teams** — it covers every
+real fixture *and* keeps non-playing Countries (e.g. the **Homeland** Cameroon)
+explorable in **World** (ADR-0008). So "all 48" no longer describes the roster.
 _Avoid_: "team" when you mean the place/culture; reserve **Team** for the
-footballing side.
+footballing side. _Avoid_: "the 48" as a synonym for the roster.
 
 **Team**:
 The footballing side a **Country** fields in a **Match** — line-up, group,
@@ -88,7 +99,9 @@ score. The sporting facet of a Country.
 
 **Match**:
 One scheduled fixture between two **Teams** on a given day, with kickoff, venue,
-status, and score.
+status, and score. A knockout **Match** whose sides aren't decided yet carries
+`TBD` placeholders; it shows a friendly "to be decided" card (not a dead one) and
+auto-becomes a journey once both **Teams** resolve (issue #44).
 
 **Match of the Day**:
 The **Match** the app auto-features and highlights each day (a ⭐ on the
