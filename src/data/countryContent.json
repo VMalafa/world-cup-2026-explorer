@@ -1534,5 +1534,325 @@
       "kinder": "Green and white with a red dragon.",
       "enriched": "Wales's flag is green and white with a bright red dragon striding across it."
     }
+  },
+  "BIH": {
+    "wonders": {
+      "landmark": {
+        "name": "Stari Most",
+        "emoji": "🌉",
+        "blurb": {
+          "kinder": "A stone bridge curving over a river.",
+          "enriched": "Stari Most is a graceful stone bridge that arches over the Neretva River in Mostar."
+        }
+      },
+      "animal": {
+        "name": "Brown bear",
+        "emoji": "🐻",
+        "blurb": {
+          "kinder": "Brown bears roam the forests.",
+          "enriched": "Brown bears live in the country's thick mountain forests."
+        }
+      },
+      "food": {
+        "name": "Ćevapi",
+        "emoji": "🍢",
+        "blurb": {
+          "kinder": "Little grilled rolls in warm bread.",
+          "enriched": "Ćevapi are small grilled rolls served in soft flatbread with onions."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue with a yellow triangle and white stars.",
+      "enriched": "The flag is blue with a yellow triangle and a row of white stars along one side."
+    }
+  },
+  "COD": {
+    "wonders": {
+      "landmark": {
+        "name": "Congo River",
+        "emoji": "🌊",
+        "blurb": {
+          "kinder": "One of the longest rivers in Africa.",
+          "enriched": "The Congo River is one of Africa's longest, curving through deep green rainforest."
+        }
+      },
+      "animal": {
+        "name": "Okapi",
+        "emoji": "🦓",
+        "blurb": {
+          "kinder": "A forest cousin of the giraffe.",
+          "enriched": "The okapi is a shy forest animal, related to the giraffe, with striped legs."
+        }
+      },
+      "food": {
+        "name": "Fufu",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Soft dough you dip and share.",
+          "enriched": "Fufu is a soft, stretchy dough scooped up with tasty sauces and shared."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Sky blue with a red stripe and a star.",
+      "enriched": "The flag is sky blue with a red diagonal stripe and a single yellow star."
+    }
+  },
+  "CPV": {
+    "wonders": {
+      "landmark": {
+        "name": "Pico do Fogo",
+        "emoji": "🌋",
+        "blurb": {
+          "kinder": "A tall volcano on an island.",
+          "enriched": "Pico do Fogo is a tall volcano that rises from one of the islands."
+        }
+      },
+      "animal": {
+        "name": "Loggerhead turtle",
+        "emoji": "🐢",
+        "blurb": {
+          "kinder": "Sea turtles nest on the beaches.",
+          "enriched": "Loggerhead sea turtles come ashore to nest on Cape Verde's sandy beaches."
+        }
+      },
+      "food": {
+        "name": "Cachupa",
+        "emoji": "🍲",
+        "blurb": {
+          "kinder": "A slow stew of corn and beans.",
+          "enriched": "Cachupa is a hearty, slow-cooked stew of corn, beans, and vegetables."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue with stripes and a ring of stars.",
+      "enriched": "The flag is blue with white and red stripes and a circle of ten yellow stars."
+    }
+  },
+  "CUW": {
+    "wonders": {
+      "landmark": {
+        "name": "Handelskade",
+        "emoji": "🏘️",
+        "blurb": {
+          "kinder": "Rainbow houses along the water.",
+          "enriched": "Handelskade is a waterfront row of houses painted in cheerful rainbow colours."
+        }
+      },
+      "animal": {
+        "name": "Flamingo",
+        "emoji": "🦩",
+        "blurb": {
+          "kinder": "Pink flamingos wade in the water.",
+          "enriched": "Pink flamingos wade in Curaçao's shallow salt ponds."
+        }
+      },
+      "food": {
+        "name": "Keshi yena",
+        "emoji": "🧀",
+        "blurb": {
+          "kinder": "Cheese filled with tasty surprises.",
+          "enriched": "Keshi yena is a round of cheese baked around a savoury, spiced filling."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue with a yellow stripe and two stars.",
+      "enriched": "The flag is blue with a yellow stripe and two white stars for the island."
+    }
+  },
+  "CZE": {
+    "wonders": {
+      "landmark": {
+        "name": "Charles Bridge",
+        "emoji": "🌉",
+        "blurb": {
+          "kinder": "An old stone bridge lined with statues.",
+          "enriched": "Charles Bridge is an old stone bridge across the river, lined with rows of statues."
+        }
+      },
+      "animal": {
+        "name": "Eurasian lynx",
+        "emoji": "🐱",
+        "blurb": {
+          "kinder": "A wild cat with tufted ears.",
+          "enriched": "The Eurasian lynx is a wild cat with tufted ears that lives in Czech forests."
+        }
+      },
+      "food": {
+        "name": "Trdelník",
+        "emoji": "🍩",
+        "blurb": {
+          "kinder": "A sweet pastry rolled into a tube.",
+          "enriched": "Trdelník is a sweet pastry wrapped around a stick, grilled, and dusted with sugar."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "White and red with a blue triangle.",
+      "enriched": "The flag has white and red bands with a blue triangle beside them."
+    }
+  },
+  "HAI": {
+    "wonders": {
+      "landmark": {
+        "name": "Citadelle Laferrière",
+        "emoji": "🏰",
+        "blurb": {
+          "kinder": "A giant fortress on a hilltop.",
+          "enriched": "The Citadelle is a giant stone fortress that stands high on a mountain top."
+        }
+      },
+      "animal": {
+        "name": "Hispaniolan trogon",
+        "emoji": "🐦",
+        "blurb": {
+          "kinder": "A colourful island bird.",
+          "enriched": "The Hispaniolan trogon is a colourful bird found on Haiti's island."
+        }
+      },
+      "food": {
+        "name": "Soup joumou",
+        "emoji": "🍲",
+        "blurb": {
+          "kinder": "A golden pumpkin soup to celebrate.",
+          "enriched": "Soup joumou is a golden pumpkin soup shared to celebrate freedom and family."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue and red with a coat of arms.",
+      "enriched": "The flag has blue and red bands with a coat of arms and a palm tree in the centre."
+    }
+  },
+  "IRQ": {
+    "wonders": {
+      "landmark": {
+        "name": "Great Ziggurat of Ur",
+        "emoji": "🛕",
+        "blurb": {
+          "kinder": "A huge stepped temple of mud bricks.",
+          "enriched": "The Great Ziggurat of Ur is a huge stepped temple built from mud bricks long ago."
+        }
+      },
+      "animal": {
+        "name": "Gazelle",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "Gazelles cross the open plains.",
+          "enriched": "Graceful gazelles roam Iraq's open plains and grasslands."
+        }
+      },
+      "food": {
+        "name": "Dolma",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Leaves wrapped around rice.",
+          "enriched": "Dolma are vine leaves rolled around rice and herbs, then gently cooked."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red, white, and black with green words.",
+      "enriched": "The flag has red, white, and black bands with green writing in the middle."
+    }
+  },
+  "JOR": {
+    "wonders": {
+      "landmark": {
+        "name": "Petra",
+        "emoji": "🏛️",
+        "blurb": {
+          "kinder": "A city carved into pink stone.",
+          "enriched": "Petra is an ancient city carved into tall cliffs of rose-coloured stone."
+        }
+      },
+      "animal": {
+        "name": "Arabian oryx",
+        "emoji": "🦌",
+        "blurb": {
+          "kinder": "A white desert antelope.",
+          "enriched": "The Arabian oryx is a white desert antelope with long, straight horns."
+        }
+      },
+      "food": {
+        "name": "Mansaf",
+        "emoji": "🍚",
+        "blurb": {
+          "kinder": "Rice and lamb shared from one tray.",
+          "enriched": "Mansaf is a dish of rice and tender lamb in a yogurt sauce, shared from one tray."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Black, white, and green with a red triangle.",
+      "enriched": "The flag has black, white, and green bands with a red triangle and a white star."
+    }
+  },
+  "SWE": {
+    "wonders": {
+      "landmark": {
+        "name": "Vasa ship",
+        "emoji": "🚢",
+        "blurb": {
+          "kinder": "An old wooden ship in a museum.",
+          "enriched": "The Vasa is a grand old wooden sailing ship kept whole inside a Stockholm museum."
+        }
+      },
+      "animal": {
+        "name": "Moose",
+        "emoji": "🫎",
+        "blurb": {
+          "kinder": "A tall deer of the northern woods.",
+          "enriched": "The moose is a tall, antlered deer that wanders Sweden's northern woods."
+        }
+      },
+      "food": {
+        "name": "Kanelbulle",
+        "emoji": "🥐",
+        "blurb": {
+          "kinder": "A swirly cinnamon bun.",
+          "enriched": "A kanelbulle is a soft, swirly cinnamon bun enjoyed with a cosy break."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Blue with a yellow cross.",
+      "enriched": "Sweden's flag is blue with a yellow cross that reaches to each edge."
+    }
+  },
+  "TUR": {
+    "wonders": {
+      "landmark": {
+        "name": "Hagia Sophia",
+        "emoji": "🕌",
+        "blurb": {
+          "kinder": "A grand domed building in Istanbul.",
+          "enriched": "Hagia Sophia is a grand domed building in Istanbul with tall towers around it."
+        }
+      },
+      "animal": {
+        "name": "Van cat",
+        "emoji": "🐈",
+        "blurb": {
+          "kinder": "A white cat that likes water.",
+          "enriched": "The Turkish Van is a white cat, known for often liking water and swimming."
+        }
+      },
+      "food": {
+        "name": "Baklava",
+        "emoji": "🍯",
+        "blurb": {
+          "kinder": "Sweet pastry layered with nuts.",
+          "enriched": "Baklava is a sweet pastry of thin layers, filled with nuts and soaked in syrup."
+        }
+      }
+    },
+    "flagMeaning": {
+      "kinder": "Red with a white crescent and star.",
+      "enriched": "Türkiye's flag is red with a white crescent moon and a single white star."
+    }
   }
 }

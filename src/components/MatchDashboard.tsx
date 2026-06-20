@@ -27,6 +27,16 @@ const CONTINENT_RING: Record<string, string> = {
   oceania: "ring-continent-oceania",
 };
 
+/**
+ * A bracket slot whose team isn't decided yet — no curated Team, no provider
+ * flag, and a placeholder/empty name. These get the friendly "to be decided"
+ * card instead of a dead 🏳️ "TBD" one (#44 / ADR-0008).
+ */
+function isUndecided(code: string, name?: string, flag?: string): boolean {
+  if (getTeam(code) || flag) return false;
+  return !name || name.toUpperCase() === "TBD" || code.toUpperCase() === "TBD";
+}
+
 function Side({
   code,
   name,
@@ -53,6 +63,19 @@ function Side({
           {team.name}
         </span>
         <span className="text-sm text-muted">{team.hello}</span>
+      </div>
+    );
+  }
+
+  // A knockout slot whose team isn't decided yet — a friendly placeholder, not
+  // a dead 🏳️ "TBD" card (#44 / ADR-0008).
+  const undecided =
+    !flagUrl && (!name || name.toUpperCase() === "TBD" || code.toUpperCase() === "TBD");
+  if (undecided) {
+    return (
+      <div className="flex flex-1 flex-col items-center gap-2 text-center text-muted">
+        <span className="text-5xl" aria-hidden>🏆</span>
+        <span className="text-lg font-extrabold leading-tight sm:text-2xl">To be decided</span>
       </div>
     );
   }
@@ -132,6 +155,7 @@ function MatchCard({
   index,
   featured = false,
   clickable = false,
+  pending = false,
 }: {
   match: Match;
   index: number;
@@ -139,6 +163,8 @@ function MatchCard({
   featured?: boolean;
   /** Both teams are curated, so the card opens a journey. */
   clickable?: boolean;
+  /** A knockout slot whose teams aren't decided yet — show a gentle note. */
+  pending?: boolean;
 }) {
   const reduce = useReducedMotion();
   return (
@@ -208,6 +234,13 @@ function MatchCard({
           </span>
         </div>
       )}
+
+      {pending && (
+        <p className="mt-4 text-center text-sm font-semibold text-muted">
+          <span aria-hidden>🏆</span> To be decided — this match fills in after the
+          group stage. Check back soon!
+        </p>
+      )}
     </motion.article>
   );
 }
@@ -262,11 +295,22 @@ export function MatchDashboard({
       <div className="grid gap-5 sm:grid-cols-2">
         {featured.matches.map((m, i) => {
           const curated = Boolean(getTeam(m.homeCode) && getTeam(m.awayCode));
+          // A knockout slot whose teams aren't decided yet (#44 / ADR-0008).
+          const pending =
+            !curated &&
+            (isUndecided(m.homeCode, m.homeName, m.homeFlag) ||
+              isUndecided(m.awayCode, m.awayName, m.awayFlag));
           // The ⭐ Match of the Day is a spotlight only on the real today; on
           // other browsed days every fixture is an equal journey (#30).
           const isMatchOfTheDay = featured.kind === "today" && i === 0;
           const card = (
-            <MatchCard match={m} index={i} featured={isMatchOfTheDay} clickable={curated} />
+            <MatchCard
+              match={m}
+              index={i}
+              featured={isMatchOfTheDay}
+              clickable={curated}
+              pending={pending}
+            />
           );
           return curated ? (
             <Link

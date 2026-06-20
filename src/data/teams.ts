@@ -377,6 +377,79 @@ export const TEAMS: Team[] = [
       { kinder: "Ivory Coast grows most of the world's cocoa.", enriched: "Ivory Coast grows more cocoa beans than anywhere, the source of chocolate." },
     ],
   },
+
+  // ---- Qualified nations added so every real fixture is explorable (#44 / ADR-0008).
+  // Real groups come from the live fixture data; the group letter here is cosmetic.
+  {
+    code: "BIH", name: "Bosnia and Herzegovina", flag: "🇧🇦", iso2: "ba", capital: "Sarajevo",
+    continent: "europe", lat: 43.85, lng: 18.41, group: "B", hello: "Zdravo!",
+    funFacts: [
+      { kinder: "It has green hills and clear rivers.", enriched: "Bosnia and Herzegovina is known for green hills, deep forests, and clear rivers." },
+    ],
+  },
+  {
+    code: "COD", name: "DR Congo", flag: "🇨🇩", iso2: "cd", capital: "Kinshasa",
+    continent: "africa", lat: -4.32, lng: 15.31, group: "K", hello: "Mbote!",
+    funFacts: [
+      { kinder: "A huge river winds across the land.", enriched: "The mighty Congo River winds across the country through vast green rainforest." },
+    ],
+  },
+  {
+    code: "CPV", name: "Cape Verde", flag: "🇨🇻", iso2: "cv", capital: "Praia",
+    continent: "africa", lat: 14.93, lng: -23.51, group: "H", hello: "Olá!",
+    funFacts: [
+      { kinder: "It is a group of islands in the sea.", enriched: "Cape Verde is a group of sunny islands in the Atlantic Ocean, off West Africa." },
+    ],
+  },
+  {
+    code: "CUW", name: "Curaçao", flag: "🇨🇼", iso2: "cw", capital: "Willemstad",
+    continent: "namerica", lat: 12.11, lng: -68.93, group: "E", hello: "Bon dia!",
+    funFacts: [
+      { kinder: "It has bright painted houses by the sea.", enriched: "Curaçao is a Caribbean island known for rows of brightly painted houses by the sea." },
+    ],
+  },
+  {
+    code: "CZE", name: "Czechia", flag: "🇨🇿", iso2: "cz", capital: "Prague",
+    continent: "europe", lat: 50.08, lng: 14.44, group: "A", hello: "Ahoj!",
+    funFacts: [
+      { kinder: "Prague has a fairy-tale castle.", enriched: "Czechia's capital, Prague, is famous for its grand castle and old stone bridges." },
+    ],
+  },
+  {
+    code: "HAI", name: "Haiti", flag: "🇭🇹", iso2: "ht", capital: "Port-au-Prince",
+    continent: "namerica", lat: 18.59, lng: -72.31, group: "C", hello: "Bonjou!",
+    funFacts: [
+      { kinder: "It shares a warm island with a neighbour.", enriched: "Haiti shares the warm Caribbean island of Hispaniola with the Dominican Republic." },
+    ],
+  },
+  {
+    code: "IRQ", name: "Iraq", flag: "🇮🇶", iso2: "iq", capital: "Baghdad",
+    continent: "asia", lat: 33.31, lng: 44.36, group: "I", hello: "Marhaba!",
+    funFacts: [
+      { kinder: "Two great rivers cross the land.", enriched: "Iraq sits between two great rivers, the Tigris and the Euphrates." },
+    ],
+  },
+  {
+    code: "JOR", name: "Jordan", flag: "🇯🇴", iso2: "jo", capital: "Amman",
+    continent: "asia", lat: 31.95, lng: 35.93, group: "J", hello: "Marhaba!",
+    funFacts: [
+      { kinder: "It has a famous city carved in rock.", enriched: "Jordan is home to Petra, an ancient city carved straight into rose-coloured rock." },
+    ],
+  },
+  {
+    code: "SWE", name: "Sweden", flag: "🇸🇪", iso2: "se", capital: "Stockholm",
+    continent: "europe", lat: 59.33, lng: 18.07, group: "F", hello: "Hej!",
+    funFacts: [
+      { kinder: "In summer the sun barely sets.", enriched: "In Sweden's far north, the summer sun barely sets, giving long, bright nights." },
+    ],
+  },
+  {
+    code: "TUR", name: "Türkiye", flag: "🇹🇷", iso2: "tr", capital: "Ankara",
+    continent: "asia", lat: 39.93, lng: 32.86, group: "D", hello: "Merhaba!",
+    funFacts: [
+      { kinder: "It sits in two parts of the world.", enriched: "Türkiye stretches across two continents, with land in both Europe and Asia." },
+    ],
+  },
 ];
 
 /** Fast lookup of a team by its code. */
