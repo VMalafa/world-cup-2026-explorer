@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import type { Country } from "@/types";
 import { getTeam } from "@/data/teams";
@@ -10,6 +11,7 @@ import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
 import { CountdownTimer } from "./CountdownTimer";
 import { SpeakableText } from "./SpeakableText";
+import { ConfirmBadge } from "./ConfirmBadge";
 
 const DRAW = "draw";
 
@@ -31,6 +33,7 @@ export function MatchMoment({
   kickoff?: string;
 }) {
   const { activeProfileId } = useProfile();
+  const reduce = useReducedMotion();
   const store = useMemo(() => createPredictionStore(browserKeyValue()), []);
   const [pick, setPick] = useState<string | null>(null);
 
@@ -80,30 +83,49 @@ export function MatchMoment({
         {options.map((o) => {
           const active = pick === o.code;
           return (
-            <button
+            <motion.button
               key={o.code}
               type="button"
               onClick={() => choose(o.code)}
               aria-pressed={active}
-              className={`flex flex-col items-center gap-2 rounded-blob px-2 py-4 font-extrabold ring-1 transition-transform hover:-translate-y-0.5 ${
+              whileTap={reduce ? undefined : { scale: 0.95 }}
+              className={`relative flex flex-col items-center gap-2 rounded-blob px-2 py-4 font-extrabold ring-1 transition-transform hover:-translate-y-0.5 ${
                 active ? "bg-royal text-white ring-royal" : "bg-white text-ink ring-line"
               }`}
             >
+              {/* The "you got it!" signal — a ✓ that springs onto the chosen card. */}
+              <AnimatePresence>
+                {active && (
+                  <motion.span
+                    initial={reduce ? false : { scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={reduce ? { opacity: 0 } : { scale: 0, opacity: 0 }}
+                    transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 600, damping: 18 }}
+                    className="absolute -right-1.5 -top-1.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-gold text-sm text-white shadow-card ring-2 ring-white"
+                    aria-hidden
+                  >
+                    ✓
+                  </motion.span>
+                )}
+              </AnimatePresence>
               {o.country ? (
                 <Flag team={getTeam(o.country.code)!} size={56} className="!h-[33px] !w-[44px]" />
               ) : (
                 <span className="text-3xl" aria-hidden>🤝</span>
               )}
               <span className="text-sm leading-tight">{o.label}</span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
 
       {pickedLabel && (
-        <p className="mt-4 rounded-full bg-cedar-100 px-4 py-2 font-extrabold text-cedar-700">
-          You picked {pickedLabel}! We&rsquo;ll see what happens. 🎉
-        </p>
+        <div className="mt-4 flex flex-col items-center gap-1.5">
+          <ConfirmBadge label={`You picked ${pickedLabel}!`} tone="cedar" />
+          <p className="text-sm font-semibold text-muted">
+            We&rsquo;ll see what happens. 🎉
+          </p>
+        </div>
       )}
       <p className="mt-3 text-sm font-semibold text-muted">
         Guessing is just for fun — finishing the journey earns your stamps either way.
