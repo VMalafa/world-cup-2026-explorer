@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-06-28T07:31:34.647Z",
+  "capturedAt": "2026-06-29T07:58:28.950Z",
   "source": "football-data.org",
   "competition": "WC",
   "season": "2026",
@@ -1310,7 +1310,9 @@
       "stadium": "",
       "city": "",
       "group": "",
-      "status": "scheduled",
+      "status": "finished",
+      "homeScore": 0,
+      "awayScore": 1,
       "homeName": "South Africa",
       "awayName": "Canada",
       "homeFlag": "https://crests.football-data.org/9396.svg",
@@ -1545,12 +1547,14 @@
       "id": "fd-537376",
       "date": "2026-07-04",
       "kickoff": "2026-07-04T17:00:00Z",
-      "homeCode": "TBD",
+      "homeCode": "CAN",
       "awayCode": "TBD",
       "stadium": "",
       "city": "",
       "group": "",
-      "status": "scheduled"
+      "status": "scheduled",
+      "homeName": "Canada",
+      "homeFlag": "https://crests.football-data.org/canada.svg"
     },
     {
       "id": "fd-537375",
