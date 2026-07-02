@@ -14,6 +14,7 @@
  * we never get firewall-blocked. Lower it for fresher scores if your plan allows.
  */
 import type { Match, MatchStatus } from "@/types";
+import { stageFromRoundLabel } from "../round";
 import { resolveCode } from "./resolveTeam";
 
 const BASE = "https://v3.football.api-sports.io";
@@ -120,6 +121,8 @@ export async function fetchApiFootballMatches(): Promise<Match[] | null> {
         awayName: f.teams.away.name,
         homeFlag: f.teams.home.logo,
         awayFlag: f.teams.away.logo,
+        // A knockout Match's Round (CONTEXT.md, #62).
+        stage: stageFromRoundLabel(f.league.round),
       };
     });
 

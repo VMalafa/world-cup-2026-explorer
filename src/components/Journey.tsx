@@ -5,8 +5,9 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-import type { Country } from "@/types";
+import type { Country, Stage } from "@/types";
 import { getCountry } from "@/data/countries";
+import { roundName } from "@/lib/round";
 import { getTeam } from "@/data/teams";
 import { getWonderPhoto } from "@/data/wonderPhotos";
 import { buildJourney, type Station } from "@/lib/journey";
@@ -49,6 +50,7 @@ export function Journey({
   kickoff,
   group = "",
   standings = [],
+  stage,
 }: {
   homeCode: string;
   awayCode: string;
@@ -60,6 +62,8 @@ export function Journey({
   group?: string;
   /** The playing group's standings, derived from real results (issue #31). */
   standings?: StandingRow[];
+  /** Tournament stage — a knockout Match's Round (CONTEXT.md, #62). */
+  stage?: Stage;
 }) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
@@ -195,6 +199,15 @@ export function Journey({
                   <h2 className="mb-3 text-center text-2xl font-extrabold sm:text-3xl">
                     Match moment <span aria-hidden>⚽</span>
                   </h2>
+                  {/* A knockout Match's Round is its bucket, the way a Group is
+                      a group-stage Match's (CONTEXT.md, #62). */}
+                  {roundName(stage) && (
+                    <p className="mb-3 flex justify-center">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
+                        <span aria-hidden>🏆</span> {roundName(stage)}
+                      </span>
+                    </p>
+                  )}
                   <MatchMoment
                     home={journey.countries[0]}
                     away={journey.countries[1]}

@@ -61,6 +61,7 @@ export function JourneyClient() {
       kickoff={match?.kickoff}
       group={group}
       standings={standings}
+      stage={match?.stage}
     />
   );
 }

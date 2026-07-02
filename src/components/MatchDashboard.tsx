@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
 import { matchClock, prettyDate, type Featured } from "@/lib/schedule";
+import { roundName } from "@/lib/round";
 import { getTeam } from "@/data/teams";
 import type { Match } from "@/types";
 import { CountdownTimer } from "./CountdownTimer";
@@ -188,7 +189,9 @@ function MatchCard({
             </>
           ) : (
             <>
-              <TrophyIcon className="h-4 w-4" aria-hidden /> Group {match.group}
+              <TrophyIcon className="h-4 w-4" aria-hidden />{" "}
+              {/* Group for group-stage; the Round for knockouts (#62). */}
+              {match.group ? `Group ${match.group}` : roundName(match.stage)}
             </>
           )}
         </span>
