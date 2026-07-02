@@ -104,6 +104,21 @@ export interface Team {
 
 export type MatchStatus = "scheduled" | "live" | "finished";
 
+/**
+ * The tournament stage a Match belongs to, normalized from the live provider's
+ * `stage` (football-data.org) or `round` (API-Football) strings. A knockout
+ * Match's stage is its **Round** (CONTEXT.md) — the knockout counterpart of a
+ * group-stage Match's **Group**. See ADR-0009 (#60/#62).
+ */
+export type Stage =
+  | "GROUP_STAGE"
+  | "LAST_32"
+  | "LAST_16"
+  | "QUARTER_FINALS"
+  | "SEMI_FINALS"
+  | "THIRD_PLACE"
+  | "FINAL";
+
 export interface Match {
   id: string;
   /** ISO date (YYYY-MM-DD) the match is played, host local calendar. */
@@ -140,6 +155,12 @@ export interface Match {
   awayFlag?: string;
   /** Matchday number from the live provider, if known. */
   matchday?: string;
+  /**
+   * Tournament stage from the live provider. `GROUP_STAGE` for group matches
+   * (which also carry `group`); a knockout value is the Match's **Round**.
+   * Absent when the provider didn't say (kid-facing UI then shows no Round).
+   */
+  stage?: Stage;
 }
 
 export interface PlayerStory {

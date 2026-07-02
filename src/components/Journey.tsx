@@ -5,16 +5,21 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-import type { Country } from "@/types";
+import type { Country, Stage } from "@/types";
 import { getCountry } from "@/data/countries";
+import { roundName } from "@/lib/round";
 import { getTeam } from "@/data/teams";
+import { getWonderPhoto } from "@/data/wonderPhotos";
 import { buildJourney, type Station } from "@/lib/journey";
+import type { RoadStep } from "@/lib/road";
+import { useSpeak } from "@/lib/useSpeak";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
+import { createDoneMatchesStore } from "@/lib/doneMatches";
 import type { StandingRow } from "@/lib/standings";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
-import { FindItStation, SayHelloStation, WondersStation } from "./Stations";
+import { FindItStation, SayHelloStation, WondersStation, type WonderSlot } from "./Stations";
 import { MatchMoment } from "./MatchMoment";
 import { Standings } from "./Standings";
 import { Insights, type TeamInsights } from "./Insights";
@@ -22,7 +27,7 @@ import { Insights, type TeamInsights } from "./Insights";
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[44vh] min-h-[280px] w-full items-center justify-center rounded-blob bg-royal-50">
+    <div className="flex h-[38vh] min-h-[260px] w-full items-center justify-center rounded-blob bg-royal-50">
       <span className="animate-float text-5xl" aria-hidden>
         🌍
       </span>
@@ -50,6 +55,8 @@ export function Journey({
   group = "",
   standings = [],
   insights = [],
+  stage,
+  road = null,
 }: {
   homeCode: string;
   awayCode: string;
@@ -63,19 +70,29 @@ export function Journey({
   standings?: StandingRow[];
   /** Verifiable facts for each playing country (issue #33). */
   insights?: TeamInsights[];
+  /** Tournament stage — a knockout Match's Round (CONTEXT.md, #62). */
+  stage?: Stage;
+  /** The knockout Road step for this Match, computed by the caller (#63). */
+  road?: RoadStep | null;
 }) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
+  const { speak } = useSpeak();
   const passport = useMemo(() => createPassportStore(browserKeyValue()), []);
+  const doneMatches = useMemo(() => createDoneMatchesStore(browserKeyValue()), []);
 
   const journey = useMemo(() => buildJourney(homeCode, awayCode), [homeCode, awayCode]);
   const [step, setStep] = useState(0);
   const [finished, setFinished] = useState(false);
   // The Country the child last tapped on the globe — drives "Find it".
   const [tappedCode, setTappedCode] = useState<string | null>(null);
+  const [activeWonderSlot, setActiveWonderSlot] = useState<WonderSlot>("landmark");
 
   // A fresh Station starts un-tapped.
-  useEffect(() => setTappedCode(null), [step]);
+  useEffect(() => {
+    setTappedCode(null);
+    setActiveWonderSlot("landmark");
+  }, [step]);
 
   if (!journey) {
     return (
@@ -97,30 +114,68 @@ export function Journey({
   // Plain const (not a hook) — we're past the early return above.
   const journeyCodes = new Set(journey.countries.map((c) => c.code));
 
+  /**
+   * A Globe tap says the tapped Country's name aloud — a pre-reader can hear
+   * what every country is called (#59). The winning "Find it" tap is the one
+   * exception: FindItStation already auto-reads "You found it!", so speaking
+   * the name too would stack two lines. Speech degrades silently when
+   * unavailable (useSpeak no-ops), so the tap still selects.
+   */
+  function handleGlobeTap(code: string) {
+    setTappedCode(code);
+    const winningFindItTap = station?.kind === "locate" && code === station.countryCode;
+    if (!winningFindItTap) {
+      const name = getCountry(code)?.name ?? getTeam(code)?.name;
+      if (name) speak(`${name}!`);
+    }
+  }
+
   function finish() {
     if (activeProfileId) {
       for (const c of journey!.countries) passport.earnStamp(activeProfileId, c.code);
+      // The same moment Stamps are earned, the Match itself becomes Done —
+      // per-Match and per-Profile, so Today can show what's already finished (#56).
+      doneMatches.markDone(activeProfileId, matchId);
     }
     setFinished(true);
   }
 
   return (
     <Shell>
-      {/* Globe spine — always present, focused on the current Country */}
-      <div className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5">
-        <WorldMap
-          selectedCode={finished || !station ? null : station.countryCode}
-          onSelect={setTappedCode}
-          earnedCodes={journeyCodes}
-        />
-      </div>
+      <AnimatePresence mode="wait">
+        {station?.kind === "wonders" && country ? (
+          <motion.div
+            key={`${country.code}-wonder-stage`}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+          >
+            <WonderStage country={country} activeSlot={activeWonderSlot} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="globe-stage"
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
+            className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5"
+          >
+            <WorldMap
+              selectedCode={finished || !station ? null : station.countryCode}
+              onSelect={handleGlobeTap}
+              earnedCodes={journeyCodes}
+              heightClass="h-[38vh] min-h-[260px]"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {finished ? (
         <FinishCard countries={journey.countries} />
       ) : (
         <>
           {/* Progress */}
-          <div className="mt-5 flex items-center justify-between gap-3">
+          <div className="mt-3 flex items-center justify-between gap-3">
             <p className="font-bold text-muted">
               Step <span className="text-royal">{step + 1}</span> of {total}
             </p>
@@ -161,18 +216,36 @@ export function Journey({
                     <FindItStation country={country} found={tappedCode === country.code} />
                   )}
                   {station.kind === "hello" && <SayHelloStation country={country} />}
-                  {station.kind === "wonders" && <WondersStation country={country} pick={pick} />}
+                  {station.kind === "wonders" && (
+                    <WondersStation
+                      country={country}
+                      pick={pick}
+                      activeSlot={activeWonderSlot}
+                      onActiveSlotChange={setActiveWonderSlot}
+                    />
+                  )}
                 </>
               ) : (
                 <>
                   <h2 className="mb-3 text-center text-2xl font-extrabold sm:text-3xl">
                     Match moment <span aria-hidden>⚽</span>
                   </h2>
+                  {/* A knockout Match's Round is its bucket, the way a Group is
+                      a group-stage Match's (CONTEXT.md, #62). */}
+                  {roundName(stage) && (
+                    <p className="mb-3 flex justify-center">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
+                        <span aria-hidden>🏆</span> {roundName(stage)}
+                      </span>
+                    </p>
+                  )}
                   <MatchMoment
                     home={journey.countries[0]}
                     away={journey.countries[1]}
                     matchId={matchId}
                     kickoff={kickoff}
+                    road={road}
+                    stage={stage}
                   />
                   <Insights teams={insights} />
                   {group && standings.length > 0 && (
@@ -188,7 +261,7 @@ export function Journey({
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="mt-5 flex items-center justify-between gap-3">
+          <div className="mt-4 flex items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setStep((s) => Math.max(0, s - 1))}
@@ -214,6 +287,54 @@ export function Journey({
         </>
       )}
     </Shell>
+  );
+}
+
+function WonderStage({
+  country,
+  activeSlot,
+}: {
+  country: Country;
+  activeSlot: WonderSlot;
+}) {
+  const wonder = country.wonders?.[activeSlot];
+  const photo = getWonderPhoto(country.code, activeSlot);
+
+  return (
+    <section className="overflow-hidden rounded-blob bg-ink shadow-soft ring-1 ring-black/10">
+      <div className="relative flex h-[38vh] min-h-[260px] max-h-[460px] items-end justify-start overflow-hidden">
+        {photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={photo.file}
+            src={`/wonders/${photo.file}`}
+            alt={wonder?.name ?? `${country.name} wonder`}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-royal-50">
+            <span className="text-8xl grayscale" aria-hidden>
+              {wonder?.emoji ?? country.flag}
+            </span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent" />
+        <div className="relative z-10 w-full p-5 text-white sm:p-7">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-sm font-extrabold text-ink shadow-card">
+            <Flag team={getTeam(country.code)!} size={26} className="!h-[19px] !w-[26px]" />
+            {country.name}
+          </div>
+          <h2 className="max-w-xl text-3xl font-extrabold leading-tight sm:text-5xl">
+            {wonder?.name ?? "Wonder"}
+          </h2>
+          <p className="mt-2 max-w-xl text-sm font-bold text-white/85 sm:text-base">
+            {photo
+              ? `${photo.author} · ${photo.license}`
+              : "Picture coming soon. The journey still works with the emoji fallback."}
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

@@ -7,7 +7,10 @@ import type { Country, DualText, Wonder } from "@/types";
 import { CONTINENT_LABEL } from "@/data/teams";
 import { langFor } from "@/data/languages";
 import { geographyFor, type Compass } from "@/lib/geography";
+import { getWonderPhoto } from "@/data/wonderPhotos";
+import type { WonderPhoto } from "@/lib/wikimedia";
 import { SpeakableText } from "./SpeakableText";
+import { ConfirmBadge } from "./ConfirmBadge";
 
 const COMPASS_WORD: Record<Compass, string> = {
   N: "north", NE: "north-east", E: "east", SE: "south-east",
@@ -15,6 +18,8 @@ const COMPASS_WORD: Record<Compass, string> = {
 };
 
 const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
+
+export type WonderSlot = "landmark" | "animal" | "food";
 
 /**
  * Find it — the globe has flown to the Country; the child taps its dot. On a
@@ -43,6 +48,10 @@ export function FindItStation({ country, found }: { country: Country; found: boo
 
   return (
     <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <ConfirmBadge label="You found it!" tone="cedar" />
+        <span aria-hidden className="text-2xl">🎉</span>
+      </div>
       <SpeakableText
         autoRead
         text={`You found ${country.name}!`}
@@ -104,9 +113,13 @@ export function SayHelloStation({ country }: { country: Country }) {
 export function WondersStation({
   country,
   pick,
+  activeSlot = "landmark",
+  onActiveSlotChange,
 }: {
   country: Country;
   pick: (t: DualText) => string;
+  activeSlot?: WonderSlot;
+  onActiveSlotChange?: (slot: WonderSlot) => void;
 }) {
   if (!country.wonders) {
     return (
@@ -130,7 +143,14 @@ export function WondersStation({
       <ul className="space-y-3">
         {slots.map(({ slot, wonder }) => (
           <li key={wonder.name}>
-            <WonderCard wonder={wonder} code={country.code} slot={slot} pick={pick} />
+            <WonderCard
+              wonder={wonder}
+              code={country.code}
+              slot={slot}
+              pick={pick}
+              active={activeSlot === slot}
+              onActivate={() => onActiveSlotChange?.(slot)}
+            />
           </li>
         ))}
       </ul>
@@ -143,21 +163,31 @@ function WonderCard({
   code,
   slot,
   pick,
+  active,
+  onActivate,
 }: {
   wonder: Wonder;
   code: string;
-  slot: string;
+  slot: WonderSlot;
   pick: (t: DualText) => string;
+  active: boolean;
+  onActivate: () => void;
 }) {
   const [revealed, setRevealed] = useState(false);
   const reduce = useReducedMotion();
+  const photo = getWonderPhoto(code, slot);
 
   if (!revealed) {
     return (
       <button
         type="button"
-        onClick={() => setRevealed(true)}
-        className="flex w-full items-center gap-3 rounded-blob bg-royal-50 px-4 py-5 text-left ring-1 ring-royal-100 transition-transform hover:-translate-y-0.5"
+        onClick={() => {
+          onActivate();
+          setRevealed(true);
+        }}
+        className={`flex w-full items-center gap-3 rounded-blob px-4 py-5 text-left ring-1 transition-transform hover:-translate-y-0.5 ${
+          active ? "bg-gold-100 ring-gold-300" : "bg-royal-50 ring-royal-100"
+        }`}
       >
         <span className="text-4xl grayscale" aria-hidden>{wonder.emoji}</span>
         <span className="text-lg font-extrabold text-royal">Tap to discover ✨</span>
@@ -170,45 +200,83 @@ function WonderCard({
       initial={reduce ? false : { rotateY: 90, opacity: 0 }}
       animate={{ rotateY: 0, opacity: 1 }}
       transition={{ duration: reduce ? 0 : 0.3 }}
-      className="kid-card flex items-start gap-3 p-4"
+      onClick={onActivate}
+      className={`kid-card flex cursor-pointer flex-col gap-3 p-4 transition ${
+        active ? "ring-2 ring-gold-300" : ""
+      }`}
     >
-      <WonderArt code={code} slot={slot} emoji={wonder.emoji} name={wonder.name} />
-      <div>
-        <p className="font-extrabold text-ink">{wonder.name}</p>
-        <SpeakableText autoRead text={pick(wonder.blurb)} textClassName="font-semibold text-muted" />
+      <div className="flex items-start gap-3">
+        <WonderArt photo={photo} emoji={wonder.emoji} name={wonder.name} />
+        <div>
+          <p className="font-extrabold text-ink">{wonder.name}</p>
+          <SpeakableText
+            autoRead
+            text={pick(wonder.blurb)}
+            // Speak the wonder's name before its description so a non-reader
+            // hears what they're exploring first (issue #46).
+            speakText={`${wonder.name}. ${pick(wonder.blurb)}`}
+            textClassName="font-semibold text-muted"
+          />
+        </div>
       </div>
+      {photo && <PhotoCredit photo={photo} />}
     </motion.div>
   );
 }
 
 /**
- * A wonder's children's-atlas illustration (ADR-0004), loaded by convention
- * from `/public/wonders/<code>-<slot>.png`. Until that picture is generated and
- * dropped in, this gracefully falls back to the wonder's emoji — so the journey
- * is never broken by a missing image (Design Principle 3).
+ * The required CC attribution for a real photo (ADR-0007 / issue #28), plus a
+ * parent-facing "Learn more" link to the source. The link is deliberately small
+ * and muted — not a primary kid button — because the users are 4 and 6 and must
+ * not free-roam the open web.
+ */
+function PhotoCredit({ photo }: { photo: WonderPhoto }) {
+  return (
+    <p className="flex flex-wrap items-center gap-x-1.5 text-[0.7rem] leading-snug text-muted">
+      <span>
+        Photo: {photo.author} · {photo.license}
+      </span>
+      {photo.sourceUrl && (
+        <a
+          href={photo.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          // Parent affordance: opens Wikimedia in a new tab, away from the journey.
+          className="font-bold text-royal underline decoration-dotted underline-offset-2"
+        >
+          Learn more ↗
+        </a>
+      )}
+    </p>
+  );
+}
+
+/**
+ * A wonder's real photo (ADR-0007 / issue #28), loaded from `public/wonders`
+ * using the committed attribution manifest. Until a photo is sourced — or if it
+ * fails to load — this gracefully falls back to the wonder's emoji, so the
+ * journey is never broken by a missing image (Design Principle 3).
  */
 function WonderArt({
-  code,
-  slot,
+  photo,
   emoji,
   name,
 }: {
-  code: string;
-  slot: string;
+  photo: WonderPhoto | undefined;
   emoji: string;
   name: string;
 }) {
   const [failed, setFailed] = useState(false);
 
-  if (failed) {
+  if (!photo || failed) {
     return <span className="text-4xl" aria-hidden>{emoji}</span>;
   }
   return (
-    // A plain <img> keeps this offline-friendly: drop a PNG in and it appears,
-    // miss one and onError swaps in the emoji. No optimizer round-trip needed.
+    // A plain <img> keeps this offline-friendly: the committed photo appears,
+    // and onError swaps in the emoji. No optimizer round-trip needed.
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/wonders/${code.toLowerCase()}-${slot}.png`}
+      src={`/wonders/${photo.file}`}
       alt={name}
       width={64}
       height={64}

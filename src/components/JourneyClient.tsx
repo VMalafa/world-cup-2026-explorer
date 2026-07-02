@@ -7,6 +7,7 @@ import { getTeam } from "@/data/teams";
 import { useFeatured } from "@/lib/useFeatured";
 import { computeStandings } from "@/lib/standings";
 import { computeInsights } from "@/lib/insights";
+import { nextOpponents } from "@/lib/road";
 import { Journey } from "./Journey";
 
 const nameOf = (code: string) => getTeam(code)?.name ?? code;
@@ -55,6 +56,8 @@ export function JourneyClient() {
   // The playing group's table (group stage only; knockout matches carry no group).
   const group = match?.group ?? "";
   const standings = group ? computeStandings(allMatches, group) : [];
+  // The Road: a knockout Match's candidate next-round opponents (#63).
+  const road = match ? nextOpponents(match, allMatches) : null;
 
   // Verifiable facts for each playing country, derived from the real results.
   const insights = [
@@ -71,6 +74,8 @@ export function JourneyClient() {
       group={group}
       standings={standings}
       insights={insights}
+      stage={match?.stage}
+      road={road}
     />
   );
 }

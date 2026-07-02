@@ -62,16 +62,22 @@ the new ADRs; terms (**Standings**, **Insight**) are in [CONTEXT.md](../CONTEXT.
 - **Days-ahead + Standings (#31).** A light date strip on Today (today ± a few
   days, each day's fixtures explorable) + the playing group's **Standings** shown
   in-context — no new tab, two-surface minimalism preserved.
-- **Natural read-aloud (ADR-0006, amends ADR-0001).** Pre-generated natural TTS
-  audio for authored lines (incl. native greetings); Web Speech becomes the
-  fallback. Fixes both "robotic" and the CriOS flakiness (#29).
+- **Better read-aloud (ADR-0001 upgraded; ADR-0006 deferred).** The AI Gateway
+  can't do TTS, so pre-generated cloud audio is deferred (needs a separate TTS
+  key). The shipped #29 fix upgrades on-device Web Speech: select the best neural
+  voice (iOS Siri/Enhanced) instead of the robotic default, and fix the CriOS
+  reliability bugs (late voice load, long-line truncation, ~15s pause). Free,
+  offline, fixes both "robotic" and "doesn't always work".
 - **Wonders are real photos (ADR-0007, supersedes ADR-0004).** Real openly-
   licensed Wikimedia Commons photos, AI-vision + human-glance vetted, emoji
   fallback, required attribution, parent-facing "learn more" link (#28). (The
   ADR-0004 illustrations were never rendered — only a generator + manifest — so
   nothing shipped was lost.)
-- **Insights (#33).** Source-verifiable, cron-pulled team facts shown as a flag-
-  accented list in the journey. No AI narrative or unverifiable quotes.
+- **Insights (#33) — deferred.** A results-derived version was built (branch
+  `feat/team-insights`, closed PR #38) but skipped: too thin to be worth showing
+  (circular before kickoff; the standing duplicated the Standings table). The
+  genuinely interesting example facts are historical/editorial and can't be
+  auto-verified from results. Revisit only with a curated, verified facts source.
 
 ### Build order (dependency-honouring)
 
@@ -81,8 +87,8 @@ the new ADRs; terms (**Standings**, **Insight**) are in [CONTEXT.md](../CONTEXT.
 2. **All-fixtures-explorable (#30) + date strip (#31a)** — every match clickable
    into a journey; browse days ahead/behind. (Live data already maps team codes,
    so journeys link today.)
-3. **Standings (#31b) + Insights (#33)** — Standings from the provider/snapshot;
-   Insights from cron-pulled verifiable facts.
+3. **Standings (#31b)** — from the provider/snapshot. (Insights #33 deferred —
+   see above.)
 4. **Wonder photos (#28)** and **natural audio (#29)** — two independent build-
    time content pipelines; parallelisable with the above.
 

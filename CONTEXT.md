@@ -39,13 +39,25 @@ Each **Profile** has its own **Passport** and reading level. Stored on-device.
 
 **Passport**:
 The persistent collection of every **Country** a child has explored — the
-come-back hook, filled gradually across all 48. Lives in the **World** surface;
-gains a **Stamp** the *first* time each **Country**'s journey is finished
-(one stamp per **Country**, ever — revisiting never re-stamps).
+come-back hook, filled gradually across the whole curated roster. Lives in the
+**World** surface; gains a **Stamp** the *first* time each **Country**'s journey
+is finished (one stamp per **Country**, ever — revisiting never re-stamps).
 
 **Stamp**:
 The reward earned for a **Country** when its part of a **Match Day Journey** is
 completed; the unit the **Passport** collects.
+
+**Done** (a Match):
+A **Match** whose **Match Day Journey** a **Profile** has finished — surfaced as a
+✓ "Done" badge on that match's card in **Today**, so a child sees which of the
+day's fixtures they've already done. Per-**Profile**, stored on-device
+(ADR-0003), set the moment the journey finishes (the same moment a **Stamp** is
+earned), and persistent per Match (never reset — it simply reads as "done for
+today" because each day lists different fixtures). Distinct from a **Stamp**: a
+Stamp is per-**Country** and permanent (one ever); Done is per-**Match** and just
+reflects "we did this fixture", so a Country already stamped can still have an
+un-Done Match (issue #56). _Avoid_: "explored" (reserved for the Country-level
+**Passport** sense).
 
 **World**:
 The free-explore surface (one of the two primary surfaces, with **Today**) where
@@ -54,7 +66,16 @@ a child can revisit any **Country** on the **Globe** and see their **Passport**.
 **Prediction**:
 A child's pre-kickoff guess of the **Match of the Day** winner, made during the
 journey and paid off by the post-match "what happened?" beat. Never gates a
-**Stamp** — learning earns stamps, watching does not.
+**Stamp** — learning earns stamps, watching does not. Making a pick triggers a
+**Send-off** (below).
+
+**Send-off**:
+The warm farewell played right after a **Prediction** is made — "Goodbye and good
+luck!" read aloud in the picked **Team**'s own language (native script + an
+English gloss), reusing the same read-aloud path as the say-hello **Station**
+(ADR-0001). Picking "a tie" wishes both **Teams** luck, in both languages (issue
+#47). On **The Road**, the same Send-off voices a knockout exit as a *proud*
+farewell — never as elimination (issue #60).
 
 **Wonders**:
 The small curated set of kid-friendly highlights shown for a **Country** in a
@@ -77,10 +98,13 @@ accurate, age-appropriate, relevant, culturally respectful, mindful, and
 altruistic/global. Defined in full in ADR-0002.
 
 **Country**:
-A nation in the tournament, treated as the unit of learning (not just a team
-that plays). Carries the learning content a child explores.
+A nation treated as the unit of learning (not just a team that plays). Carries
+the learning content a child explores. The curated **Country** roster is a
+deliberate **superset** of the tournament's qualified **Teams** — it covers every
+real fixture *and* keeps non-playing Countries (e.g. the **Homeland** Cameroon)
+explorable in **World** (ADR-0008). So "all 48" no longer describes the roster.
 _Avoid_: "team" when you mean the place/culture; reserve **Team** for the
-footballing side.
+footballing side. _Avoid_: "the 48" as a synonym for the roster.
 
 **Team**:
 The footballing side a **Country** fields in a **Match** — line-up, group,
@@ -88,7 +112,9 @@ score. The sporting facet of a Country.
 
 **Match**:
 One scheduled fixture between two **Teams** on a given day, with kickoff, venue,
-status, and score.
+status, and score. A knockout **Match** whose sides aren't decided yet carries
+`TBD` placeholders; it shows a friendly "to be decided" card (not a dead one) and
+auto-becomes a journey once both **Teams** resolve (issue #44).
 
 **Match of the Day**:
 The **Match** the app auto-features and highlights each day (a ⭐ on the
@@ -98,16 +124,36 @@ The Match of the Day is a spotlight, not a gate.
 _Avoid_: implying other fixtures can't be journeyed — they can.
 
 **Insight**:
-A bite-size, **source-verifiable** football fact about a **Team** (e.g. "making
-their World Cup debut", titles won, qualifying result), pulled by the ADR-0005
-daily cron — never AI-authored or an unverifiable quote (issue #33). Shown in-app
-as a flag-accented list in the **Match Day Journey** for the two playing
-**Countries**. "Shared within the application" means *surfaced in-app*, not
-socially exported.
-_Avoid_: editorial narrative or quotes (out of scope — can't be auto-verified).
+A bite-size, kid-friendly football fact about a **Team**, shown in-app as a
+flag-accented list in the **Match Day Journey** (issue #33; built in PR #38,
+shipped by owner decision after an earlier deferral). Every Insight is *derived
+from this tournament's committed real results* — group standing, last result,
+biggest win, next fixture — so it stays auto-verifiable, never AI narrative or
+an editorial quote. Historical/editorial facts ("World Cup debut") remain out
+until a curated, Guardian-gated per-Team facts source exists (ADR-0002 bar).
+"Shared within the application" means *surfaced in-app*, not socially exported.
 
 **Standings**:
 A **Group**'s live table — each **Team**'s points, played, and goal difference —
 *derived* from committed real **Match** results, never authored. The "where does
 my country stand?" view (issue #31). Current to within ~a day (see ADR-0005).
 _Avoid_: "league table" (this is group-stage standings within one **Group**).
+
+**The Road**:
+A single **Team**'s forward path through the single-elimination knockout stage,
+shown as the sequence of **Countries** it *could* face round by round — each a
+potential new Country to learn if the Team keeps winning. Losing ends the Road
+with a warm, proud **Send-off** — never framed as elimination; the child keeps
+every explored Country in their **Passport** regardless of the result, so the
+friendship is never lost with the match. Teaches the knockout format — "win and
+move on, lose and go home" — in the app's own currency, *new Countries to meet*,
+never a stat grid. Team-centric ("what happens to **this** Country"), not a
+whole-tournament view (issue #60). _Avoid_: "bracket", "draw" (dense, football-
+cold framings that the product's anti-references rule out).
+
+**Round**:
+One stage of the knockout **Road** — Round of 32, Round of 16, Quarter-final,
+Semi-final, Final. It is a knockout **Match**'s bucket the way a **Group** is a
+group-stage Match's bucket: a knockout Match carries a **Round**, not a Group.
+Derived from the provider's `stage`, which the live feed already supplies (issue
+#60).

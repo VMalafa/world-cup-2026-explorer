@@ -2,10 +2,12 @@
 
 ## Status
 
-amended by ADR-0006 — Web Speech is now the *fallback*; authored lines play
-pre-generated natural audio. The hybrid upgrade this ADR anticipated was expanded
-from greetings-only to all authored read-aloud, because the robotic default voice
-(issue #29) hurt every line, not just greetings.
+accepted — and now upgraded for issue #29. Web Speech remains the primary
+read-aloud engine, but `useSpeak` was hardened: it actively selects the best
+on-device *neural* voice (not the robotic default) and fixes the field
+reliability bugs (late voice loading, long-line truncation, the ~15s Chrome/iOS
+pause). The pre-generated natural-audio upgrade (ADR-0006) is deferred — the AI
+Gateway can't do TTS, so it needs a separate provider key not yet set up.
 
 ## Context & decision
 

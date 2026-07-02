@@ -1,15 +1,22 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-import type { Country } from "@/types";
+import type { Country, Stage } from "@/types";
 import { getTeam } from "@/data/teams";
+import { langFor } from "@/data/languages";
+import { farewellFor } from "@/data/farewells";
 import { browserKeyValue } from "@/lib/storage";
 import { createPredictionStore } from "@/lib/prediction";
+import type { RoadStep } from "@/lib/road";
+import { roundName } from "@/lib/round";
 import { useProfile } from "./Profiles";
+import { RoadBeat, RoundsClimb, TrophyFinale } from "./Road";
 import { Flag } from "./Flag";
 import { CountdownTimer } from "./CountdownTimer";
 import { SpeakableText } from "./SpeakableText";
+import { ConfirmBadge } from "./ConfirmBadge";
 
 const DRAW = "draw";
 
@@ -24,13 +31,20 @@ export function MatchMoment({
   away,
   matchId,
   kickoff,
+  road = null,
+  stage,
 }: {
   home: Country;
   away: Country;
   matchId: string;
   kickoff?: string;
+  /** The knockout Road step for this Match — null for group-stage fixtures (#63). */
+  road?: RoadStep | null;
+  /** Tournament stage — drives the Rounds climb and the Final finale (#65). */
+  stage?: Stage;
 }) {
   const { activeProfileId } = useProfile();
+  const reduce = useReducedMotion();
   const store = useMemo(() => createPredictionStore(browserKeyValue()), []);
   const [pick, setPick] = useState<string | null>(null);
 
@@ -80,33 +94,134 @@ export function MatchMoment({
         {options.map((o) => {
           const active = pick === o.code;
           return (
-            <button
+            <motion.button
               key={o.code}
               type="button"
               onClick={() => choose(o.code)}
               aria-pressed={active}
-              className={`flex flex-col items-center gap-2 rounded-blob px-2 py-4 font-extrabold ring-1 transition-transform hover:-translate-y-0.5 ${
+              whileTap={reduce ? undefined : { scale: 0.95 }}
+              className={`relative flex flex-col items-center gap-2 rounded-blob px-2 py-4 font-extrabold ring-1 transition-transform hover:-translate-y-0.5 ${
                 active ? "bg-royal text-white ring-royal" : "bg-white text-ink ring-line"
               }`}
             >
+              {/* The "you got it!" signal — a ✓ that springs onto the chosen card. */}
+              <AnimatePresence>
+                {active && (
+                  <motion.span
+                    initial={reduce ? false : { scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={reduce ? { opacity: 0 } : { scale: 0, opacity: 0 }}
+                    transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 600, damping: 18 }}
+                    className="absolute -right-1.5 -top-1.5 inline-flex h-7 w-7 items-center justify-center rounded-full bg-gold text-sm text-white shadow-card ring-2 ring-white"
+                    aria-hidden
+                  >
+                    ✓
+                  </motion.span>
+                )}
+              </AnimatePresence>
               {o.country ? (
                 <Flag team={getTeam(o.country.code)!} size={56} className="!h-[33px] !w-[44px]" />
               ) : (
                 <span className="text-3xl" aria-hidden>🤝</span>
               )}
               <span className="text-sm leading-tight">{o.label}</span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
 
       {pickedLabel && (
-        <p className="mt-4 rounded-full bg-cedar-100 px-4 py-2 font-extrabold text-cedar-700">
-          You picked {pickedLabel}! We&rsquo;ll see what happens. 🎉
-        </p>
+        <div className="mt-4 flex flex-col items-center gap-1.5">
+          <ConfirmBadge label={`You picked ${pickedLabel}!`} tone="cedar" />
+          <p className="text-sm font-semibold text-muted">
+            We&rsquo;ll see what happens. 🎉
+          </p>
+        </div>
       )}
+
+      {pick && <Sendoff pick={pick} home={home} away={away} />}
+
+      {/* A tie picked on a knockout Match gets a kind secret, never a scolding:
+          these rounds always find a winner (#65). */}
+      {pick === DRAW && stage && stage !== "GROUP_STAGE" && (
+        <SpeakableText
+          text={`Here's a secret: ${
+            roundName(stage) ? `in the ${roundName(stage)}` : "in these rounds"
+          }, nobody finishes level — extra time and penalty kicks always find a winner!`}
+          className="mt-3 justify-center"
+          textClassName="text-sm font-semibold text-muted"
+        />
+      )}
+
+      <RoadBeat road={road} pick={pick} home={home} away={away} />
+
+      {stage === "FINAL" && <TrophyFinale />}
+
+      <RoundsClimb stage={stage} />
+
       <p className="mt-3 text-sm font-semibold text-muted">
         Guessing is just for fun — finishing the journey earns your stamps either way.
+      </p>
+    </div>
+  );
+}
+
+/**
+ * The Send-off (issue #47) — after a Prediction, wish the picked Team good luck
+ * in its own language (native line read aloud + an English gloss). A tie wishes
+ * both Teams luck, in both languages; only the English headline auto-reads, so
+ * the two native lines don't cancel each other (useSpeak stops on a new line).
+ */
+function Sendoff({ pick, home, away }: { pick: string; home: Country; away: Country }) {
+  if (pick === DRAW) {
+    return (
+      <div className="mt-4 flex flex-col items-center gap-2">
+        <SpeakableText
+          autoRead
+          text="Good luck to both teams!"
+          className="justify-center"
+          textClassName="text-lg font-extrabold text-royal"
+        />
+        <div className="flex flex-col items-center gap-1.5">
+          {[home, away].map((c) => {
+            const fw = farewellFor(c.code);
+            return (
+              <div key={c.code} className="text-center">
+                <SpeakableText
+                  lang={langFor(c.code)}
+                  text={fw.native}
+                  className="justify-center"
+                  textClassName="font-extrabold text-ink"
+                />
+                <p className="text-xs font-semibold text-muted">
+                  “{fw.gloss}” — {c.name}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  const country = pick === home.code ? home : pick === away.code ? away : null;
+  if (!country) return null;
+  const fw = farewellFor(country.code);
+
+  return (
+    <div className="mt-4 flex flex-col items-center gap-1.5">
+      <SpeakableText
+        autoRead
+        lang={langFor(country.code)}
+        text={fw.native}
+        className="justify-center"
+        textClassName="text-xl font-extrabold text-royal sm:text-2xl"
+      />
+      {fw.native !== fw.gloss && (
+        <p className="text-sm font-semibold text-muted">“{fw.gloss}”</p>
+      )}
+      <p className="text-sm font-semibold text-muted">
+        Good luck, {country.name}! <span aria-hidden>🍀</span>
       </p>
     </div>
   );

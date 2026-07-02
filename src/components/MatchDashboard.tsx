@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
 import { matchClock, prettyDate, type Featured } from "@/lib/schedule";
+import { roundName } from "@/lib/round";
+import { createDoneMatchesStore } from "@/lib/doneMatches";
+import { browserKeyValue } from "@/lib/storage";
 import { getTeam } from "@/data/teams";
 import type { Match } from "@/types";
+import { useProfile } from "./Profiles";
+import { ConfirmBadge } from "./ConfirmBadge";
 import { CountdownTimer } from "./CountdownTimer";
 import { Flag } from "./Flag";
 
@@ -15,6 +20,27 @@ const HEADING: Record<Featured["kind"], { title: string; sub: string }> = {
   upcoming: { title: "Next Up", sub: "The next exciting match day is coming!" },
   recent: { title: "Latest Matches", sub: "Look back at the last match day." },
 };
+
+// A continent-coloured ring around each flag — functional colour that teaches
+// where a team is from while warming up the card (DESIGN.md continent coding, #45c).
+const CONTINENT_RING: Record<string, string> = {
+  africa: "ring-continent-africa",
+  asia: "ring-continent-asia",
+  europe: "ring-continent-europe",
+  namerica: "ring-continent-namerica",
+  samerica: "ring-continent-samerica",
+  oceania: "ring-continent-oceania",
+};
+
+/**
+ * A bracket slot whose team isn't decided yet — no curated Team, no provider
+ * flag, and a placeholder/empty name. These get the friendly "to be decided"
+ * card instead of a dead 🏳️ "TBD" one (#44 / ADR-0008).
+ */
+function isUndecided(code: string, name?: string, flag?: string): boolean {
+  if (getTeam(code) || flag) return false;
+  return !name || name.toUpperCase() === "TBD" || code.toUpperCase() === "TBD";
+}
 
 function Side({
   code,
@@ -33,11 +59,28 @@ function Side({
   if (team) {
     return (
       <div className="flex min-w-0 flex-1 flex-col items-center gap-2 text-center">
-        <Flag team={team} size={72} className="sm:!h-[66px] sm:!w-[88px]" />
+        <Flag
+          team={team}
+          size={72}
+          className={`ring-2 ring-offset-2 ring-offset-white ${CONTINENT_RING[team.continent] ?? "ring-line"} sm:!h-[66px] sm:!w-[88px]`}
+        />
         <span className="break-words text-lg font-extrabold leading-tight sm:text-2xl">
           {team.name}
         </span>
         <span className="text-sm text-muted">{team.hello}</span>
+      </div>
+    );
+  }
+
+  // A knockout slot whose team isn't decided yet — a friendly placeholder, not
+  // a dead 🏳️ "TBD" card (#44 / ADR-0008).
+  const undecided =
+    !flagUrl && (!name || name.toUpperCase() === "TBD" || code.toUpperCase() === "TBD");
+  if (undecided) {
+    return (
+      <div className="flex flex-1 flex-col items-center gap-2 text-center text-muted">
+        <span className="text-5xl" aria-hidden>🏆</span>
+        <span className="text-lg font-extrabold leading-tight sm:text-2xl">To be decided</span>
       </div>
     );
   }
@@ -117,6 +160,8 @@ function MatchCard({
   index,
   featured = false,
   clickable = false,
+  pending = false,
+  done = false,
 }: {
   match: Match;
   index: number;
@@ -124,26 +169,50 @@ function MatchCard({
   featured?: boolean;
   /** Both teams are curated, so the card opens a journey. */
   clickable?: boolean;
+  /** A knockout slot whose teams aren't decided yet — show a gentle note. */
+  pending?: boolean;
+  /** The active Profile finished this Match's journey (#56). */
+  done?: boolean;
 }) {
+  const reduce = useReducedMotion();
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08, type: "spring", stiffness: 220, damping: 24 }}
-      className={`kid-card h-full p-4 transition-transform sm:p-7 ${
+      // A tactile press so a small child sees the tap land before the journey opens (#45b).
+      whileTap={clickable && !reduce ? { scale: 0.98 } : undefined}
+      className={`kid-card relative h-full overflow-hidden p-4 transition-transform sm:p-7 ${
         clickable ? "hover:-translate-y-0.5" : ""
-      } ${featured ? "ring-2 ring-gold" : ""}`}
+      } ${featured ? "ring-2 ring-gold" : ""} ${
+        // Gently softened so not-yet-done fixtures stand out — same order, no hiding (#56).
+        done ? "opacity-80 saturate-[.85]" : ""
+      }`}
     >
+      {/* The Unity Ribbon — four homes, one game — warms each card on-brand (#45c). */}
+      <span className="unity-ribbon absolute inset-x-0 top-0 h-1.5" aria-hidden />
       <div className="mb-4 flex items-center justify-between">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
-          {featured ? (
-            <>
-              <span aria-hidden>⭐</span> Match of the Day
-            </>
-          ) : (
-            <>
-              <TrophyIcon className="h-4 w-4" aria-hidden /> Group {match.group}
-            </>
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
+            {featured ? (
+              <>
+                <span aria-hidden>⭐</span> Match of the Day
+              </>
+            ) : (
+              <>
+                <TrophyIcon className="h-4 w-4" aria-hidden />{" "}
+                {/* Group for group-stage; the Round for knockouts (#62). */}
+                {match.group ? `Group ${match.group}` : roundName(match.stage)}
+              </>
+            )}
+          </span>
+          {done && (
+            // The shared confirm-badge springs in as the child returns to Today
+            // (reduced-motion safe inside) — icon + word, never colour alone (#56).
+            <ConfirmBadge label="Done" className="!px-3 !py-1 text-sm" />
+          )}
+          {done && (
+            <span className="sr-only">You finished this match&rsquo;s journey.</span>
           )}
         </span>
         <span className="text-sm font-bold text-muted">
@@ -180,8 +249,19 @@ function MatchCard({
       )}
 
       {clickable && (
-        <p className="mt-4 text-center text-sm font-extrabold text-royal">
-          {featured ? "Start the Match Day Journey" : "Explore these countries"} →
+        <div className="mt-4 flex justify-center">
+          {/* A filled pill reads as a real "tap me" button for small hands (#45b). */}
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-royal px-4 py-2 text-sm font-extrabold text-white shadow-pop">
+            {featured ? "Start the Match Day Journey" : "Explore these countries"}
+            <span aria-hidden>→</span>
+          </span>
+        </div>
+      )}
+
+      {pending && (
+        <p className="mt-4 text-center text-sm font-semibold text-muted">
+          <span aria-hidden>🏆</span> To be decided — this match fills in after the
+          group stage. Check back soon!
         </p>
       )}
     </motion.article>
@@ -196,6 +276,15 @@ export function MatchDashboard({
   /** Whether the data is live or the last-good real snapshot, for the badge. */
   source?: "live" | "snapshot" | null;
 }) {
+  const { activeProfileId } = useProfile();
+  const doneMatches = useMemo(() => createDoneMatchesStore(browserKeyValue()), []);
+  // Read after mount (not during render) so SSR/hydration never disagree with
+  // localStorage; re-read when the Profile switches — Done is per-Profile (#56).
+  const [doneIds, setDoneIds] = useState<ReadonlySet<string>>(new Set());
+  useEffect(() => {
+    setDoneIds(new Set(activeProfileId ? doneMatches.listDone(activeProfileId) : []));
+  }, [activeProfileId, doneMatches]);
+
   if (!featured) {
     return (
       <div className="grid gap-5 sm:grid-cols-2">
@@ -238,11 +327,23 @@ export function MatchDashboard({
       <div className="grid gap-5 sm:grid-cols-2">
         {featured.matches.map((m, i) => {
           const curated = Boolean(getTeam(m.homeCode) && getTeam(m.awayCode));
+          // A knockout slot whose teams aren't decided yet (#44 / ADR-0008).
+          const pending =
+            !curated &&
+            (isUndecided(m.homeCode, m.homeName, m.homeFlag) ||
+              isUndecided(m.awayCode, m.awayName, m.awayFlag));
           // The ⭐ Match of the Day is a spotlight only on the real today; on
           // other browsed days every fixture is an equal journey (#30).
           const isMatchOfTheDay = featured.kind === "today" && i === 0;
           const card = (
-            <MatchCard match={m} index={i} featured={isMatchOfTheDay} clickable={curated} />
+            <MatchCard
+              match={m}
+              index={i}
+              featured={isMatchOfTheDay}
+              clickable={curated}
+              pending={pending}
+              done={doneIds.has(m.id)}
+            />
           );
           return curated ? (
             <Link

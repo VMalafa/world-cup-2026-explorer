@@ -21,6 +21,9 @@ export const COUNTRY_LANG: Record<string, string> = {
   NED: "nl-NL", SEN: "wo-SN", DEN: "da-DK", CHI: "es-CL",
   BEL: "nl-BE", NGA: "ha-NG", AUT: "de-AT", EGY: "ar-EG",
   ENG: "en-GB", ITA: "it-IT", ALG: "ar-DZ", CIV: "fr-CI",
+  // Qualified nations added for #44 (ADR-0008) — authentic-first greeting language.
+  BIH: "bs-BA", COD: "ln-CD", CPV: "pt-CV", CUW: "pap-CW", CZE: "cs-CZ",
+  HAI: "ht-HT", IRQ: "ar-IQ", JOR: "ar-JO", SWE: "sv-SE", TUR: "tr-TR",
 };
 
 /** The greeting language for a Country code, if known. */
