@@ -47,6 +47,18 @@ is finished (one stamp per **Country**, ever — revisiting never re-stamps).
 The reward earned for a **Country** when its part of a **Match Day Journey** is
 completed; the unit the **Passport** collects.
 
+**Done** (a Match):
+A **Match** whose **Match Day Journey** a **Profile** has finished — surfaced as a
+✓ "Done" badge on that match's card in **Today**, so a child sees which of the
+day's fixtures they've already done. Per-**Profile**, stored on-device
+(ADR-0003), set the moment the journey finishes (the same moment a **Stamp** is
+earned), and persistent per Match (never reset — it simply reads as "done for
+today" because each day lists different fixtures). Distinct from a **Stamp**: a
+Stamp is per-**Country** and permanent (one ever); Done is per-**Match** and just
+reflects "we did this fixture", so a Country already stamped can still have an
+un-Done Match (issue #56). _Avoid_: "explored" (reserved for the Country-level
+**Passport** sense).
+
 **World**:
 The free-explore surface (one of the two primary surfaces, with **Today**) where
 a child can revisit any **Country** on the **Globe** and see their **Passport**.
