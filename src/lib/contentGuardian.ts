@@ -98,6 +98,39 @@ function textFields(draft: CountryDraft): TextField[] {
 }
 
 /**
+ * A knockout exit must stay a proud farewell — never cold sports-speak
+ * ("eliminated", "knocked out"). The product's Send-off framing (#66).
+ */
+const COLD_DEFEAT =
+  /\b(eliminated|elimination|knocked out|kicked out|out of the (tournament|cup|world cup)|loser)\b/i;
+
+/**
+ * Review one line of kid-facing UI copy against the wording checks of the
+ * Values Rubric. UI copy has no reading levels, so there is no length gate —
+ * this is the vocabulary gate tests run over authored strings (e.g. The
+ * Road's loss Send-off, #66) so they stay shippable.
+ */
+export function reviewCopyLine(field: string, text: string): GuardianFinding[] {
+  const findings: GuardianFinding[] = [];
+  if (!text.trim()) {
+    findings.push({ dimension: "relevant", field, message: "empty copy" });
+  }
+  if (UNSAFE.test(text)) {
+    findings.push({ dimension: "ageAppropriate", field, message: "scary or unsafe wording" });
+  }
+  if (OTHERING.test(text)) {
+    findings.push({ dimension: "respectful", field, message: "othering or exoticizing language" });
+  }
+  if (HYPE.test(text)) {
+    findings.push({ dimension: "mindful", field, message: "hype-y phrasing" });
+  }
+  if (COLD_DEFEAT.test(text)) {
+    findings.push({ dimension: "mindful", field, message: "cold defeat framing" });
+  }
+  return findings;
+}
+
+/**
  * Review one draft against the Values Rubric. Returns `approved` only when no
  * dimension raises a finding; otherwise `quarantined` with the reasons.
  */
