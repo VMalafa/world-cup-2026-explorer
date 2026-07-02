@@ -17,6 +17,8 @@ import { getTeam } from "@/data/teams";
 export interface RoadCandidate {
   code: string;
   name: string;
+  /** Provider flag URL, for non-curated teams (name/flag-at-minimum, #64). */
+  flag?: string;
 }
 
 export interface RoadStep {
@@ -29,11 +31,11 @@ export interface RoadStep {
 }
 
 /** A fixture side that names a real team (curated or provider-named), not a TBD slot. */
-function candidateFor(code: string, name?: string): RoadCandidate | null {
+function candidateFor(code: string, name?: string, flag?: string): RoadCandidate | null {
   const team = getTeam(code);
   if (team) return { code, name: team.name };
   if (code && code.toUpperCase() !== "TBD" && name && name.toUpperCase() !== "TBD") {
-    return { code, name };
+    return { code, name, flag };
   }
   return null;
 }
@@ -68,8 +70,8 @@ export function nextOpponents(match: Match, all: Match[]): RoadStep | null {
 
   const candidates = sibling
     ? [
-        candidateFor(sibling.homeCode, sibling.homeName),
-        candidateFor(sibling.awayCode, sibling.awayName),
+        candidateFor(sibling.homeCode, sibling.homeName, sibling.homeFlag),
+        candidateFor(sibling.awayCode, sibling.awayName, sibling.awayFlag),
       ].filter((c): c is RoadCandidate => c !== null)
     : [];
 
