@@ -44,6 +44,18 @@ export function stageFromRoundLabel(round: string | null | undefined): Stage | u
 }
 
 /**
+ * The knockout climb in playing order — every Round on the way to lifting the
+ * trophy (#65). The third-place match sits off this ladder on purpose.
+ */
+export const ROUND_LADDER: readonly Stage[] = [
+  "LAST_32",
+  "LAST_16",
+  "QUARTER_FINALS",
+  "SEMI_FINALS",
+  "FINAL",
+];
+
+/**
  * The kid-facing name of a knockout Round, e.g. "Round of 16". Empty string
  * for the group stage or an unknown stage — callers render nothing, exactly
  * like a knockout Match renders no Group.

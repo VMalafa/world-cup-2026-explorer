@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-import type { Country } from "@/types";
+import type { Country, Stage } from "@/types";
 import { getCountry } from "@/data/countries";
 import { getTeam } from "@/data/teams";
 import { langFor } from "@/data/languages";
-import { roundName } from "@/lib/round";
+import { ROUND_LADDER, roundName } from "@/lib/round";
 import type { RoadCandidate, RoadStep } from "@/lib/road";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
@@ -113,6 +113,78 @@ export function RoadBeat({
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+/**
+ * The whole climb at a glance (#65): a dotted outline of the Rounds from the
+ * Round of 32 to the Final, current Round marked, no team names — the child
+ * sees how far up the mountain this Match sits.
+ */
+export function RoundsClimb({ stage }: { stage?: Stage }) {
+  if (!stage || !ROUND_LADDER.includes(stage)) return null;
+  const at = ROUND_LADDER.indexOf(stage);
+
+  return (
+    <ol
+      aria-label="The road to the Final"
+      className="mt-4 flex flex-wrap items-center justify-center gap-y-2"
+    >
+      {ROUND_LADDER.map((s, i) => {
+        const current = i === at;
+        const climbed = i < at;
+        return (
+          <li key={s} className="flex items-center">
+            {i > 0 && (
+              <span className="mx-1 w-4 border-t-2 border-dotted border-royal-200" aria-hidden />
+            )}
+            <span
+              aria-current={current ? "step" : undefined}
+              className={`rounded-full px-2.5 py-1 text-xs font-extrabold ${
+                current
+                  ? "bg-royal text-white"
+                  : climbed
+                    ? "border border-dotted border-cedar text-cedar-700"
+                    : "border border-dotted border-royal-200 text-muted"
+              }`}
+            >
+              {current && (
+                <span aria-hidden className="mr-1">
+                  📍
+                </span>
+              )}
+              {s === "FINAL" ? "Final 🏆" : roundName(s)}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/**
+ * The end of the Road (#65): the Final has no next Round — whoever wins it
+ * lifts the trophy. A celebration, not another arrow.
+ */
+export function TrophyFinale() {
+  const reduce = useReducedMotion();
+  return (
+    <div className="mt-5 rounded-blob bg-gold-100 p-4 text-center">
+      <motion.p
+        initial={reduce ? false : { scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 14 }}
+        className="text-5xl"
+        aria-hidden
+      >
+        🏆
+      </motion.p>
+      <SpeakableText
+        text="This is the Final — the very top of the Road. Whoever wins this match lifts the World Cup trophy!"
+        className="mt-1 justify-center"
+        textClassName="font-extrabold text-gold-700"
+      />
     </div>
   );
 }

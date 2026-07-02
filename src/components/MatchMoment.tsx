@@ -3,15 +3,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-import type { Country } from "@/types";
+import type { Country, Stage } from "@/types";
 import { getTeam } from "@/data/teams";
 import { langFor } from "@/data/languages";
 import { farewellFor } from "@/data/farewells";
 import { browserKeyValue } from "@/lib/storage";
 import { createPredictionStore } from "@/lib/prediction";
 import type { RoadStep } from "@/lib/road";
+import { roundName } from "@/lib/round";
 import { useProfile } from "./Profiles";
-import { RoadBeat } from "./Road";
+import { RoadBeat, RoundsClimb, TrophyFinale } from "./Road";
 import { Flag } from "./Flag";
 import { CountdownTimer } from "./CountdownTimer";
 import { SpeakableText } from "./SpeakableText";
@@ -31,6 +32,7 @@ export function MatchMoment({
   matchId,
   kickoff,
   road = null,
+  stage,
 }: {
   home: Country;
   away: Country;
@@ -38,6 +40,8 @@ export function MatchMoment({
   kickoff?: string;
   /** The knockout Road step for this Match — null for group-stage fixtures (#63). */
   road?: RoadStep | null;
+  /** Tournament stage — drives the Rounds climb and the Final finale (#65). */
+  stage?: Stage;
 }) {
   const { activeProfileId } = useProfile();
   const reduce = useReducedMotion();
@@ -137,7 +141,23 @@ export function MatchMoment({
 
       {pick && <Sendoff pick={pick} home={home} away={away} />}
 
+      {/* A tie picked on a knockout Match gets a kind secret, never a scolding:
+          these rounds always find a winner (#65). */}
+      {pick === DRAW && stage && stage !== "GROUP_STAGE" && (
+        <SpeakableText
+          text={`Here's a secret: ${
+            roundName(stage) ? `in the ${roundName(stage)}` : "in these rounds"
+          }, nobody finishes level — extra time and penalty kicks always find a winner!`}
+          className="mt-3 justify-center"
+          textClassName="text-sm font-semibold text-muted"
+        />
+      )}
+
       <RoadBeat road={road} pick={pick} home={home} away={away} />
+
+      {stage === "FINAL" && <TrophyFinale />}
+
+      <RoundsClimb stage={stage} />
 
       <p className="mt-3 text-sm font-semibold text-muted">
         Guessing is just for fun — finishing the journey earns your stamps either way.
