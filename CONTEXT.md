@@ -123,14 +123,14 @@ not the *only* one: **every** fixture now opens its own full journey (issue #30)
 The Match of the Day is a spotlight, not a gate.
 _Avoid_: implying other fixtures can't be journeyed — they can.
 
-**Insight** (deferred):
+**Insight**:
 A bite-size, kid-friendly football fact about a **Team**, shown in-app as a
-flag-accented list in the **Match Day Journey** (issue #33). _Status:_ deferred.
-A version derived purely from this tournament's results proved too thin (circular
-before kickoff; the standing duplicated the **Standings** table), and the
-genuinely interesting facts in the original example ("World Cup debut", "haven't
-won a knockout since 2010") are historical/editorial and can't be auto-verified
-from results. Revisit only with a **curated, verified** per-Team facts source.
+flag-accented list in the **Match Day Journey** (issue #33; built in PR #38,
+shipped by owner decision after an earlier deferral). Every Insight is *derived
+from this tournament's committed real results* — group standing, last result,
+biggest win, next fixture — so it stays auto-verifiable, never AI narrative or
+an editorial quote. Historical/editorial facts ("World Cup debut") remain out
+until a curated, Guardian-gated per-Team facts source exists (ADR-0002 bar).
 "Shared within the application" means *surfaced in-app*, not socially exported.
 
 **Standings**:

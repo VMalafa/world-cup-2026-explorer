@@ -6,8 +6,11 @@ import type { Match } from "@/types";
 import { getTeam } from "@/data/teams";
 import { useFeatured } from "@/lib/useFeatured";
 import { computeStandings } from "@/lib/standings";
+import { computeInsights } from "@/lib/insights";
 import { nextOpponents } from "@/lib/road";
 import { Journey } from "./Journey";
+
+const nameOf = (code: string) => getTeam(code)?.name ?? code;
 
 /**
  * Resolves which Match Day Journey to run: an explicit `?home=&away=` override
@@ -56,6 +59,12 @@ export function JourneyClient() {
   // The Road: a knockout Match's candidate next-round opponents (#63).
   const road = match ? nextOpponents(match, allMatches) : null;
 
+  // Verifiable facts for each playing country, derived from the real results.
+  const insights = [
+    { code: homeCode, facts: computeInsights(allMatches, homeCode, { group, nameOf }) },
+    { code: awayCode, facts: computeInsights(allMatches, awayCode, { group, nameOf }) },
+  ];
+
   return (
     <Journey
       homeCode={homeCode}
@@ -64,6 +73,7 @@ export function JourneyClient() {
       kickoff={match?.kickoff}
       group={group}
       standings={standings}
+      insights={insights}
       stage={match?.stage}
       road={road}
     />

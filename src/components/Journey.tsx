@@ -22,6 +22,7 @@ import { Flag } from "./Flag";
 import { FindItStation, SayHelloStation, WondersStation, type WonderSlot } from "./Stations";
 import { MatchMoment } from "./MatchMoment";
 import { Standings } from "./Standings";
+import { Insights, type TeamInsights } from "./Insights";
 
 const WorldMap = dynamic(() => import("./WorldMap"), {
   ssr: false,
@@ -53,6 +54,7 @@ export function Journey({
   kickoff,
   group = "",
   standings = [],
+  insights = [],
   stage,
   road = null,
 }: {
@@ -66,6 +68,8 @@ export function Journey({
   group?: string;
   /** The playing group's standings, derived from real results (issue #31). */
   standings?: StandingRow[];
+  /** Verifiable facts for each playing country (issue #33). */
+  insights?: TeamInsights[];
   /** Tournament stage — a knockout Match's Round (CONTEXT.md, #62). */
   stage?: Stage;
   /** The knockout Road step for this Match, computed by the caller (#63). */
@@ -243,6 +247,7 @@ export function Journey({
                     road={road}
                     stage={stage}
                   />
+                  <Insights teams={insights} />
                   {group && standings.length > 0 && (
                     <Standings
                       group={group}
