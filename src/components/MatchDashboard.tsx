@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { MapPinIcon, TrophyIcon } from "@heroicons/react/24/solid";
 import { matchClock, prettyDate, type Featured } from "@/lib/schedule";
 import { roundName } from "@/lib/round";
+import { createDoneMatchesStore } from "@/lib/doneMatches";
+import { browserKeyValue } from "@/lib/storage";
 import { getTeam } from "@/data/teams";
 import type { Match } from "@/types";
+import { useProfile } from "./Profiles";
+import { ConfirmBadge } from "./ConfirmBadge";
 import { CountdownTimer } from "./CountdownTimer";
 import { Flag } from "./Flag";
 
@@ -157,6 +161,7 @@ function MatchCard({
   featured = false,
   clickable = false,
   pending = false,
+  done = false,
 }: {
   match: Match;
   index: number;
@@ -166,6 +171,8 @@ function MatchCard({
   clickable?: boolean;
   /** A knockout slot whose teams aren't decided yet — show a gentle note. */
   pending?: boolean;
+  /** The active Profile finished this Match's journey (#56). */
+  done?: boolean;
 }) {
   const reduce = useReducedMotion();
   return (
@@ -177,22 +184,35 @@ function MatchCard({
       whileTap={clickable && !reduce ? { scale: 0.98 } : undefined}
       className={`kid-card relative h-full overflow-hidden p-4 transition-transform sm:p-7 ${
         clickable ? "hover:-translate-y-0.5" : ""
-      } ${featured ? "ring-2 ring-gold" : ""}`}
+      } ${featured ? "ring-2 ring-gold" : ""} ${
+        // Gently softened so not-yet-done fixtures stand out — same order, no hiding (#56).
+        done ? "opacity-80 saturate-[.85]" : ""
+      }`}
     >
       {/* The Unity Ribbon — four homes, one game — warms each card on-brand (#45c). */}
       <span className="unity-ribbon absolute inset-x-0 top-0 h-1.5" aria-hidden />
       <div className="mb-4 flex items-center justify-between">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
-          {featured ? (
-            <>
-              <span aria-hidden>⭐</span> Match of the Day
-            </>
-          ) : (
-            <>
-              <TrophyIcon className="h-4 w-4" aria-hidden />{" "}
-              {/* Group for group-stage; the Round for knockouts (#62). */}
-              {match.group ? `Group ${match.group}` : roundName(match.stage)}
-            </>
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-100 px-3 py-1 text-sm font-extrabold text-gold-700">
+            {featured ? (
+              <>
+                <span aria-hidden>⭐</span> Match of the Day
+              </>
+            ) : (
+              <>
+                <TrophyIcon className="h-4 w-4" aria-hidden />{" "}
+                {/* Group for group-stage; the Round for knockouts (#62). */}
+                {match.group ? `Group ${match.group}` : roundName(match.stage)}
+              </>
+            )}
+          </span>
+          {done && (
+            // The shared confirm-badge springs in as the child returns to Today
+            // (reduced-motion safe inside) — icon + word, never colour alone (#56).
+            <ConfirmBadge label="Done" className="!px-3 !py-1 text-sm" />
+          )}
+          {done && (
+            <span className="sr-only">You finished this match&rsquo;s journey.</span>
           )}
         </span>
         <span className="text-sm font-bold text-muted">
@@ -256,6 +276,15 @@ export function MatchDashboard({
   /** Whether the data is live or the last-good real snapshot, for the badge. */
   source?: "live" | "snapshot" | null;
 }) {
+  const { activeProfileId } = useProfile();
+  const doneMatches = useMemo(() => createDoneMatchesStore(browserKeyValue()), []);
+  // Read after mount (not during render) so SSR/hydration never disagree with
+  // localStorage; re-read when the Profile switches — Done is per-Profile (#56).
+  const [doneIds, setDoneIds] = useState<ReadonlySet<string>>(new Set());
+  useEffect(() => {
+    setDoneIds(new Set(activeProfileId ? doneMatches.listDone(activeProfileId) : []));
+  }, [activeProfileId, doneMatches]);
+
   if (!featured) {
     return (
       <div className="grid gap-5 sm:grid-cols-2">
@@ -313,6 +342,7 @@ export function MatchDashboard({
               featured={isMatchOfTheDay}
               clickable={curated}
               pending={pending}
+              done={doneIds.has(m.id)}
             />
           );
           return curated ? (

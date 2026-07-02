@@ -13,6 +13,7 @@ import { getWonderPhoto } from "@/data/wonderPhotos";
 import { buildJourney, type Station } from "@/lib/journey";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
+import { createDoneMatchesStore } from "@/lib/doneMatches";
 import type { StandingRow } from "@/lib/standings";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
@@ -68,6 +69,7 @@ export function Journey({
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
   const passport = useMemo(() => createPassportStore(browserKeyValue()), []);
+  const doneMatches = useMemo(() => createDoneMatchesStore(browserKeyValue()), []);
 
   const journey = useMemo(() => buildJourney(homeCode, awayCode), [homeCode, awayCode]);
   const [step, setStep] = useState(0);
@@ -105,6 +107,9 @@ export function Journey({
   function finish() {
     if (activeProfileId) {
       for (const c of journey!.countries) passport.earnStamp(activeProfileId, c.code);
+      // The same moment Stamps are earned, the Match itself becomes Done —
+      // per-Match and per-Profile, so Today can show what's already finished (#56).
+      doneMatches.markDone(activeProfileId, matchId);
     }
     setFinished(true);
   }
