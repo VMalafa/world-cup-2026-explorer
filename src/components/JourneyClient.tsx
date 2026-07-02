@@ -6,6 +6,7 @@ import type { Match } from "@/types";
 import { getTeam } from "@/data/teams";
 import { useFeatured } from "@/lib/useFeatured";
 import { computeStandings } from "@/lib/standings";
+import { nextOpponents } from "@/lib/road";
 import { Journey } from "./Journey";
 
 /**
@@ -52,6 +53,8 @@ export function JourneyClient() {
   // The playing group's table (group stage only; knockout matches carry no group).
   const group = match?.group ?? "";
   const standings = group ? computeStandings(allMatches, group) : [];
+  // The Road: a knockout Match's candidate next-round opponents (#63).
+  const road = match ? nextOpponents(match, allMatches) : null;
 
   return (
     <Journey
@@ -62,6 +65,7 @@ export function JourneyClient() {
       group={group}
       standings={standings}
       stage={match?.stage}
+      road={road}
     />
   );
 }
