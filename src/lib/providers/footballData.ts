@@ -12,6 +12,7 @@
  * Auth: header `X-Auth-Token: <FOOTBALL_DATA_TOKEN>`.
  */
 import type { Match, MatchStatus } from "@/types";
+import { toStage } from "../round";
 import { resolveCode } from "./resolveTeam";
 
 const BASE = "https://api.football-data.org/v4";
@@ -112,6 +113,8 @@ export async function fetchFootballDataMatches(): Promise<Match[] | null> {
         homeFlag: m.homeTeam.crest ?? undefined,
         awayFlag: m.awayTeam.crest ?? undefined,
         matchday: m.matchday != null ? String(m.matchday) : undefined,
+        // A knockout Match's Round (CONTEXT.md, #62) — stop dropping it.
+        stage: toStage(m.stage),
       };
     });
 
