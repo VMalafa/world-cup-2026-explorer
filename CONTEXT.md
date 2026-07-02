@@ -62,7 +62,8 @@ The warm farewell played right after a **Prediction** is made — "Goodbye and g
 luck!" read aloud in the picked **Team**'s own language (native script + an
 English gloss), reusing the same read-aloud path as the say-hello **Station**
 (ADR-0001). Picking "a tie" wishes both **Teams** luck, in both languages (issue
-#47).
+#47). On **The Road**, the same Send-off voices a knockout exit as a *proud*
+farewell — never as elimination (issue #60).
 
 **Wonders**:
 The small curated set of kid-friendly highlights shown for a **Country** in a
@@ -125,3 +126,22 @@ A **Group**'s live table — each **Team**'s points, played, and goal difference
 *derived* from committed real **Match** results, never authored. The "where does
 my country stand?" view (issue #31). Current to within ~a day (see ADR-0005).
 _Avoid_: "league table" (this is group-stage standings within one **Group**).
+
+**The Road**:
+A single **Team**'s forward path through the single-elimination knockout stage,
+shown as the sequence of **Countries** it *could* face round by round — each a
+potential new Country to learn if the Team keeps winning. Losing ends the Road
+with a warm, proud **Send-off** — never framed as elimination; the child keeps
+every explored Country in their **Passport** regardless of the result, so the
+friendship is never lost with the match. Teaches the knockout format — "win and
+move on, lose and go home" — in the app's own currency, *new Countries to meet*,
+never a stat grid. Team-centric ("what happens to **this** Country"), not a
+whole-tournament view (issue #60). _Avoid_: "bracket", "draw" (dense, football-
+cold framings that the product's anti-references rule out).
+
+**Round**:
+One stage of the knockout **Road** — Round of 32, Round of 16, Quarter-final,
+Semi-final, Final. It is a knockout **Match**'s bucket the way a **Group** is a
+group-stage Match's bucket: a knockout Match carries a **Round**, not a Group.
+Derived from the provider's `stage`, which the live feed already supplies (issue
+#60).
