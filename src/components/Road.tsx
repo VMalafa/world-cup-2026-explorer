@@ -1,9 +1,15 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+
 import type { Country } from "@/types";
+import { getCountry } from "@/data/countries";
 import { getTeam } from "@/data/teams";
+import { langFor } from "@/data/languages";
 import { roundName } from "@/lib/round";
-import type { RoadStep } from "@/lib/road";
+import type { RoadCandidate, RoadStep } from "@/lib/road";
+import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
 import { SpeakableText } from "./SpeakableText";
 
@@ -13,6 +19,11 @@ import { SpeakableText } from "./SpeakableText";
  * conditional only: fixture team lists, never live scores, and it never
  * touches Stamp/Passport state. Undecided rivals get the friendly
  * to-be-decided treatment (#44/ADR-0008), never an invented name.
+ *
+ * Each candidate is a light in-place teaser (#64): tapping reveals the
+ * Country's flag, its hello (read aloud in-language), and one fun fact —
+ * reusing the curated Country content. No navigation away, no Stamp earned;
+ * that stays the Match Day Journey's job.
  */
 export function RoadBeat({
   road,
@@ -26,6 +37,8 @@ export function RoadBeat({
   home: Country;
   away: Country;
 }) {
+  const reduce = useReducedMotion();
+  const [openCode, setOpenCode] = useState<string | null>(null);
   if (!road) return null;
 
   const round = roundName(road.nextStage);
@@ -39,6 +52,8 @@ export function RoadBeat({
       : names.length === 1
         ? `If ${subject} wins, they'd meet ${names[0]} in the ${round}!`
         : `If ${subject} wins, they'll play in the ${round} — their next rival isn't decided yet. Check back soon!`;
+
+  const open = road.candidates.find((c) => c.code === openCode) ?? null;
 
   return (
     <div className="mt-5 rounded-blob bg-royal-50 p-4 text-center">
@@ -54,18 +69,28 @@ export function RoadBeat({
         {road.candidates.length > 0 ? (
           road.candidates.map((c) => {
             const team = getTeam(c.code);
+            const active = openCode === c.code;
             return (
-              <span
+              <button
                 key={c.code}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-extrabold text-ink ring-1 ring-line"
+                type="button"
+                onClick={() => setOpenCode(active ? null : c.code)}
+                aria-expanded={active}
+                aria-label={`Meet ${c.name}`}
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 font-extrabold ring-1 transition-transform hover:-translate-y-0.5 ${
+                  active ? "bg-royal text-white ring-royal" : "bg-white text-ink ring-line"
+                }`}
               >
                 {team ? (
                   <Flag team={team} size={26} className="!h-[19px] !w-[26px]" />
+                ) : c.flag ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- provider CDN flag
+                  <img src={c.flag} alt="" width={26} height={19} className="h-[19px] w-[26px] rounded-sm object-cover" />
                 ) : (
                   <span aria-hidden>🏳️</span>
                 )}
                 {c.name}
-              </span>
+              </button>
             );
           })
         ) : (
@@ -74,6 +99,77 @@ export function RoadBeat({
           </span>
         )}
       </div>
+
+      <AnimatePresence mode="wait">
+        {open && (
+          <motion.div
+            key={open.code}
+            initial={reduce ? false : { opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <CandidateTeaser candidate={open} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/**
+ * The in-place teaser (#64): flag, read-aloud hello, one fun fact. A Country
+ * missing richer content degrades gracefully — name and flag at minimum.
+ */
+function CandidateTeaser({ candidate }: { candidate: RoadCandidate }) {
+  const { pick } = useProfile();
+  const country = getCountry(candidate.code);
+  const team = getTeam(candidate.code);
+  const funFact = country?.funFacts[0];
+
+  return (
+    <div className="mt-3 rounded-blob bg-white p-4 shadow-card ring-1 ring-line">
+      <div className="flex items-center justify-center gap-3">
+        {team ? (
+          <Flag team={team} size={56} className="!h-[42px] !w-[56px] shrink-0" />
+        ) : candidate.flag ? (
+          // eslint-disable-next-line @next/next/no-img-element -- provider CDN flag
+          <img
+            src={candidate.flag}
+            alt={`Flag of ${candidate.name}`}
+            width={56}
+            height={42}
+            className="h-[42px] w-[56px] rounded-lg object-cover shadow-sm"
+          />
+        ) : (
+          <span className="text-4xl" role="img" aria-label={`Flag of ${candidate.name}`}>
+            🏳️
+          </span>
+        )}
+        <span className="text-xl font-extrabold text-ink">{candidate.name}</span>
+      </div>
+
+      {country?.hello && (
+        <div className="mt-2 flex justify-center">
+          <SpeakableText
+            autoRead
+            lang={langFor(country.code)}
+            text={country.hello}
+            speakText={country.hello}
+            className="justify-center rounded-full bg-royal-50 px-3 py-1"
+            textClassName="font-extrabold text-ink"
+          />
+        </div>
+      )}
+
+      {funFact && (
+        <SpeakableText
+          text={pick(funFact)}
+          speakText={`${candidate.name}. ${pick(funFact)}`}
+          className="mt-2 justify-center"
+          textClassName="font-semibold text-ink"
+        />
+      )}
     </div>
   );
 }
