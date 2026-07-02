@@ -9,6 +9,7 @@ import { getTeam } from "@/data/teams";
 import { langFor } from "@/data/languages";
 import { ROUND_LADDER, roundName } from "@/lib/round";
 import type { RoadCandidate, RoadStep } from "@/lib/road";
+import { lossBranchCopy } from "@/lib/sendoffCopy";
 import { useProfile } from "./Profiles";
 import { Flag } from "./Flag";
 import { SpeakableText } from "./SpeakableText";
@@ -113,6 +114,62 @@ export function RoadBeat({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {picked && (
+        <LossBranch
+          picked={picked}
+          other={picked.code === home.code ? away : home}
+          candidates={road.candidates}
+        />
+      )}
+    </div>
+  );
+}
+
+/**
+ * The Send-off's lose conditional on The Road (#66, #60): a proud farewell —
+ * never "out"/"eliminated" — that normalizes going home, keeps the Country in
+ * the child's Passport forever, then pivots to the winner's joy and the new
+ * Countries ahead. The copy lives in `sendoffCopy.ts`, gated line-by-line by
+ * the Content Guardian's Values Rubric in tests (ADR-0002).
+ */
+function LossBranch({
+  picked,
+  other,
+  candidates,
+}: {
+  picked: Country;
+  other: Country;
+  candidates: RoadCandidate[];
+}) {
+  const copy = lossBranchCopy(picked.name, other.name, candidates);
+  return (
+    <div className="mt-4 border-t-2 border-dotted border-royal-200 pt-3">
+      <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-sm font-extrabold text-royal shadow-card">
+        <span aria-hidden>💛</span> And if the day goes the other way?
+      </p>
+      <div className="flex flex-col gap-1.5">
+        <SpeakableText
+          text={copy.farewell}
+          className="justify-center"
+          textClassName="font-extrabold text-ink"
+        />
+        <SpeakableText
+          text={copy.partOfTheGame}
+          className="justify-center"
+          textClassName="font-semibold text-ink"
+        />
+        <SpeakableText
+          text={copy.passportKeepsake}
+          className="justify-center"
+          textClassName="font-extrabold text-gold-700"
+        />
+        <SpeakableText
+          text={copy.winnersJoy}
+          className="justify-center"
+          textClassName="font-semibold text-ink"
+        />
+      </div>
     </div>
   );
 }
