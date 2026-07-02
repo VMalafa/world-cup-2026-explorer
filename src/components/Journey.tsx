@@ -11,6 +11,7 @@ import { roundName } from "@/lib/round";
 import { getTeam } from "@/data/teams";
 import { getWonderPhoto } from "@/data/wonderPhotos";
 import { buildJourney, type Station } from "@/lib/journey";
+import { useSpeak } from "@/lib/useSpeak";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
 import { createDoneMatchesStore } from "@/lib/doneMatches";
@@ -68,6 +69,7 @@ export function Journey({
 }) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
+  const { speak } = useSpeak();
   const passport = useMemo(() => createPassportStore(browserKeyValue()), []);
   const doneMatches = useMemo(() => createDoneMatchesStore(browserKeyValue()), []);
 
@@ -104,6 +106,22 @@ export function Journey({
   // Plain const (not a hook) — we're past the early return above.
   const journeyCodes = new Set(journey.countries.map((c) => c.code));
 
+  /**
+   * A Globe tap says the tapped Country's name aloud — a pre-reader can hear
+   * what every country is called (#59). The winning "Find it" tap is the one
+   * exception: FindItStation already auto-reads "You found it!", so speaking
+   * the name too would stack two lines. Speech degrades silently when
+   * unavailable (useSpeak no-ops), so the tap still selects.
+   */
+  function handleGlobeTap(code: string) {
+    setTappedCode(code);
+    const winningFindItTap = station?.kind === "locate" && code === station.countryCode;
+    if (!winningFindItTap) {
+      const name = getCountry(code)?.name ?? getTeam(code)?.name;
+      if (name) speak(`${name}!`);
+    }
+  }
+
   function finish() {
     if (activeProfileId) {
       for (const c of journey!.countries) passport.earnStamp(activeProfileId, c.code);
@@ -136,7 +154,7 @@ export function Journey({
           >
             <WorldMap
               selectedCode={finished || !station ? null : station.countryCode}
-              onSelect={setTappedCode}
+              onSelect={handleGlobeTap}
               earnedCodes={journeyCodes}
               heightClass="h-[38vh] min-h-[260px]"
             />

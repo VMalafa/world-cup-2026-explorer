@@ -9,6 +9,7 @@ import { CONTINENT_COLOR, CONTINENT_LABEL, getTeam } from "@/data/teams";
 import { langFor } from "@/data/languages";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore, type Stamp } from "@/lib/passport";
+import { useSpeak } from "@/lib/useSpeak";
 import { useProfile } from "./Profiles";
 import { ProfileChip } from "./ProfileChip";
 import { Flag } from "./Flag";
@@ -40,6 +41,7 @@ const TOTAL = COUNTRIES.length;
 export function WorldView() {
   const { activeProfile, activeProfileId, hydrated } = useProfile();
   const reduce = useReducedMotion();
+  const { speak } = useSpeak();
 
   const passport = useMemo(() => createPassportStore(browserKeyValue()), []);
   const [stamps, setStamps] = useState<Stamp[]>([]);
@@ -58,6 +60,17 @@ export function WorldView() {
   const selectedCountry = selected ? getCountry(selected) : null;
   // Show most-recently earned first in the Passport grid.
   const recent = useMemo(() => [...stamps].reverse(), [stamps]);
+
+  /**
+   * A Globe tap says the tapped Country's name aloud, so a pre-reader can hear
+   * what every country is called (#59). Repeated taps re-speak; where speech
+   * is unavailable the tap still selects (useSpeak no-ops silently).
+   */
+  function handleGlobeTap(code: string) {
+    setSelected(code);
+    const name = getCountry(code)?.name;
+    if (name) speak(`${name}!`);
+  }
 
   if (hydrated && !activeProfile) return null; // first-run gate covers this
 
@@ -149,7 +162,7 @@ export function WorldView() {
         <div className="overflow-hidden rounded-blob shadow-soft ring-1 ring-black/5">
           <WorldMap
             selectedCode={selected}
-            onSelect={setSelected}
+            onSelect={handleGlobeTap}
             earnedCodes={earnedCodes}
           />
         </div>
