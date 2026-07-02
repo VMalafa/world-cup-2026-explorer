@@ -241,6 +241,7 @@ export function Journey({
                     matchId={matchId}
                     kickoff={kickoff}
                     road={road}
+                    stage={stage}
                   />
                   {group && standings.length > 0 && (
                     <Standings

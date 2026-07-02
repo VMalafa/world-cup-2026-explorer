@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { roundName, stageFromRoundLabel, toStage } from "./round";
+import { ROUND_LADDER, roundName, stageFromRoundLabel, toStage } from "./round";
 
 describe("toStage (football-data.org stage strings)", () => {
   it("passes every known stage through", () => {
@@ -65,5 +65,18 @@ describe("roundName (kid-facing Round)", () => {
   it("shows no Round for group-stage or unknown matches", () => {
     expect(roundName("GROUP_STAGE")).toBe("");
     expect(roundName(undefined)).toBe("");
+  });
+});
+
+describe("ROUND_LADDER (the climb to the Final, #65)", () => {
+  it("runs Round of 32 → Final in playing order, every step named", () => {
+    expect(ROUND_LADDER[0]).toBe("LAST_32");
+    expect(ROUND_LADDER[ROUND_LADDER.length - 1]).toBe("FINAL");
+    for (const stage of ROUND_LADDER) expect(roundName(stage)).not.toBe("");
+  });
+
+  it("keeps the third-place match and group stage off the ladder", () => {
+    expect(ROUND_LADDER).not.toContain("THIRD_PLACE");
+    expect(ROUND_LADDER).not.toContain("GROUP_STAGE");
   });
 });
