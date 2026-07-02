@@ -11,6 +11,7 @@ import { roundName } from "@/lib/round";
 import { getTeam } from "@/data/teams";
 import { getWonderPhoto } from "@/data/wonderPhotos";
 import { buildJourney, type Station } from "@/lib/journey";
+import type { RoadStep } from "@/lib/road";
 import { useSpeak } from "@/lib/useSpeak";
 import { browserKeyValue } from "@/lib/storage";
 import { createPassportStore } from "@/lib/passport";
@@ -53,6 +54,7 @@ export function Journey({
   group = "",
   standings = [],
   stage,
+  road = null,
 }: {
   homeCode: string;
   awayCode: string;
@@ -66,6 +68,8 @@ export function Journey({
   standings?: StandingRow[];
   /** Tournament stage — a knockout Match's Round (CONTEXT.md, #62). */
   stage?: Stage;
+  /** The knockout Road step for this Match, computed by the caller (#63). */
+  road?: RoadStep | null;
 }) {
   const { activeProfileId, pick } = useProfile();
   const reduce = useReducedMotion();
@@ -236,6 +240,7 @@ export function Journey({
                     away={journey.countries[1]}
                     matchId={matchId}
                     kickoff={kickoff}
+                    road={road}
                   />
                   {group && standings.length > 0 && (
                     <Standings

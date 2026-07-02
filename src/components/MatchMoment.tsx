@@ -9,7 +9,9 @@ import { langFor } from "@/data/languages";
 import { farewellFor } from "@/data/farewells";
 import { browserKeyValue } from "@/lib/storage";
 import { createPredictionStore } from "@/lib/prediction";
+import type { RoadStep } from "@/lib/road";
 import { useProfile } from "./Profiles";
+import { RoadBeat } from "./Road";
 import { Flag } from "./Flag";
 import { CountdownTimer } from "./CountdownTimer";
 import { SpeakableText } from "./SpeakableText";
@@ -28,11 +30,14 @@ export function MatchMoment({
   away,
   matchId,
   kickoff,
+  road = null,
 }: {
   home: Country;
   away: Country;
   matchId: string;
   kickoff?: string;
+  /** The knockout Road step for this Match — null for group-stage fixtures (#63). */
+  road?: RoadStep | null;
 }) {
   const { activeProfileId } = useProfile();
   const reduce = useReducedMotion();
@@ -131,6 +136,8 @@ export function MatchMoment({
       )}
 
       {pick && <Sendoff pick={pick} home={home} away={away} />}
+
+      <RoadBeat road={road} pick={pick} home={home} away={away} />
 
       <p className="mt-3 text-sm font-semibold text-muted">
         Guessing is just for fun — finishing the journey earns your stamps either way.
