@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-07-09T07:25:36.795Z",
+  "capturedAt": "2026-07-10T07:19:04.233Z",
   "source": "football-data.org",
   "competition": "WC",
   "season": "2026",
@@ -1814,7 +1814,9 @@
       "stadium": "",
       "city": "",
       "group": "",
-      "status": "scheduled",
+      "status": "finished",
+      "homeScore": 2,
+      "awayScore": 0,
       "homeName": "France",
       "awayName": "Morocco",
       "homeFlag": "https://crests.football-data.org/773.svg",
@@ -1873,12 +1875,14 @@
       "id": "fd-537387",
       "date": "2026-07-14",
       "kickoff": "2026-07-14T19:00:00Z",
-      "homeCode": "TBD",
+      "homeCode": "FRA",
       "awayCode": "TBD",
       "stadium": "",
       "city": "",
       "group": "",
       "status": "scheduled",
+      "homeName": "France",
+      "homeFlag": "https://crests.football-data.org/773.svg",
       "stage": "SEMI_FINALS"
     },
     {
