@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-07-15T06:53:21.540Z",
+  "capturedAt": "2026-07-16T06:57:07.158Z",
   "source": "football-data.org",
   "competition": "WC",
   "season": "2026",
@@ -1904,7 +1904,9 @@
       "stadium": "",
       "city": "",
       "group": "",
-      "status": "scheduled",
+      "status": "finished",
+      "homeScore": 1,
+      "awayScore": 2,
       "homeName": "England",
       "awayName": "Argentina",
       "homeFlag": "https://crests.football-data.org/770.svg",
@@ -1916,13 +1918,15 @@
       "date": "2026-07-18",
       "kickoff": "2026-07-18T21:00:00Z",
       "homeCode": "FRA",
-      "awayCode": "TBD",
+      "awayCode": "ENG",
       "stadium": "",
       "city": "",
       "group": "",
       "status": "scheduled",
       "homeName": "France",
+      "awayName": "England",
       "homeFlag": "https://crests.football-data.org/773.svg",
+      "awayFlag": "https://crests.football-data.org/770.svg",
       "stage": "THIRD_PLACE"
     },
     {
@@ -1930,13 +1934,15 @@
       "date": "2026-07-19",
       "kickoff": "2026-07-19T19:00:00Z",
       "homeCode": "ESP",
-      "awayCode": "TBD",
+      "awayCode": "ARG",
       "stadium": "",
       "city": "",
       "group": "",
       "status": "scheduled",
       "homeName": "Spain",
+      "awayName": "Argentina",
       "homeFlag": "https://crests.football-data.org/760.svg",
+      "awayFlag": "https://crests.football-data.org/762.png",
       "stage": "FINAL"
     }
   ]
