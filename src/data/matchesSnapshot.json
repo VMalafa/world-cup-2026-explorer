@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-07-19T06:58:33.116Z",
+  "capturedAt": "2026-07-20T07:14:46.090Z",
   "source": "football-data.org",
   "competition": "WC",
   "season": "2026",
@@ -1940,7 +1940,9 @@
       "stadium": "",
       "city": "",
       "group": "",
-      "status": "scheduled",
+      "status": "finished",
+      "homeScore": 1,
+      "awayScore": 0,
       "homeName": "Spain",
       "awayName": "Argentina",
       "homeFlag": "https://crests.football-data.org/760.svg",
